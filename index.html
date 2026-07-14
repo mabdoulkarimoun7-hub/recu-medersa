@@ -40,6 +40,25 @@
       if (cfg.couleurPrincipale) document.documentElement.style.setProperty("--primary", cfg.couleurPrincipale);
       if (cfg.couleurSecondaire) document.documentElement.style.setProperty("--secondary", cfg.couleurSecondaire);
       if (cfg.couleurAccent) document.documentElement.style.setProperty("--accent", cfg.couleurAccent);
+      var icon = cfg.logo || "assets/icon-192.png";
+      var manifest = {
+        name: (cfg.nomFr || "Médersa") + " — " + (cfg.nomAr || ""),
+        short_name: cfg.nomFr || "Médersa",
+        description: "Gestion — " + (cfg.nomFr || "Médersa"),
+        start_url: "./index.html?c=" + encodeURIComponent(p),
+        scope: "./",
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#f4f6f5",
+        theme_color: cfg.couleurPrincipale || "#0d7a3d",
+        icons: [
+          { src: icon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+          { src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+      var blob = new Blob([JSON.stringify(manifest)], {type: "application/json"});
+      document.querySelector('link[rel="manifest"]').href = URL.createObjectURL(blob);
+      if (cfg.couleurPrincipale) document.querySelector('meta[name="theme-color"]').content = cfg.couleurPrincipale;
       window._brandingApplied = true;
       sp.style.visibility = "visible";
     })

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guide Confidentiel — Midenty</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card { background: #fff; border-radius: 12px; padding: 40px; max-width: 500px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+    h1 { color: #c0392b; font-size: 22px; margin-bottom: 8px; }
+    p { color: #555; margin-bottom: 24px; font-size: 14px; }
+    .warning { background: #fef3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 24px; font-size: 13px; color: #856404; }
+    button { background: #c0392b; color: #fff; border: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #a93226; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>DOCUMENT CONFIDENTIEL</h1>
+    <p>Guide d'utilisation et codes secrets de l'application Médersa — par Midenty</p>
+    <div class="warning">Ce document contient des informations sensibles. Ne le partagez qu'avec les personnes autorisées.</div>
+    <button onclick="generateGuide()">Télécharger le guide PDF</button>
+  </div>
+
+  <script>
+function generateGuide() {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: "mm", format: "a4" });
+  const W = pdf.internal.pageSize.getWidth();
+  const ml = 20;
+  const mr = W - 20;
+  let y = 20;
+
+  function title(text, size) {
+    pdf.setFontSize(size || 16);
+    pdf.setFont(undefined, "bold");
+    pdf.setTextColor(192, 57, 43);
+    pdf.text(text, ml, y);
+    y += size ? size * 0.5 : 8;
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont(undefined, "normal");
+  }
+
+  function subtitle(text) {
+    pdf.setFontSize(13);
+    pdf.setFont(undefined, "bold");
+    pdf.setTextColor(44, 62, 80);
+    pdf.text(text, ml, y);
+    y += 7;
+    pdf.setFont(undefined, "normal");
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFontSize(11);
+  }
+
+  function line(text, indent) {
+    const x = ml + (indent || 0);
+    const lines = pdf.splitTextToSize(text, mr - x);
+    pdf.text(lines, x, y);
+    y += lines.length * 5.5;
+  }
+
+  function sep() {
+    y += 3;
+    pdf.setDrawColor(200);
+    pdf.line(ml, y, mr, y);
+    y += 6;
+  }
+
+  function checkPage(needed) {
+    if (y + (needed || 30) > 270) {
+      pdf.addPage();
+      y = 20;
+    }
+  }
+
+  // ===== PAGE 1 : COUVERTURE =====
+  pdf.setFillColor(192, 57, 43);
+  pdf.rect(0, 0, W, 60, "F");
+  pdf.setTextColor(255, 255, 255);
+  pdf.setFontSize(24);
+  pdf.setFont(undefined, "bold");
+  pdf.text("GUIDE CONFIDENTIEL", W / 2, 28, { align: "center" });
+  pdf.setFontSize(14);
+  pdf.setFont(undefined, "normal");
+  pdf.text("Application de Gestion — Médersa", W / 2, 38, { align: "center" });
+  pdf.setFontSize(10);
+  pdf.text("Par Midenty — +227 88 81 10 81", W / 2, 48, { align: "center" });
+
+  pdf.setTextColor(0, 0, 0);
+  y = 75;
+  pdf.setFontSize(12);
+  pdf.setFont(undefined, "bold");
+  pdf.text("AVERTISSEMENT", W / 2, y, { align: "center" });
+  y += 8;
+  pdf.setFont(undefined, "normal");
+  pdf.setFontSize(10);
+  const warn = pdf.splitTextToSize(
+    "Ce document est strictement confidentiel. Il contient les codes d'accès, " +
+    "les codes de réinitialisation et toutes les informations nécessaires à l'administration " +
+    "de l'application. Ne le partagez qu'avec les personnes de confiance autorisées à gérer l'application.",
+    mr - ml
+  );
+  pdf.text(warn, ml, y);
+  y += warn.length * 5 + 10;
+
+  sep();
+
+  // ===== SECTION 1 : CODES SECRETS =====
+  title("1. CODES SECRETS");
+  y += 4;
+
+  subtitle("Code d'accès à l'application");
+  line("Ce code est demandé à chaque ouverture de l'application.");
+  line("Code : MEI-2026-EDU", 5);
+  y += 3;
+  line("Donnez ce code uniquement au directeur de l'école et aux personnes");
+  line("autorisées à utiliser l'application.");
+  y += 4;
+
+  subtitle("Code de réinitialisation (ADMIN)");
+  line("Ce code permet d'effacer TOUTES les données de l'application.");
+  line("Code : MIDENTY-RESET-2026", 5);
+  y += 3;
+  line("ATTENTION : La réinitialisation est IRRÉVERSIBLE. Toutes les données");
+  line("(élèves, paiements, reçus) seront supprimées définitivement.");
+  y += 3;
+  line("Pour réinitialiser :");
+  line("1. Aller dans l'onglet Paramètres", 5);
+  line("2. Descendre jusqu'à la section « À propos »", 5);
+  line("3. Taper 5 fois rapidement sur le texte « À propos »", 5);
+  line("4. Un champ de mot de passe apparaît", 5);
+  line("5. Saisir le code : MIDENTY-RESET-2026", 5);
+  line("6. Confirmer la suppression", 5);
+  y += 3;
+  line("Ne donnez JAMAIS ce code aux enseignants ou au personnel de l'école.");
+
+  sep();
+  checkPage(60);
+
+  // ===== SECTION 2 : INSTALLATION =====
+  title("2. INSTALLATION DE L'APPLICATION");
+  y += 4;
+
+  subtitle("Sur Android (Chrome)");
+  line("1. Ouvrir Chrome sur le téléphone");
+  line("2. Aller à l'adresse de l'application (URL fournie par Midenty)");
+  line("3. Attendre que la bannière « Installer » apparaisse");
+  line("4. Cliquer sur « Installer »");
+  line("5. L'application apparaît sur l'écran d'accueil comme une app native");
+  y += 4;
+
+  subtitle("Première utilisation");
+  line("1. Ouvrir l'application");
+  line("2. L'écran de démarrage (splash) s'affiche avec le logo");
+  line("3. Saisir le code d'accès : MEI-2026-EDU");
+  line("4. L'application s'ouvre sur l'onglet « Inscription »");
+
+  sep();
+  checkPage(80);
+
+  // ===== SECTION 3 : UTILISATION =====
+  title("3. GUIDE D'UTILISATION");
+  y += 4;
+
+  subtitle("Onglet 1 : Inscription (التسجيل)");
+  line("Cet onglet permet d'inscrire de nouveaux élèves.");
+  y += 2;
+  line("• Le matricule (MEI-001, MEI-002...) est généré automatiquement");
+  line("• Remplir : nom complet, téléphone élève, téléphone parent, classe");
+  line("• Cliquer sur « Inscrire » pour enregistrer l'élève");
+  line("• Un reçu d'inscription est généré automatiquement");
+  line("• Le reçu affiche le matricule — c'est ce numéro que le parent");
+  line("  utilisera pour payer les frais mensuels chaque mois");
+  y += 2;
+  line("Important : Un élève inscrit NE PEUT PAS être supprimé (protection");
+  line("contre la fraude). On peut seulement modifier son nom ou sa classe.");
+
+  checkPage(50);
+  y += 4;
+
+  subtitle("Onglet 2 : Classes (الأقسام)");
+  line("Cet onglet affiche la liste des classes et leurs élèves.");
+  y += 2;
+  line("• Sélectionner une classe dans le menu déroulant");
+  line("• La liste des élèves de cette classe s'affiche");
+  line("• Possibilité d'exporter la liste en PDF");
+
+  checkPage(60);
+  y += 4;
+
+  subtitle("Onglet 3 : Frais mensuels (الرسوم الشهرية)");
+  line("Cet onglet permet de collecter les frais mensuels.");
+  y += 2;
+  line("Étapes pour enregistrer un paiement :");
+  line("1. Saisir le matricule de l'élève (ex: MEI-001)", 5);
+  line("2. Cliquer sur « Rechercher »", 5);
+  line("3. Les informations de l'élève s'affichent automatiquement", 5);
+  line("4. La grille des mois apparaît (vert = payé, gris = impayé)", 5);
+  line("5. Cliquer sur le(s) mois à payer (ils deviennent bleus)", 5);
+  line("6. Choisir le mode de paiement (Espèces, Mynita, Amanata)", 5);
+  line("7. Cliquer sur « Payer » pour générer le reçu", 5);
+  y += 3;
+  line("Section « Consultation » : en bas de page, choisir un mois pour voir");
+  line("la liste des élèves qui ont payé et ceux qui n'ont pas encore payé.");
+
+  checkPage(60);
+  y += 4;
+
+  subtitle("Onglet 4 : Paramètres (الإعدادات)");
+  line("Cet onglet permet de configurer l'application.");
+  y += 2;
+  line("• Informations de l'école : nom (FR/AR), adresse, téléphones, logo");
+  line("• Classes : créer ou supprimer des classes");
+  line("• Frais : modifier le montant de l'inscription et des frais mensuels");
+  line("• Année scolaire : choisir le mois de début et de fin");
+  line("• Préfixe matricule : changer le préfixe (par défaut: MEI)");
+  line("• Sauvegarde : exporter/importer les données en fichier JSON");
+
+  sep();
+  checkPage(50);
+
+  // ===== SECTION 4 : REÇUS =====
+  title("4. LES REÇUS");
+  y += 4;
+
+  line("Chaque reçu peut être partagé de 4 façons :");
+  y += 2;
+  line("• PDF — télécharge un fichier PDF du reçu");
+  line("• Image — télécharge une image PNG du reçu");
+  line("• WhatsApp — partage le reçu directement via WhatsApp");
+  line("• Imprimer — envoie le reçu vers une imprimante Bluetooth");
+  y += 3;
+
+  subtitle("Impression Bluetooth");
+  line("L'application utilise l'app RawBT pour imprimer sur une imprimante");
+  line("thermique Bluetooth (58mm). Pour configurer :");
+  line("1. Installer l'app « RawBT » depuis Google Play Store", 5);
+  line("2. Connecter l'imprimante Bluetooth dans les paramètres Android", 5);
+  line("3. Ouvrir RawBT et sélectionner l'imprimante", 5);
+  line("4. Dans l'application Médersa, cliquer sur « Imprimer »", 5);
+
+  sep();
+  checkPage(50);
+
+  // ===== SECTION 5 : SAUVEGARDE =====
+  title("5. SAUVEGARDE DES DONNÉES");
+  y += 4;
+
+  pdf.setFont(undefined, "bold");
+  line("TRÈS IMPORTANT : Faites une sauvegarde au moins une fois par semaine !");
+  pdf.setFont(undefined, "normal");
+  y += 3;
+  line("Les données sont stockées dans le navigateur du téléphone. Si le");
+  line("téléphone est perdu, volé ou réinitialisé, les données sont perdues.");
+  y += 3;
+  line("Pour sauvegarder :");
+  line("1. Aller dans Paramètres → Sauvegarde des données", 5);
+  line("2. Cliquer sur « Exporter une sauvegarde »", 5);
+  line("3. Un fichier JSON est téléchargé — gardez-le en lieu sûr", 5);
+  line("   (envoyez-le par email ou WhatsApp à vous-même)", 5);
+  y += 3;
+  line("Pour restaurer une sauvegarde :");
+  line("1. Aller dans Paramètres → Sauvegarde des données", 5);
+  line("2. Cliquer sur « Importer une sauvegarde »", 5);
+  line("3. Sélectionner le fichier JSON sauvegardé", 5);
+
+  sep();
+  checkPage(40);
+
+  // ===== SECTION 6 : CONTACT =====
+  title("6. SUPPORT ET CONTACT");
+  y += 4;
+
+  line("Pour toute question, problème technique ou demande de modification :");
+  y += 3;
+  pdf.setFont(undefined, "bold");
+  line("Midenty");
+  pdf.setFont(undefined, "normal");
+  line("Téléphone / WhatsApp : +227 88 81 10 81");
+  line("Email : mabdoulkarimoun7@gmail.com");
+  y += 6;
+
+  // Footer
+  pdf.setFontSize(9);
+  pdf.setTextColor(150);
+  pdf.text(
+    "© Midenty — Tous droits réservés — Document généré le " + new Date().toLocaleDateString("fr-FR"),
+    W / 2, 280,
+    { align: "center" }
+  );
+
+  pdf.save("GUIDE_CONFIDENTIEL_Medersa_Midenty.pdf");
+}
+  </script>
+</body>
+</html>

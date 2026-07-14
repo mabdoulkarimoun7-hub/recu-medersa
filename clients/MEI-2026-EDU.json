@@ -1,0 +1,23 @@
+{
+  "codeAcces": "MEI-2026-EDU",
+  "nomFr": "Médersa d'Éducation Islamique",
+  "nomAr": "مدرسة التربية الإسلامية",
+  "adresse": "Niamey - Lossogoungou",
+  "telephones": ["+227 91 27 33 07", "+227 96 06 28 28"],
+  "logo": "assets/logo.png",
+  "couleurPrincipale": "#0d7a3d",
+  "couleurSecondaire": "#0b3d91",
+  "couleurAccent": "#c5972c",
+  "classes": [],
+  "fraisInscription": 5000,
+  "fraisMensuels": 5000,
+  "debutAnnee": 10,
+  "finAnnee": 7,
+  "prefixeMatricule": "MEI",
+  "devise": "FCFA",
+  "modesPaiement": ["Espèces", "Mynita", "Amanata"],
+  "messageFinalFr": "Que le Coran soit une lumière pour vous",
+  "messageFinalAr": "ليكن القرآن نوراً لكم",
+  "actif": true,
+  "dateCreation": "2026-07-14"
+}

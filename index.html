@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d7a3d">
+<title>Reçus — Médersa</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app/style.css">
+</head>
+<body>
+
+<!-- ========== SPLASH SCREEN ========== -->
+<div id="splashScreen" class="splash-screen">
+  <img src="assets/logo.png" alt="Logo" class="splash-logo">
+  <div class="splash-name-ar" id="splashNameAr"></div>
+  <div class="splash-name-fr" id="splashNameFr"></div>
+</div>
+
+<!-- ========== LOGIN SCREEN ========== -->
+<div id="loginScreen" class="login-screen hidden">
+  <div class="login-card">
+    <img src="assets/logo.png" alt="Logo" class="login-logo">
+    <h2 class="login-title-ar">رمز الدخول</h2>
+    <h3 class="login-title-fr">Code d'accès</h3>
+    <input type="password" id="loginCode" class="login-input" placeholder="••••••••" autocomplete="off">
+    <button type="button" id="loginBtn" class="primary-btn login-btn">
+      <span class="label-ar">دخول</span>
+      <span class="label-fr">Entrer</span>
+    </button>
+    <div id="loginError" class="login-error hidden">Code incorrect</div>
+    <div class="login-footer">© Midenty</div>
+  </div>
+</div>
+
+<!-- ========== APP PRINCIPALE ========== -->
+<div id="appMain" class="hidden">
+
+<header class="app-header">
+  <img src="assets/logo.png" alt="Logo" class="app-logo" id="appLogo">
+  <div class="app-header-text">
+    <div class="nom-arabe" id="nomArabe"></div>
+    <h1 id="nomFr"></h1>
+    <p id="adresseInfo"></p>
+  </div>
+  <div id="syncIndicator" class="sync-indicator disabled">
+    <span class="sync-dot"></span>
+    <span class="sync-label"></span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="inscription">
+    <span class="tab-icon">📝</span>
+    <span class="tab-label-ar">التسجيل</span>
+    <span class="tab-label-fr">Inscription</span>
+  </button>
+  <button class="tab-btn" data-tab="classes">
+    <span class="tab-icon">📚</span>
+    <span class="tab-label-ar">الأقسام</span>
+    <span class="tab-label-fr">Classes</span>
+  </button>
+  <button class="tab-btn" data-tab="mensuel">
+    <span class="tab-icon">💰</span>
+    <span class="tab-label-ar">الرسوم</span>
+    <span class="tab-label-fr">Mensuel</span>
+  </button>
+  <button class="tab-btn" data-tab="parametres">
+    <span class="tab-icon">⚙️</span>
+    <span class="tab-label-ar">الإعدادات</span>
+    <span class="tab-label-fr">Paramètres</span>
+  </button>
+</nav>
+
+<div id="installBanner" class="install-banner hidden">
+  📲 Installe cette application sur ton écran d'accueil.
+  <button id="installBtn">Installer</button>
+  <button id="dismissInstallBtn" class="link-btn">Plus tard</button>
+</div>
+
+<div id="exportWarning" class="export-warning hidden"></div>
+
+<!-- ========== ONGLET 1 : INSCRIPTION ========== -->
+<main id="tab-inscription" class="tab-content">
+
+  <form id="inscriptionForm">
+    <div class="field">
+      <label class="label-ar">الرقم التسلسلي</label>
+      <label class="label-fr">Matricule</label>
+      <input type="text" id="matriculePreview" readonly class="input-readonly">
+    </div>
+
+    <div class="field">
+      <label class="label-ar">الاسم الكامل</label>
+      <label class="label-fr" for="studentNom">Nom complet</label>
+      <input type="text" id="studentNom" placeholder="الاسم الكامل / Nom complet" required>
+    </div>
+
+    <div class="field">
+      <label class="label-ar">هاتف التلميذ</label>
+      <label class="label-fr" for="studentTel">Téléphone de l'élève</label>
+      <input type="tel" id="studentTel" placeholder="Optionnel">
+    </div>
+
+    <div class="field">
+      <label class="label-ar">هاتف ولي الأمر</label>
+      <label class="label-fr" for="studentTelParent">Téléphone du parent</label>
+      <input type="tel" id="studentTelParent" placeholder="Optionnel">
+    </div>
+
+    <div class="field">
+      <label class="label-ar">القسم</label>
+      <label class="label-fr" for="studentClasse">Classe</label>
+      <select id="studentClasse" required>
+        <option value="">-- Choisir / اختر --</option>
+      </select>
+    </div>
+
+    <div class="actions-row">
+      <button type="button" id="btnInscrire" class="primary-btn">
+        <span class="label-ar">تسجيل</span>
+        <span class="label-fr">Inscrire</span>
+      </button>
+    </div>
+  </form>
+
+  <section id="inscriptionReceiptSection" class="hidden">
+    <h3>
+      <span class="label-ar">إيصال التسجيل</span>
+      <span class="label-fr">Reçu d'inscription</span>
+    </h3>
+    <div id="inscriptionReceiptPreview" class="receipt-preview"></div>
+    <div class="actions-grid">
+      <button class="action-btn btn-share" data-type="pdf">📄 PDF</button>
+      <button class="action-btn btn-share" data-type="png">🖼️ Image</button>
+      <button class="action-btn btn-share" data-type="whatsapp">💬 WhatsApp</button>
+      <button class="action-btn btn-share" data-type="print">🖨️ Imprimer</button>
+    </div>
+  </section>
+
+  <section class="section-divider">
+    <h3>
+      <span class="label-ar">قائمة التلاميذ المسجلين</span>
+      <span class="label-fr">Élèves inscrits</span>
+    </h3>
+    <input type="search" id="searchStudents" placeholder="🔍 Rechercher / بحث...">
+    <button type="button" id="btnExportStudentsPdf" class="secondary-btn">📄 Liste PDF</button>
+  </section>
+  <div id="studentsList" class="list-container"></div>
+
+  <!-- Modale modification élève -->
+  <div id="editStudentModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>
+        <span class="label-ar">تعديل التلميذ</span>
+        <span class="label-fr">Modifier l'élève</span>
+      </h3>
+      <div class="field">
+        <label class="label-fr">Nom</label>
+        <input type="text" id="editStudentNom">
+      </div>
+      <div class="field">
+        <label class="label-fr">Tél. élève</label>
+        <input type="tel" id="editStudentTel">
+      </div>
+      <div class="field">
+        <label class="label-fr">Tél. parent</label>
+        <input type="tel" id="editStudentTelParent">
+      </div>
+      <div class="field">
+        <label class="label-fr">Classe</label>
+        <select id="editStudentClasse"></select>
+      </div>
+      <input type="hidden" id="editStudentId">
+      <div class="actions-row">
+        <button type="button" id="btnSaveEdit" class="primary-btn">Enregistrer</button>
+        <button type="button" id="btnCancelEdit" class="secondary-btn">Annuler</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ========== ONGLET 2 : CLASSES ========== -->
+<main id="tab-classes" class="tab-content hidden">
+  <div class="field">
+    <label class="label-ar">اختر القسم</label>
+    <label class="label-fr" for="classeFilter">Choisir une classe</label>
+    <select id="classeFilter">
+      <option value="">-- Toutes les classes / جميع الأقسام --</option>
+    </select>
+  </div>
+
+  <div id="classeInfo" class="classe-info hidden">
+    <div class="classe-info-header">
+      <h3 id="classeInfoTitle"></h3>
+      <span id="classeInfoCount" class="badge"></span>
+    </div>
+    <button type="button" id="btnExportClassePdf" class="secondary-btn">📄 Exporter PDF</button>
+  </div>
+
+  <div id="classeStudentsList" class="list-container"></div>
+</main>
+
+<!-- ========== ONGLET 3 : FRAIS MENSUELS ========== -->
+<main id="tab-mensuel" class="tab-content hidden">
+
+  <div class="field">
+    <label class="label-ar">الرقم التسلسلي</label>
+    <label class="label-fr" for="mensuelMatricule">Matricule de l'élève</label>
+    <input type="text" id="mensuelMatricule" placeholder="MEI-001" autocomplete="off">
+    <button type="button" id="btnSearchMatricule" class="secondary-btn" style="margin-top:8px">
+      <span class="label-ar">بحث</span>
+      <span class="label-fr">Rechercher</span>
+    </button>
+  </div>
+
+  <div id="mensuelStudentInfo" class="student-info-card hidden">
+    <div class="student-info-row">
+      <span class="label-fr">Nom :</span>
+      <strong id="mensuelNom"></strong>
+    </div>
+    <div class="student-info-row">
+      <span class="label-fr">Classe :</span>
+      <span id="mensuelClasse"></span>
+    </div>
+    <div class="student-info-row">
+      <span class="label-fr">Tél. parent :</span>
+      <span id="mensuelTelParent"></span>
+    </div>
+  </div>
+
+  <div id="mensuelMonthsSection" class="hidden">
+    <h3>
+      <span class="label-ar">اختر الشهر</span>
+      <span class="label-fr">Sélectionner le(s) mois à payer</span>
+    </h3>
+    <div id="monthsGrid" class="months-grid"></div>
+
+    <div class="field" style="margin-top:12px">
+      <label class="label-ar">طريقة الدفع</label>
+      <label class="label-fr" for="mensuelPaiement">Mode de paiement</label>
+      <select id="mensuelPaiement"></select>
+    </div>
+
+    <div class="total-general">
+      <span>Total</span>
+      <strong id="mensuelTotal">0 FCFA</strong>
+    </div>
+
+    <div class="actions-row">
+      <button type="button" id="btnPayerMensuel" class="primary-btn">
+        <span class="label-ar">إنشاء الإيصال</span>
+        <span class="label-fr">Générer le reçu</span>
+      </button>
+    </div>
+  </div>
+
+  <section id="mensuelReceiptSection" class="hidden">
+    <h3>
+      <span class="label-ar">إيصال الرسوم</span>
+      <span class="label-fr">Reçu des frais</span>
+    </h3>
+    <div id="mensuelReceiptPreview" class="receipt-preview"></div>
+    <div class="actions-grid">
+      <button class="action-btn btn-share-mensuel" data-type="pdf">📄 PDF</button>
+      <button class="action-btn btn-share-mensuel" data-type="png">🖼️ Image</button>
+      <button class="action-btn btn-share-mensuel" data-type="whatsapp">💬 WhatsApp</button>
+      <button class="action-btn btn-share-mensuel" data-type="print">🖨️ Imprimer</button>
+    </div>
+  </section>
+
+  <section class="section-divider">
+    <h3>
+      <span class="label-ar">استشارة</span>
+      <span class="label-fr">Consultation des paiements</span>
+    </h3>
+    <div class="field">
+      <select id="consultMonth">
+        <option value="">-- Choisir un mois --</option>
+      </select>
+    </div>
+    <div id="consultResults" class="list-container"></div>
+  </section>
+</main>
+
+<!-- ========== ONGLET 4 : PARAMÈTRES ========== -->
+<main id="tab-parametres" class="tab-content hidden">
+
+  <!-- Infos école en lecture seule (le client ne peut pas modifier) -->
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">معلومات المدرسة</span>
+      <span class="label-fr">Informations de l'école</span>
+    </h3>
+    <div class="school-info-readonly">
+      <p><strong id="readonlyNomFr"></strong></p>
+      <p class="ar-text" id="readonlyNomAr"></p>
+      <p id="readonlyAdresse"></p>
+      <p id="readonlyTelephones"></p>
+    </div>
+  </section>
+
+  <!-- Panneau développeur caché (visible uniquement après code admin) -->
+  <section class="settings-block hidden" id="devPanel">
+    <h3>
+      <span class="label-ar">إعدادات المطور</span>
+      <span class="label-fr">Configuration développeur</span>
+    </h3>
+    <div class="field">
+      <label class="label-fr">Nom (français)</label>
+      <input type="text" id="setNomFr">
+    </div>
+    <div class="field">
+      <label class="label-ar">الاسم بالعربية</label>
+      <label class="label-fr">Nom (arabe)</label>
+      <input type="text" id="setNomAr" dir="rtl">
+    </div>
+    <div class="field">
+      <label class="label-fr">Adresse</label>
+      <input type="text" id="setAdresse">
+    </div>
+    <div class="field">
+      <label class="label-fr">Téléphone(s)</label>
+      <input type="text" id="setTelephones" placeholder="Séparés par des virgules">
+    </div>
+    <div class="field">
+      <label class="label-fr">Logo de l'école</label>
+      <input type="file" id="setLogo" accept="image/*">
+    </div>
+    <div class="field">
+      <label class="label-fr">Couleur principale</label>
+      <input type="color" id="setColorPrimary" value="#0d7a3d">
+    </div>
+    <div class="field">
+      <label class="label-fr">Couleur secondaire</label>
+      <input type="color" id="setColorSecondary" value="#0b3d91">
+    </div>
+    <div class="field">
+      <label class="label-fr">Couleur accent</label>
+      <input type="color" id="setColorAccent" value="#c5972c">
+    </div>
+    <div class="field">
+      <label class="label-fr">Code d'accès client</label>
+      <input type="text" id="setCodeAcces">
+    </div>
+    <button type="button" id="btnSaveSchoolInfo" class="primary-btn">
+      <span class="label-ar">حفظ</span>
+      <span class="label-fr">Enregistrer (dev)</span>
+    </button>
+  </section>
+
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">الأقسام</span>
+      <span class="label-fr">Gestion des classes</span>
+    </h3>
+    <div id="classesList" class="classes-list"></div>
+    <div class="field" style="margin-top:8px">
+      <input type="text" id="newClasseName" placeholder="Nom de la classe / اسم القسم">
+    </div>
+    <button type="button" id="btnAddClasse" class="secondary-btn">+ Ajouter une classe</button>
+  </section>
+
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">الرسوم</span>
+      <span class="label-fr">Montants des frais</span>
+    </h3>
+    <div class="field">
+      <label class="label-fr">Frais d'inscription (FCFA)</label>
+      <input type="number" id="setFraisInscription" min="0">
+    </div>
+    <div class="field">
+      <label class="label-fr">Frais mensuels (FCFA)</label>
+      <input type="number" id="setFraisMensuels" min="0">
+    </div>
+    <button type="button" id="btnSaveFrais" class="primary-btn">
+      <span class="label-ar">حفظ</span>
+      <span class="label-fr">Enregistrer</span>
+    </button>
+  </section>
+
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">السنة الدراسية</span>
+      <span class="label-fr">Année scolaire</span>
+    </h3>
+    <div class="field">
+      <label class="label-fr">Mois de début</label>
+      <select id="setDebutAnnee"></select>
+    </div>
+    <div class="field">
+      <label class="label-fr">Mois de fin</label>
+      <select id="setFinAnnee"></select>
+    </div>
+    <div class="field">
+      <label class="label-fr">Préfixe matricule</label>
+      <input type="text" id="setPrefixeMatricule" maxlength="6">
+    </div>
+    <button type="button" id="btnSaveAnnee" class="primary-btn">
+      <span class="label-ar">حفظ</span>
+      <span class="label-fr">Enregistrer</span>
+    </button>
+  </section>
+
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">النسخ الاحتياطي</span>
+      <span class="label-fr">Sauvegarde des données</span>
+    </h3>
+    <p class="hint">Exporte une sauvegarde régulièrement.</p>
+    <button id="btnExportBackup" class="primary-btn">⬇️ Exporter une sauvegarde</button>
+    <button id="btnExportCsv" class="secondary-btn" style="margin-top:8px">📊 Exporter en Excel/CSV</button>
+    <label for="importFile" class="secondary-btn file-label" style="margin-top:8px">⬆️ Importer une sauvegarde</label>
+    <input type="file" id="importFile" accept="application/json" class="hidden">
+    <p id="lastExportInfo" class="hint"></p>
+  </section>
+
+  <section class="settings-block">
+    <h3>
+      <span class="label-ar">حول التطبيق</span>
+      <span class="label-fr">À propos</span>
+    </h3>
+    <p class="hint" id="aboutText" style="line-height:1.6">
+      Cette application a été développée par <strong>Midenty</strong>.<br>
+      Pour toute assistance technique ou information,<br>
+      veuillez nous contacter au <strong>+227 88 81 10 81</strong>.<br><br>
+      © Midenty — Tous droits réservés
+    </p>
+  </section>
+</main>
+
+</div><!-- /appMain -->
+
+<div id="toast" class="toast"></div>
+
+<!-- Librairies tierces (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@point-of-sale/receipt-printer-encoder@3/dist/receipt-printer-encoder.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
+<!-- Firebase SDK (v9 compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<!-- Code de l'application -->
+<script src="app/config.js"></script>
+<script src="app/firebase-config.js"></script>
+<script src="app/storage.js"></script>
+<script src="app/pdf-export.js"></script>
+<script src="app/print-escpos.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>

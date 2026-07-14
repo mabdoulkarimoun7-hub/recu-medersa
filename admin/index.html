@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Midenty</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="adminLogin" class="admin-login">
+    <div class="admin-login-card">
+      <h2>Midenty Admin</h2>
+      <p>Panneau de gestion des clients</p>
+      <input type="email" id="adminEmail" placeholder="Email" autocomplete="email">
+      <input type="password" id="adminPassword" placeholder="Mot de passe" autocomplete="current-password">
+      <div class="error" id="adminError"></div>
+      <button class="btn btn-primary" id="adminLoginBtn" style="width:100%">Connexion</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="adminMain" class="hidden">
+    <header class="admin-header">
+      <div>
+        <h1>Midenty — Panneau Admin</h1>
+        <span class="brand">Gestion des clients</span>
+      </div>
+      <button class="btn btn-outline" id="btnLogout" style="color:#fff;border-color:rgba(255,255,255,0.3)">Déconnexion</button>
+    </header>
+
+    <div class="admin-container">
+      <!-- LIST VIEW -->
+      <div id="listView">
+        <div class="admin-toolbar">
+          <h2>Clients</h2>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline" id="btnExportAll">Exporter tout (ZIP)</button>
+            <button class="btn btn-primary" id="btnNewClient">+ Nouveau client</button>
+          </div>
+        </div>
+
+        <div id="clientsListContainer">
+          <div class="empty-state">
+            <p>Aucun client configuré. Importez un fichier JSON ou créez un nouveau client.</p>
+            <button class="btn btn-primary" id="btnNewClientEmpty">+ Créer le premier client</button>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;text-align:center">
+          <label class="btn btn-outline" style="cursor:pointer">
+            Importer des clients (JSON)
+            <input type="file" id="importClients" accept=".json" multiple style="display:none">
+          </label>
+        </div>
+      </div>
+
+      <!-- FORM VIEW -->
+      <div id="formView" class="hidden">
+        <div class="admin-toolbar">
+          <h2 id="formTitle">Nouveau client</h2>
+          <button class="btn btn-outline" id="btnBackToList">← Retour à la liste</button>
+        </div>
+
+        <form class="admin-form" id="clientForm" autocomplete="off">
+          <!-- Identité -->
+          <div class="form-section">
+            <h3>Identité de l'école</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom (Français) *</label>
+                <input type="text" id="cfgNomFr" required placeholder="Médersa Al-Nour">
+              </div>
+              <div class="form-group">
+                <label>Nom (Arabe) *</label>
+                <input type="text" id="cfgNomAr" dir="rtl" required placeholder="مدرسة النور">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Adresse</label>
+                <input type="text" id="cfgAdresse" placeholder="Niamey - Quartier...">
+              </div>
+              <div class="form-group">
+                <label>Téléphones (séparés par des virgules)</label>
+                <input type="text" id="cfgTelephones" placeholder="+227 90 00 00 00, +227 91 00 00 00">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Logo (image)</label>
+                <input type="file" id="cfgLogoFile" accept="image/*">
+                <img id="cfgLogoPreview" class="logo-preview hidden" alt="Aperçu logo">
+              </div>
+            </div>
+          </div>
+
+          <!-- Couleurs -->
+          <div class="form-section">
+            <h3>Couleurs du thème</h3>
+            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
+              <div class="form-group">
+                <label>Couleur principale</label>
+                <input type="color" id="cfgCouleurPrincipale" value="#0d7a3d">
+              </div>
+              <div class="form-group">
+                <label>Couleur secondaire</label>
+                <input type="color" id="cfgCouleurSecondaire" value="#0b3d91">
+              </div>
+              <div class="form-group">
+                <label>Couleur accent</label>
+                <input type="color" id="cfgCouleurAccent" value="#c5972c">
+              </div>
+            </div>
+          </div>
+
+          <!-- Code d'accès -->
+          <div class="form-section">
+            <h3>Accès</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Code d'accès *</label>
+                <input type="text" id="cfgCodeAcces" required placeholder="Ex: ALQ-2026-NIA">
+              </div>
+              <div class="form-group">
+                <label>Statut</label>
+                <select id="cfgActif">
+                  <option value="true">Actif</option>
+                  <option value="false">Désactivé</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row single">
+              <button type="button" class="btn btn-outline btn-sm" id="btnGenerateCode">Générer un code automatique</button>
+            </div>
+          </div>
+
+          <!-- Scolarité -->
+          <div class="form-section">
+            <h3>Scolarité</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Frais d'inscription (FCFA)</label>
+                <input type="number" id="cfgFraisInscription" value="5000" min="0">
+              </div>
+              <div class="form-group">
+                <label>Frais mensuels (FCFA)</label>
+                <input type="number" id="cfgFraisMensuels" value="5000" min="0">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Début année scolaire</label>
+                <select id="cfgDebutAnnee">
+                  <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
+                  <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
+                  <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
+                  <option value="10" selected>Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fin année scolaire</label>
+                <select id="cfgFinAnnee">
+                  <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
+                  <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
+                  <option value="7" selected>Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
+                  <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Préfixe matricule</label>
+                <input type="text" id="cfgPrefixeMatricule" value="MEI" maxlength="5">
+              </div>
+              <div class="form-group">
+                <label>Devise</label>
+                <input type="text" id="cfgDevise" value="FCFA">
+              </div>
+            </div>
+          </div>
+
+          <!-- Classes -->
+          <div class="form-section">
+            <h3>Classes</h3>
+            <div class="classes-tags" id="cfgClassesTags"></div>
+            <div class="add-class-row">
+              <input type="text" id="cfgNewClasse" placeholder="Nom de la classe">
+              <button type="button" class="btn btn-sm btn-secondary" id="btnAddClasse">Ajouter</button>
+            </div>
+          </div>
+
+          <!-- Modes de paiement -->
+          <div class="form-section">
+            <h3>Modes de paiement</h3>
+            <div class="classes-tags" id="cfgModesTags"></div>
+            <div class="add-class-row">
+              <input type="text" id="cfgNewMode" placeholder="Mode de paiement">
+              <button type="button" class="btn btn-sm btn-secondary" id="btnAddMode">Ajouter</button>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="form-section">
+            <h3>Messages sur les reçus</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Message final (Français)</label>
+                <input type="text" id="cfgMessageFinalFr" value="Que le Coran soit une lumière pour vous">
+              </div>
+              <div class="form-group">
+                <label>Message final (Arabe)</label>
+                <input type="text" id="cfgMessageFinalAr" dir="rtl" value="ليكن القرآن نوراً لكم">
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" id="btnCancelForm">Annuler</button>
+            <button type="button" class="btn btn-success" id="btnDownloadJson">Télécharger JSON</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveClient">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+  <script src="admin.js"></script>
+</body>
+</html>

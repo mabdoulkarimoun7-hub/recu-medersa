@@ -23,9 +23,35 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ==================== Splash & Login ==================== */
 
 function showSplash() {
-  const s = CONFIG.getSettings();
-  document.getElementById("splashNameAr").textContent = s.nomAr;
-  document.getElementById("splashNameFr").textContent = s.nomFr;
+  const urlCode = new URLSearchParams(window.location.search).get("c");
+
+  const applySplashBranding = (cfg) => {
+    if (cfg.nomAr) document.getElementById("splashNameAr").textContent = cfg.nomAr;
+    if (cfg.nomFr) document.getElementById("splashNameFr").textContent = cfg.nomFr;
+    if (cfg.logo && cfg.logo !== "assets/logo.png") {
+      document.getElementById("splashLogo").src = cfg.logo;
+      document.getElementById("loginLogo").src = cfg.logo;
+    }
+    if (cfg.couleurPrincipale) document.documentElement.style.setProperty("--primary", cfg.couleurPrincipale);
+    if (cfg.couleurSecondaire) document.documentElement.style.setProperty("--secondary", cfg.couleurSecondaire);
+    if (cfg.couleurAccent) document.documentElement.style.setProperty("--accent", cfg.couleurAccent);
+  };
+
+  if (urlCode) {
+    fetch("clients/" + encodeURIComponent(urlCode) + ".json")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(cfg => {
+        applySplashBranding(cfg);
+        window._urlClientCode = urlCode;
+      })
+      .catch(() => {
+        const s = CONFIG.getSettings();
+        applySplashBranding(s);
+      });
+  } else {
+    const s = CONFIG.getSettings();
+    applySplashBranding(s);
+  }
 
   setTimeout(() => {
     document.getElementById("splashScreen").classList.add("fade-out");
@@ -45,6 +71,11 @@ function setupLogin() {
   const btn = document.getElementById("loginBtn");
   const input = document.getElementById("loginCode");
   const error = document.getElementById("loginError");
+
+  if (window._urlClientCode) {
+    input.value = window._urlClientCode;
+    input.type = "text";
+  }
 
   const tryLogin = async () => {
     const code = input.value.trim();

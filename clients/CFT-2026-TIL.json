@@ -1,0 +1,39 @@
+{
+  "code": "CFT-2026-TIL",
+  "actif": true,
+  "ecole": {
+    "nom_fr": "Centre CFT Tilawa",
+    "nom_ar": "مركز التلاوة",
+    "adresse": "Niamey, Niger",
+    "telephones": ["+227 90 00 00 00"],
+    "logo": ""
+  },
+  "couleurs": {
+    "principale": "#1a6b3c",
+    "secondaire": "#0b3d91",
+    "accent": "#c5972c"
+  },
+  "scolarite": {
+    "frais_inscription": 5000,
+    "frais_mensuel": 5000,
+    "devise": "FCFA",
+    "debut_annee": 10,
+    "fin_annee": 7,
+    "prefixe_matricule": "CFT"
+  },
+  "classes": [
+    "Niveau 1",
+    "Niveau 2",
+    "Niveau 3",
+    "Niveau 4",
+    "Niveau 5"
+  ],
+  "modes_paiement": [
+    "Espèces",
+    "Mobile Money"
+  ],
+  "messages": {
+    "final_fr": "Que le Coran soit une lumière pour vous",
+    "final_ar": "ليكن القرآن نوراً لكم"
+  }
+}

@@ -54,6 +54,17 @@
             <input type="file" id="importClients" accept=".json" multiple style="display:none">
           </label>
         </div>
+
+        <!-- CONFIG GITHUB -->
+        <div style="margin-top:30px;padding:20px;background:#f8f9fa;border-radius:12px;border:1px solid #e0e0e0">
+          <h3 style="margin:0 0 10px">Déploiement automatique</h3>
+          <p style="font-size:13px;color:#666;margin:0 0 10px">Entrez votre token GitHub pour déployer les clients automatiquement quand vous cliquez "Enregistrer".</p>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="password" id="githubTokenInput" placeholder="ghp_xxxxx..." style="flex:1;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px">
+            <button class="btn btn-primary btn-sm" id="btnSaveToken">Enregistrer</button>
+          </div>
+          <div id="githubTokenStatus" style="font-size:12px;margin-top:8px;color:#666"></div>
+        </div>
       </div>
 
       <!-- FORM VIEW -->

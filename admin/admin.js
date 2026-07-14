@@ -33,6 +33,12 @@ function initAdminFirebase() {
   }
 }
 
+const GITHUB_OWNER = "mabdoulkarimoun7-hub";
+const GITHUB_REPO = "recu-medersa";
+const GITHUB_BRANCH = "master";
+const GITHUB_TOKEN_KEY = "midenty_github_token";
+const APP_URL = "https://midenty-medersa.netlify.app";
+
 const STORAGE_KEY = "midenty_admin_clients";
 
 let clients = [];
@@ -139,6 +145,27 @@ function setupListView() {
   document.getElementById("btnNewClientEmpty").addEventListener("click", () => openForm(null));
   document.getElementById("btnExportAll").addEventListener("click", exportAllClients);
   document.getElementById("importClients").addEventListener("change", handleImportClients);
+
+  const tokenInput = document.getElementById("githubTokenInput");
+  const tokenStatus = document.getElementById("githubTokenStatus");
+  const saved = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (saved) {
+    tokenInput.value = saved;
+    tokenStatus.textContent = "Token configuré — déploiement automatique actif.";
+    tokenStatus.style.color = "#1a6b3c";
+  }
+  document.getElementById("btnSaveToken").addEventListener("click", () => {
+    const val = tokenInput.value.trim();
+    if (!val) {
+      localStorage.removeItem(GITHUB_TOKEN_KEY);
+      tokenStatus.textContent = "Token supprimé.";
+      tokenStatus.style.color = "#888";
+    } else {
+      localStorage.setItem(GITHUB_TOKEN_KEY, val);
+      tokenStatus.textContent = "Token enregistré — déploiement automatique actif.";
+      tokenStatus.style.color = "#1a6b3c";
+    }
+  });
 }
 
 function setupFormView() {
@@ -192,6 +219,7 @@ function renderClientsList() {
     const badge = c.actif !== false
       ? '<span class="badge-active">Actif</span>'
       : '<span class="badge-inactive">Désactivé</span>';
+    const clientLink = APP_URL + "?c=" + encodeURIComponent(c.codeAcces);
     html += `<tr>
       <td><strong>${esc(c.nomFr)}</strong><br><span style="font-size:12px;color:#888">${esc(c.nomAr || "")}</span></td>
       <td><code>${esc(c.codeAcces)}</code></td>
@@ -199,8 +227,9 @@ function renderClientsList() {
       <td>${c.dateCreation || "-"}</td>
       <td>
         <button class="btn btn-sm btn-outline" data-edit="${esc(c.codeAcces)}">Modifier</button>
-        <button class="btn btn-sm btn-danger" data-delete="${esc(c.codeAcces)}">Suppr.</button>
         <button class="btn btn-sm btn-secondary" data-download="${esc(c.codeAcces)}">JSON</button>
+        <button class="btn btn-sm btn-primary" data-copylink="${esc(clientLink)}" title="Copier le lien">Lien</button>
+        <button class="btn btn-sm btn-danger" data-delete="${esc(c.codeAcces)}">Suppr.</button>
       </td>
     </tr>`;
   });
@@ -216,6 +245,12 @@ function renderClientsList() {
   });
   container.querySelectorAll("[data-download]").forEach(btn => {
     btn.addEventListener("click", () => downloadClient(btn.dataset.download));
+  });
+  container.querySelectorAll("[data-copylink]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(btn.dataset.copylink);
+      toast("Lien copié ! Envoyez-le au client par WhatsApp.");
+    });
   });
 }
 
@@ -304,7 +339,70 @@ function buildClientObj() {
   };
 }
 
-function handleSaveClient(e) {
+async function pushToGitHub(clientObj) {
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (!token) {
+    toast("Token GitHub non configuré. Allez dans les paramètres.");
+    return false;
+  }
+
+  const path = "clients/" + clientObj.codeAcces + ".json";
+  const content = JSON.stringify(clientObj, null, 2);
+  const contentBase64 = btoa(unescape(encodeURIComponent(content)));
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+  const headers = {
+    "Authorization": "token " + token,
+    "Accept": "application/vnd.github.v3+json",
+    "Content-Type": "application/json"
+  };
+
+  try {
+    let sha = null;
+    const getResp = await fetch(apiUrl + "?ref=" + GITHUB_BRANCH, { headers });
+    if (getResp.ok) {
+      const existing = await getResp.json();
+      sha = existing.sha;
+    }
+
+    const body = {
+      message: (sha ? "Mise à jour" : "Ajout") + " client " + clientObj.nomFr,
+      content: contentBase64,
+      branch: GITHUB_BRANCH
+    };
+    if (sha) body.sha = sha;
+
+    const putResp = await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify(body) });
+    if (!putResp.ok) {
+      const err = await putResp.json();
+      throw new Error(err.message || "Erreur GitHub");
+    }
+
+    return true;
+  } catch (err) {
+    console.error("Erreur push GitHub:", err);
+    toast("Erreur déploiement : " + err.message);
+    return false;
+  }
+}
+
+function showClientLink(code) {
+  const link = APP_URL + "?c=" + encodeURIComponent(code);
+  const linkDiv = document.getElementById("clientLinkDiv");
+  if (linkDiv) linkDiv.remove();
+
+  const div = document.createElement("div");
+  div.id = "clientLinkDiv";
+  div.style.cssText = "position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a6b3c;color:#fff;padding:15px 20px;border-radius:12px;z-index:9999;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);max-width:90%";
+  div.innerHTML = `
+    <div style="font-size:14px;margin-bottom:8px">Lien du client :</div>
+    <div style="font-size:12px;word-break:break-all;background:rgba(255,255,255,0.2);padding:8px;border-radius:6px;margin-bottom:10px">${link}</div>
+    <button onclick="navigator.clipboard.writeText('${link}');this.textContent='Copié !'" style="background:#fff;color:#1a6b3c;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:bold">Copier le lien</button>
+    <button onclick="this.parentElement.remove()" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.5);padding:8px 15px;border-radius:6px;cursor:pointer;margin-left:8px">Fermer</button>
+  `;
+  document.body.appendChild(div);
+}
+
+async function handleSaveClient(e) {
   e.preventDefault();
   const obj = buildClientObj();
 
@@ -324,6 +422,17 @@ function handleSaveClient(e) {
 
   saveClients();
   toast("Client enregistré : " + obj.nomFr);
+
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (token) {
+    toast("Déploiement en cours...");
+    const ok = await pushToGitHub(obj);
+    if (ok) {
+      toast("Déployé ! Le lien sera actif dans ~1 minute.");
+      showClientLink(obj.codeAcces);
+    }
+  }
+
   showList();
 }
 

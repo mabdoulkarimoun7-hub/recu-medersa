@@ -1,4 +1,4 @@
-const CACHE_NAME = "recu-medersa-v9";
+const CACHE_NAME = "recu-medersa-v10";
 const APP_SHELL = [
   "./",
   "./index.html",

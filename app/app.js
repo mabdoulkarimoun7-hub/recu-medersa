@@ -148,6 +148,11 @@ function showVerificationScreen() {
           Vérifier maintenant
         </button>
         <div id="verifyError" class="login-error hidden" style="margin-top:12px"></div>
+        <a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20j'ai%20besoin%20d'aide%20avec%20mon%20application."
+           target="_blank"
+           style="display:inline-block;margin-top:16px;color:#25d366;font-size:13px;text-decoration:none">
+          💬 Besoin d'aide ? Contactez Midenty
+        </a>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -181,8 +186,12 @@ function showVerificationScreen() {
       if (!cfg.actif) {
         msgDiv.innerHTML =
           "Ce compte a été <strong>désactivé</strong>.<br>" +
-          "Contactez Midenty au <strong>+227 88 81 10 81</strong>.";
-        btn.style.display = "none";
+          "Contactez Midenty pour le réactiver.";
+        btn.outerHTML =
+          '<a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20mon%20compte%20a%20%C3%A9t%C3%A9%20d%C3%A9sactiv%C3%A9.%20Code%20%3A%20' + encodeURIComponent(code) + '" ' +
+          'target="_blank" class="primary-btn login-btn" ' +
+          'style="width:100%;display:block;text-align:center;text-decoration:none;background:#25d366">' +
+          '💬 Contacter Midenty sur WhatsApp</a>';
         errDiv.classList.add("hidden");
         return;
       }

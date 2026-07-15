@@ -212,6 +212,61 @@
             </div>
           </div>
 
+          <!-- Notifications SMS -->
+          <div class="form-section">
+            <h3>Notifications SMS</h3>
+            <p style="font-size:13px;color:#666;margin:0 0 12px">Envoi automatique de SMS aux parents après inscription et paiement mensuel.</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label>SMS activés</label>
+                <select id="cfgSmsEnabled">
+                  <option value="false">Désactivé</option>
+                  <option value="true">Activé</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fournisseur SMS</label>
+                <select id="cfgSmsProvider">
+                  <option value="africastalking">Africa's Talking</option>
+                  <option value="twilio">Twilio</option>
+                  <option value="generic">Générique (URL personnalisée)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Clé API</label>
+                <input type="password" id="cfgSmsApiKey" placeholder="Clé API du fournisseur">
+              </div>
+              <div class="form-group">
+                <label>Secret API (Twilio uniquement)</label>
+                <input type="password" id="cfgSmsApiSecret" placeholder="Secret ou Auth Token">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Sender ID / Username</label>
+                <input type="text" id="cfgSmsSenderId" placeholder="MEDERSA" value="MEDERSA">
+              </div>
+              <div class="form-group">
+                <label>URL API (fournisseur générique)</label>
+                <input type="url" id="cfgSmsApiUrl" placeholder="https://api.exemple.com/sms">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Langue des SMS</label>
+                <select id="cfgSmsLanguage">
+                  <option value="fr">Français</option>
+                  <option value="ar">Arabe</option>
+                </select>
+              </div>
+              <div class="form-group" style="justify-content:flex-end">
+                <button type="button" class="btn btn-sm btn-outline" id="btnSmsTest">Envoyer SMS test</button>
+              </div>
+            </div>
+          </div>
+
           <!-- Messages -->
           <div class="form-section">
             <h3>Messages sur les reçus</h3>

@@ -22,10 +22,13 @@ function showSplash() {
     const s = CONFIG.getSettings();
     if (s.nomAr) document.getElementById("splashNameAr").textContent = s.nomAr;
     if (s.nomFr) document.getElementById("splashNameFr").textContent = s.nomFr;
-    if (s.logo && s.logo !== "assets/logo.png") {
-      document.getElementById("splashLogo").src = s.logo;
-      document.getElementById("loginLogo").src = s.logo;
-    }
+    var logoSrc = (s.logo && s.logo !== "assets/logo.png") ? s.logo : "assets/logo.png";
+    var sLogo = document.getElementById("splashLogo");
+    var lLogo = document.getElementById("loginLogo");
+    sLogo.onload = function(){ sLogo.style.opacity = "1"; };
+    lLogo.onload = function(){ lLogo.style.opacity = "1"; };
+    sLogo.src = logoSrc;
+    lLogo.src = logoSrc;
     if (s.couleurPrincipale) document.documentElement.style.setProperty("--primary", s.couleurPrincipale);
     if (s.couleurSecondaire) document.documentElement.style.setProperty("--secondary", s.couleurSecondaire);
     if (s.couleurAccent) document.documentElement.style.setProperty("--accent", s.couleurAccent);
@@ -302,9 +305,10 @@ function applyBranding() {
   document.getElementById("nomFr").textContent = s.nomFr;
   document.getElementById("adresseInfo").textContent = s.adresse + " · " + s.telephones.join(" / ");
 
-  if (s.logo && s.logo !== "assets/logo.png") {
-    document.getElementById("appLogo").src = s.logo;
-  }
+  var appLogoEl = document.getElementById("appLogo");
+  var appLogoSrc = (s.logo && s.logo !== "assets/logo.png") ? s.logo : "assets/logo.png";
+  appLogoEl.onload = function(){ appLogoEl.style.opacity = "1"; };
+  appLogoEl.src = appLogoSrc;
 
   document.documentElement.style.setProperty("--primary", s.couleurPrincipale || "#0d7a3d");
   document.documentElement.style.setProperty("--secondary", s.couleurSecondaire || "#0b3d91");

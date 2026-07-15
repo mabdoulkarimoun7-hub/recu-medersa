@@ -17,7 +17,7 @@
 
 <!-- ========== SPLASH SCREEN ========== -->
 <div id="splashScreen" class="splash-screen" style="visibility:hidden">
-  <img src="assets/logo.png" alt="Logo" class="splash-logo" id="splashLogo">
+  <img alt="Logo" class="splash-logo" id="splashLogo" style="opacity:0;transition:opacity 0.3s">
   <div class="splash-name-ar" id="splashNameAr"></div>
   <div class="splash-name-fr" id="splashNameFr"></div>
 </div>
@@ -26,15 +26,34 @@
 (function(){
   var p = new URLSearchParams(window.location.search).get("c");
   var sp = document.getElementById("splashScreen");
-  if (!p) { sp.style.visibility = "visible"; return; }
+  if (!p) {
+    var sl = document.getElementById("splashLogo");
+    sl.src = "assets/logo.png";
+    sl.style.opacity = "1";
+    var ll = document.getElementById("loginLogo");
+    ll.src = "assets/logo.png";
+    ll.style.opacity = "1";
+    sp.style.visibility = "visible";
+    return;
+  }
   window._urlClientCode = p;
+  var oldCode = localStorage.getItem("medersa_client_code");
+  if (oldCode && oldCode !== p) {
+    localStorage.removeItem("medersa_settings");
+    localStorage.removeItem("medersa_client_config");
+    localStorage.removeItem("medersa_client_code");
+    sessionStorage.removeItem("medersa_logged_in");
+  }
   fetch("clients/" + encodeURIComponent(p) + ".json")
     .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
     .then(function(cfg){
-      if (cfg.logo && cfg.logo !== "assets/logo.png") {
-        document.getElementById("splashLogo").src = cfg.logo;
-        document.getElementById("loginLogo").src = cfg.logo;
-      }
+      var sLogo = document.getElementById("splashLogo");
+      var lLogo = document.getElementById("loginLogo");
+      var logoSrc = (cfg.logo && cfg.logo !== "assets/logo.png") ? cfg.logo : "assets/logo.png";
+      sLogo.onload = function(){ sLogo.style.opacity = "1"; };
+      lLogo.onload = function(){ lLogo.style.opacity = "1"; };
+      sLogo.src = logoSrc;
+      lLogo.src = logoSrc;
       if (cfg.nomAr) document.getElementById("splashNameAr").textContent = cfg.nomAr;
       if (cfg.nomFr) document.getElementById("splashNameFr").textContent = cfg.nomFr;
       if (cfg.couleurPrincipale) document.documentElement.style.setProperty("--primary", cfg.couleurPrincipale);
@@ -69,7 +88,7 @@
 <!-- ========== LOGIN SCREEN ========== -->
 <div id="loginScreen" class="login-screen hidden">
   <div class="login-card">
-    <img src="assets/logo.png" alt="Logo" class="login-logo" id="loginLogo">
+    <img alt="Logo" class="login-logo" id="loginLogo" style="opacity:0;transition:opacity 0.3s">
     <h2 class="login-title" data-i18n="login_title"></h2>
     <input type="password" id="loginCode" class="login-input" data-i18n-placeholder="login_placeholder" autocomplete="off">
     <button type="button" id="loginBtn" class="primary-btn login-btn" data-i18n="btn_login"></button>
@@ -95,7 +114,7 @@
 <div id="appMain" class="hidden">
 
 <header class="app-header">
-  <img src="assets/logo.png" alt="Logo" class="app-logo" id="appLogo">
+  <img alt="Logo" class="app-logo" id="appLogo" style="opacity:0;transition:opacity 0.3s">
   <div class="app-header-text">
     <div class="nom-arabe" id="nomArabe"></div>
     <h1 id="nomFr"></h1>

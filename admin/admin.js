@@ -176,6 +176,7 @@ function setupFormView() {
   document.getElementById("btnAddMode").addEventListener("click", addModeTag);
   document.getElementById("btnDownloadJson").addEventListener("click", downloadCurrentJson);
   document.getElementById("clientForm").addEventListener("submit", handleSaveClient);
+  document.getElementById("btnSmsTest").addEventListener("click", handleSmsTest);
 
   document.getElementById("cfgLogoFile").addEventListener("change", e => {
     const file = e.target.files[0];
@@ -291,11 +292,13 @@ function openForm(code) {
       img.classList.remove("hidden");
     }
     loadI18nOverrides(c.i18nOverrides);
+    loadSmsConfig(c.codeAcces);
   } else {
     document.getElementById("formTitle").textContent = "Nouveau client";
     formClasses = [];
     formModes = ["Espèces", "Mynita", "Amanata"];
     loadI18nOverrides(null);
+    resetSmsFields();
   }
 
   renderClassesTags();
@@ -456,6 +459,7 @@ async function handleSaveClient(e) {
   }
 
   saveClients();
+  await saveSmsConfig(obj.codeAcces);
   toast("Client enregistré : " + obj.nomFr);
 
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);
@@ -602,6 +606,89 @@ function esc(str) {
   const d = document.createElement("div");
   d.textContent = str ?? "";
   return d.innerHTML;
+}
+
+/* ==================== SMS Config ==================== */
+
+function resetSmsFields() {
+  document.getElementById("cfgSmsEnabled").value = "false";
+  document.getElementById("cfgSmsProvider").value = "africastalking";
+  document.getElementById("cfgSmsApiKey").value = "";
+  document.getElementById("cfgSmsApiSecret").value = "";
+  document.getElementById("cfgSmsSenderId").value = "MEDERSA";
+  document.getElementById("cfgSmsApiUrl").value = "";
+  document.getElementById("cfgSmsLanguage").value = "fr";
+}
+
+async function loadSmsConfig(code) {
+  resetSmsFields();
+  if (!firebaseEnabled || !code) return;
+
+  try {
+    const doc = await _adminDb.doc(`schools/${code}/config/sms`).get();
+    if (!doc.exists) return;
+    const cfg = doc.data();
+    document.getElementById("cfgSmsEnabled").value = String(cfg.enabled === true);
+    document.getElementById("cfgSmsProvider").value = cfg.provider || "africastalking";
+    document.getElementById("cfgSmsApiKey").value = cfg.apiKey || "";
+    document.getElementById("cfgSmsApiSecret").value = cfg.apiSecret || "";
+    document.getElementById("cfgSmsSenderId").value = cfg.senderId || "MEDERSA";
+    document.getElementById("cfgSmsApiUrl").value = cfg.apiUrl || "";
+    document.getElementById("cfgSmsLanguage").value = cfg.language || "fr";
+  } catch (err) {
+    console.error("Erreur chargement config SMS:", err);
+  }
+}
+
+function buildSmsConfig() {
+  return {
+    enabled: document.getElementById("cfgSmsEnabled").value === "true",
+    provider: document.getElementById("cfgSmsProvider").value,
+    apiKey: document.getElementById("cfgSmsApiKey").value.trim(),
+    apiSecret: document.getElementById("cfgSmsApiSecret").value.trim(),
+    senderId: document.getElementById("cfgSmsSenderId").value.trim() || "MEDERSA",
+    apiUrl: document.getElementById("cfgSmsApiUrl").value.trim(),
+    language: document.getElementById("cfgSmsLanguage").value
+  };
+}
+
+async function saveSmsConfig(code) {
+  if (!firebaseEnabled || !code) return;
+  const cfg = buildSmsConfig();
+  try {
+    await _adminDb.doc(`schools/${code}/config/sms`).set(cfg);
+  } catch (err) {
+    console.error("Erreur sauvegarde config SMS:", err);
+    toast("Erreur sauvegarde SMS : " + err.message);
+  }
+}
+
+async function handleSmsTest() {
+  const code = document.getElementById("cfgCodeAcces").value.trim().toUpperCase();
+  if (!code) return toast("Remplis le code d'accès d'abord.");
+
+  const phone = prompt("Numéro de téléphone pour le test (ex: +227 90 00 00 00) :");
+  if (!phone || !phone.trim()) return;
+
+  if (!firebaseEnabled) return toast("Firebase non configuré.");
+
+  try {
+    await saveSmsConfig(code);
+    await _adminDb.collection(`schools/${code}/payments`).add({
+      studentId: "TEST",
+      matricule: "TEST-000",
+      type: "inscription",
+      montant: 0,
+      date: new Date().toISOString().slice(0, 10),
+      createdAt: new Date().toISOString(),
+      _smsTest: true,
+      _testPhone: phone.trim()
+    });
+    toast("SMS test envoyé ! Vérifiez le numéro " + phone.trim());
+  } catch (err) {
+    console.error("Erreur SMS test:", err);
+    toast("Erreur : " + err.message);
+  }
 }
 
 let toastTimeout;

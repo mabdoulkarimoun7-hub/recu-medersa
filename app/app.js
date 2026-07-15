@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ==================== Splash & Login ==================== */
 
 function showSplash() {
-  if (!window._brandingApplied) {
+  if (!window._brandingApplied && !window._urlClientCode) {
     const s = CONFIG.getSettings();
     if (s.nomAr) document.getElementById("splashNameAr").textContent = s.nomAr;
     if (s.nomFr) document.getElementById("splashNameFr").textContent = s.nomFr;

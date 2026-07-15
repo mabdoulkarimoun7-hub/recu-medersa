@@ -1,13 +1,8 @@
-/* app.js — logique principale V3 (gestion scolaire bilingue). */
+/* app.js — logique principale V4 (multilingue). */
 
 let currentReceipt = null;
 let currentReceiptEl = null;
 let deferredInstallPrompt = null;
-
-const MONTH_NAMES_FR = ["", "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-const MONTH_NAMES_AR = ["", "يناير", "فبراير", "مارس", "أبريل", "ماي", "يونيو",
-  "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 
 document.addEventListener("DOMContentLoaded", () => {
   showSplash();
@@ -36,6 +31,8 @@ function showSplash() {
     if (s.couleurAccent) document.documentElement.style.setProperty("--accent", s.couleurAccent);
     document.getElementById("splashScreen").style.visibility = "visible";
   }
+
+  applyLanguage();
 
   setTimeout(() => {
     document.getElementById("splashScreen").classList.add("fade-out");
@@ -66,7 +63,7 @@ function setupLogin() {
     if (!code) return;
 
     btn.disabled = true;
-    btn.textContent = "Connexion...";
+    btn.textContent = t("msg_connecting");
     error.classList.add("hidden");
 
     try {
@@ -75,29 +72,47 @@ function setupLogin() {
       markVerified();
       sessionStorage.setItem("medersa_logged_in", "1");
       document.getElementById("loginScreen").classList.add("hidden");
-      showApp();
+
+      if (!I18n.getLang()) {
+        showLanguageSelect();
+      } else {
+        showApp();
+      }
     } catch (err) {
       if (err.message === "inactive") {
         error.innerHTML =
-          'Ce compte est désactivé.<br>' +
+          t("msg_account_disabled") + '<br>' +
           '<a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20mon%20compte%20a%20%C3%A9t%C3%A9%20d%C3%A9sactiv%C3%A9.%20Code%20%3A%20' + encodeURIComponent(code) + '" ' +
           'target="_blank" ' +
           'style="display:inline-block;margin-top:10px;padding:10px 20px;background:#25d366;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold">' +
-          '💬 Contacter Midenty sur WhatsApp</a>';
+          '💬 ' + t("msg_contact_whatsapp") + '</a>';
       } else {
-        error.textContent = "Code incorrect / رمز غير صحيح";
+        error.textContent = t("msg_code_incorrect");
       }
       error.classList.remove("hidden");
       input.value = "";
       input.focus();
     } finally {
       btn.disabled = false;
-      btn.textContent = "Entrer / دخول";
+      btn.textContent = t("btn_login");
     }
   };
 
   btn.addEventListener("click", tryLogin);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
+}
+
+function showLanguageSelect() {
+  const screen = document.getElementById("languageSelectScreen");
+  screen.classList.remove("hidden");
+
+  screen.querySelectorAll(".lang-option").forEach(btn => {
+    btn.addEventListener("click", () => {
+      I18n.setLang(btn.dataset.lang);
+      screen.classList.add("hidden");
+      showApp();
+    });
+  });
 }
 
 const VERIFICATION_KEY = "medersa_last_verified";
@@ -111,6 +126,12 @@ function showApp() {
     return;
   }
 
+  if (!I18n.getLang()) {
+    showLanguageSelect();
+    return;
+  }
+
+  applyLanguage();
   document.getElementById("appMain").classList.remove("hidden");
   applyBranding();
   setupTabs();
@@ -120,6 +141,7 @@ function showApp() {
   setupParametres();
   checkExportWarning();
   initSyncIndicator();
+  setupLanguageSwitcher();
 }
 
 function daysSinceLastVerification() {
@@ -144,19 +166,18 @@ function showVerificationScreen() {
     overlay.innerHTML = `
       <div class="login-card" style="text-align:center">
         <div style="font-size:48px;margin-bottom:16px">🔄</div>
-        <h2 style="margin-bottom:8px">Vérification requise</h2>
+        <h2 style="margin-bottom:8px">${t("verify_title")}</h2>
         <p id="verifyMessage" style="color:#666;margin-bottom:20px;font-size:14px;line-height:1.5">
-          Connectez-vous à internet pour continuer à utiliser l'application.<br>
-          Cette vérification est nécessaire tous les 7 jours.
+          ${t("verify_message").replace("\n", "<br>")}
         </p>
         <button type="button" id="btnRetryVerify" class="primary-btn login-btn" style="width:100%">
-          Vérifier maintenant
+          ${t("btn_verify")}
         </button>
         <div id="verifyError" class="login-error hidden" style="margin-top:12px"></div>
         <a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20j'ai%20besoin%20d'aide%20avec%20mon%20application."
            target="_blank"
            style="display:inline-block;margin-top:16px;color:#25d366;font-size:13px;text-decoration:none">
-          💬 Besoin d'aide ? Contactez Midenty
+          💬 ${t("msg_need_help")}
         </a>
       </div>
     `;
@@ -171,7 +192,7 @@ function showVerificationScreen() {
 
   btn.onclick = async () => {
     btn.disabled = true;
-    btn.textContent = "Vérification...";
+    btn.textContent = t("msg_verifying");
     errDiv.classList.add("hidden");
 
     const code = CONFIG.getClientCode();
@@ -189,14 +210,12 @@ function showVerificationScreen() {
       const cfg = await resp.json();
 
       if (!cfg.actif) {
-        msgDiv.innerHTML =
-          "Ce compte a été <strong>désactivé</strong>.<br>" +
-          "Contactez Midenty pour le réactiver.";
+        msgDiv.innerHTML = t("msg_account_deactivated");
         btn.outerHTML =
           '<a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20mon%20compte%20a%20%C3%A9t%C3%A9%20d%C3%A9sactiv%C3%A9.%20Code%20%3A%20' + encodeURIComponent(code) + '" ' +
           'target="_blank" class="primary-btn login-btn" ' +
           'style="width:100%;display:block;text-align:center;text-decoration:none;background:#25d366">' +
-          '💬 Contacter Midenty sur WhatsApp</a>';
+          '💬 ' + t("msg_contact_whatsapp") + '</a>';
         errDiv.classList.add("hidden");
         return;
       }
@@ -206,6 +225,7 @@ function showVerificationScreen() {
       overlay.classList.add("hidden");
 
       document.getElementById("appMain").classList.remove("hidden");
+      applyLanguage();
       applyBranding();
       setupTabs();
       setupInscription();
@@ -214,12 +234,13 @@ function showVerificationScreen() {
       setupParametres();
       checkExportWarning();
       initSyncIndicator();
+      setupLanguageSwitcher();
     } catch (err) {
-      errDiv.textContent = "Pas de connexion internet. Réessayez.";
+      errDiv.textContent = t("msg_no_internet");
       errDiv.classList.remove("hidden");
     } finally {
       btn.disabled = false;
-      btn.textContent = "Vérifier maintenant";
+      btn.textContent = t("btn_verify");
     }
   };
 }
@@ -236,16 +257,40 @@ function initSyncIndicator() {
   const indicator = document.getElementById("syncIndicator");
   if (!indicator) return;
 
-  const labels = {
-    synced: "Synchronisé",
-    pending: "En attente...",
-    offline: "Hors-ligne",
-    disabled: ""
-  };
-
   SyncState.onChange(state => {
     indicator.className = "sync-indicator " + state;
+    const labels = {
+      synced: t("sync_synced"),
+      pending: t("sync_pending"),
+      offline: t("sync_offline"),
+      disabled: ""
+    };
     indicator.querySelector(".sync-label").textContent = labels[state] || "";
+  });
+}
+
+/* ==================== Language switcher ==================== */
+
+function setupLanguageSwitcher() {
+  document.querySelectorAll(".lang-switch-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      I18n.setLang(btn.dataset.lang);
+      updateLangSwitcherUI();
+      renderStudentsList();
+      renderClassesTab();
+      loadSettingsForm();
+      populateConsultMonths();
+      checkExportWarning();
+      updateLastExportInfo();
+    });
+  });
+  updateLangSwitcherUI();
+}
+
+function updateLangSwitcherUI() {
+  const lang = I18n.getLang();
+  document.querySelectorAll(".lang-switch-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === lang);
   });
 }
 
@@ -292,7 +337,7 @@ function setupInscription() {
   document.getElementById("searchStudents").addEventListener("input", renderStudentsList);
   document.getElementById("btnExportStudentsPdf").addEventListener("click", async () => {
     const students = Storage.getAllStudents();
-    if (students.length === 0) return toast("Aucun élève inscrit.");
+    if (students.length === 0) return toast(t("msg_no_students"));
     await PdfExport.generateStudentsListPdf(students);
   });
 
@@ -331,8 +376,8 @@ function handleInscription() {
   const telParent = document.getElementById("studentTelParent").value.trim();
   const classe = document.getElementById("studentClasse").value;
 
-  if (!nom) return toast("Saisis le nom de l'élève.");
-  if (!classe) return toast("Choisis une classe.");
+  if (!nom) return toast(t("msg_enter_name"));
+  if (!classe) return toast(t("msg_choose_class"));
 
   const s = CONFIG.getSettings();
   const student = Storage.saveStudent({
@@ -370,7 +415,7 @@ function handleInscription() {
   document.getElementById("inscriptionForm").reset();
   refreshMatriculePreview();
   renderStudentsList();
-  toast("Élève inscrit : " + student.nom + " — " + student.matricule);
+  toast(t("msg_student_enrolled", { name: student.nom, matricule: student.matricule }));
 }
 
 function renderInscriptionReceipt(receipt) {
@@ -383,20 +428,19 @@ function renderInscriptionReceipt(receipt) {
     <div class="rp-sub">${escapeHtml(s.adresse)}</div>
     <div class="rp-sub">${s.telephones.join(" / ")}</div>
     <div class="rp-line"></div>
-    <div class="rp-field"><span class="rp-field-label">Reçu N° / رقم الإيصال</span><span class="rp-field-value">${receipt.numero}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Date / التاريخ</span><span class="rp-field-value">${formatDateFr(receipt.date)}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Élève / التلميذ</span><span class="rp-field-value">${escapeHtml(receipt.student.nom)}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Matricule / الرقم</span><span class="rp-field-value">${receipt.student.matricule}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Classe / القسم</span><span class="rp-field-value">${escapeHtml(receipt.student.classe)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_number")}</span><span class="rp-field-value">${receipt.numero}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_date")}</span><span class="rp-field-value">${formatDateFr(receipt.date)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_student")}</span><span class="rp-field-value">${escapeHtml(receipt.student.nom)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_matricule")}</span><span class="rp-field-value">${receipt.student.matricule}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_class")}</span><span class="rp-field-value">${escapeHtml(receipt.student.classe)}</span></div>
     <div class="rp-line"></div>
-    <div class="rp-motif-row"><span>Inscription / التسجيل</span><span>${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}</span></div>
+    <div class="rp-motif-row"><span>${t("receipt_inscription")}</span><span>${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}</span></div>
     <div class="rp-total-row">
-      <span class="rp-total-label">TOTAL</span>
+      <span class="rp-total-label">${t("receipt_total")}</span>
       <span class="rp-total-value">${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}</span>
     </div>
     <div class="rp-matricule-msg">
-      <span class="ar">استخدموا هذا الرقم لدفع الرسوم الشهرية: ${receipt.student.matricule}</span>
-      Utilisez ce matricule pour payer les frais mensuels : <strong>${receipt.student.matricule}</strong>
+      ${t("receipt_use_matricule")} <strong>${receipt.student.matricule}</strong>
     </div>
     <div class="rp-line"></div>
     <div class="rp-message">${escapeHtml(s.messageFinalFr)}</div>
@@ -417,7 +461,7 @@ function renderStudentsList() {
   });
 
   if (students.length === 0) {
-    list.innerHTML = `<p class="hint">${search ? "Aucun résultat." : "Aucun élève inscrit."}</p>`;
+    list.innerHTML = `<p class="hint">${search ? t("msg_no_search_result") : t("msg_no_students")}</p>`;
     return;
   }
 
@@ -428,7 +472,7 @@ function renderStudentsList() {
         <span class="list-item-sub">${s.matricule} · ${escapeHtml(s.classe || "")} · ${escapeHtml(s.telephoneParent || s.telephone || "-")}</span>
       </div>
       <span class="list-item-badge">${s.matricule}</span>
-      <button class="edit-btn" data-id="${s.id}" title="Modifier">✎</button>
+      <button class="edit-btn" data-id="${s.id}" title="${t("btn_modify")}">✎</button>
     </div>
   `).join("");
 
@@ -457,11 +501,11 @@ function handleSaveEdit() {
     telephoneParent: document.getElementById("editStudentTelParent").value.trim(),
     classe: document.getElementById("editStudentClasse").value
   };
-  if (!data.nom) return toast("Le nom est obligatoire.");
+  if (!data.nom) return toast(t("msg_name_required"));
   Storage.updateStudent(id, data);
   document.getElementById("editStudentModal").classList.add("hidden");
   renderStudentsList();
-  toast("Élève modifié.");
+  toast(t("msg_student_modified"));
 }
 
 /* ==================== ONGLET 2 : Classes ==================== */
@@ -470,9 +514,9 @@ function setupClasses() {
   document.getElementById("classeFilter").addEventListener("change", renderClassesTab);
   document.getElementById("btnExportClassePdf").addEventListener("click", async () => {
     const classe = document.getElementById("classeFilter").value;
-    if (!classe) return toast("Choisis une classe.");
+    if (!classe) return toast(t("msg_choose_class"));
     const students = Storage.getStudentsByClass(classe);
-    if (students.length === 0) return toast("Aucun élève dans cette classe.");
+    if (students.length === 0) return toast(t("msg_no_student_class"));
     await PdfExport.generateClassListPdf(students, classe);
   });
 }
@@ -487,11 +531,11 @@ function renderClassesTab() {
     infoDiv.classList.add("hidden");
     const s = CONFIG.getSettings();
     if (s.classes.length === 0) {
-      listDiv.innerHTML = `<p class="hint">Aucune classe configurée. Va dans Paramètres pour en créer.</p>`;
+      listDiv.innerHTML = `<p class="hint">${t("msg_no_class_config")}</p>`;
     } else {
       listDiv.innerHTML = s.classes.map(c => {
         const count = Storage.getStudentsByClass(c).length;
-        return `<div class="list-item"><div class="list-item-info"><span class="list-item-name">${escapeHtml(c)}</span><span class="list-item-sub">${count} élève(s)</span></div><span class="badge">${count}</span></div>`;
+        return `<div class="list-item"><div class="list-item-info"><span class="list-item-name">${escapeHtml(c)}</span><span class="list-item-sub">${count} ${t("txt_students_count")}</span></div><span class="badge">${count}</span></div>`;
       }).join("");
     }
     return;
@@ -500,10 +544,10 @@ function renderClassesTab() {
   const students = Storage.getStudentsByClass(classe);
   infoDiv.classList.remove("hidden");
   document.getElementById("classeInfoTitle").textContent = classe;
-  document.getElementById("classeInfoCount").textContent = students.length + " élève(s)";
+  document.getElementById("classeInfoCount").textContent = students.length + " " + t("txt_students_count");
 
   if (students.length === 0) {
-    listDiv.innerHTML = `<p class="hint">Aucun élève dans cette classe.</p>`;
+    listDiv.innerHTML = `<p class="hint">${t("msg_no_student_class")}</p>`;
     return;
   }
 
@@ -557,11 +601,11 @@ function setupMensuel() {
 
 function handleSearchMatricule() {
   const matricule = document.getElementById("mensuelMatricule").value.trim();
-  if (!matricule) return toast("Saisis un matricule.");
+  if (!matricule) return toast(t("msg_enter_matricule"));
 
   const student = Storage.findStudentByMatricule(matricule);
   if (!student) {
-    toast("Aucun élève trouvé avec ce matricule.");
+    toast(t("msg_student_not_found"));
     document.getElementById("mensuelStudentInfo").classList.add("hidden");
     document.getElementById("mensuelMonthsSection").classList.add("hidden");
     return;
@@ -586,7 +630,7 @@ function renderMonthsGrid() {
   grid.innerHTML = months.map(m => {
     const paid = Storage.isMonthPaid(mensuelStudent.id, m.key);
     const cls = paid ? "month-cell paid" : "month-cell unpaid";
-    return `<div class="${cls}" data-month="${m.key}" data-paid="${paid}">${MONTH_NAMES_FR[m.mois]}<br><span style="font-size:10px">${MONTH_NAMES_AR[m.mois]}</span></div>`;
+    return `<div class="${cls}" data-month="${m.key}" data-paid="${paid}">${monthName(m.mois)}</div>`;
   }).join("");
 
   grid.querySelectorAll(".month-cell.unpaid").forEach(cell => {
@@ -612,8 +656,8 @@ function updateMensuelTotal() {
 }
 
 function handlePayerMensuel() {
-  if (!mensuelStudent) return toast("Cherche d'abord un élève.");
-  if (selectedMonths.length === 0) return toast("Sélectionne au moins un mois.");
+  if (!mensuelStudent) return toast(t("msg_find_student_first"));
+  if (selectedMonths.length === 0) return toast(t("msg_select_month"));
 
   const s = CONFIG.getSettings();
   const montantTotal = selectedMonths.length * s.fraisMensuels;
@@ -653,7 +697,7 @@ function handlePayerMensuel() {
   document.getElementById("mensuelReceiptSection").scrollIntoView({ behavior: "smooth" });
 
   renderMonthsGrid();
-  toast("Paiement enregistré — " + receipt.numero);
+  toast(t("msg_payment_saved", { numero: receipt.numero }));
 }
 
 function renderMensuelReceipt(receipt) {
@@ -662,7 +706,7 @@ function renderMensuelReceipt(receipt) {
 
   const moisLabels = receipt.moisPayes.map(k => {
     const m = parseInt(k.split("-")[1], 10);
-    return MONTH_NAMES_FR[m] + " / " + MONTH_NAMES_AR[m];
+    return monthName(m);
   }).join(", ");
 
   el.innerHTML = `
@@ -672,18 +716,18 @@ function renderMensuelReceipt(receipt) {
     <div class="rp-sub">${escapeHtml(s.adresse)}</div>
     <div class="rp-sub">${s.telephones.join(" / ")}</div>
     <div class="rp-line"></div>
-    <div class="rp-field"><span class="rp-field-label">Reçu N°</span><span class="rp-field-value">${receipt.numero}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Date</span><span class="rp-field-value">${formatDateFr(receipt.date)}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Élève / التلميذ</span><span class="rp-field-value">${escapeHtml(receipt.student.nom)}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Matricule</span><span class="rp-field-value">${receipt.student.matricule}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Classe</span><span class="rp-field-value">${escapeHtml(receipt.student.classe)}</span></div>
-    <div class="rp-field"><span class="rp-field-label">Paiement</span><span class="rp-field-value">${escapeHtml(receipt.modePaiement)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_number")}</span><span class="rp-field-value">${receipt.numero}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_date")}</span><span class="rp-field-value">${formatDateFr(receipt.date)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_student")}</span><span class="rp-field-value">${escapeHtml(receipt.student.nom)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_matricule")}</span><span class="rp-field-value">${receipt.student.matricule}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_class")}</span><span class="rp-field-value">${escapeHtml(receipt.student.classe)}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_payment_mode")}</span><span class="rp-field-value">${escapeHtml(receipt.modePaiement)}</span></div>
     <div class="rp-line"></div>
-    <div class="rp-motif-row"><span>Frais mensuels / الرسوم الشهرية</span></div>
-    <div class="rp-field"><span class="rp-field-label">Mois / الشهر</span><span class="rp-field-value" style="font-size:12px">${moisLabels}</span></div>
-    <div class="rp-field"><span class="rp-field-label">${receipt.moisPayes.length} mois × ${receipt.montantParMois.toLocaleString("fr-FR")}</span></div>
+    <div class="rp-motif-row"><span>${t("receipt_monthly_fees")}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_month")}</span><span class="rp-field-value" style="font-size:12px">${moisLabels}</span></div>
+    <div class="rp-field"><span class="rp-field-label">${t("receipt_months_multiply", { count: receipt.moisPayes.length, amount: receipt.montantParMois.toLocaleString("fr-FR") })}</span></div>
     <div class="rp-total-row">
-      <span class="rp-total-label">TOTAL</span>
+      <span class="rp-total-label">${t("receipt_total")}</span>
       <span class="rp-total-value">${receipt.montantTotal.toLocaleString("fr-FR")} ${receipt.devise}</span>
     </div>
     <div class="rp-line"></div>
@@ -697,10 +741,13 @@ function renderMensuelReceipt(receipt) {
 function populateConsultMonths() {
   const months = Storage.getSchoolYearMonths();
   const select = document.getElementById("consultMonth");
+  const firstOpt = select.querySelector("option:first-child");
+  select.innerHTML = "";
+  select.appendChild(firstOpt);
   months.forEach(m => {
     const opt = document.createElement("option");
     opt.value = m.key;
-    opt.textContent = MONTH_NAMES_FR[m.mois] + " " + m.annee + " / " + MONTH_NAMES_AR[m.mois];
+    opt.textContent = monthName(m.mois) + " " + m.annee;
     select.appendChild(opt);
   });
 }
@@ -724,15 +771,15 @@ function handleConsultMonth() {
 
   let html = "";
   if (unpaid.length > 0) {
-    html += `<h4 style="color:var(--danger);margin:8px 0 4px">✗ Impayés (${unpaid.length})</h4>`;
+    html += `<h4 style="color:var(--danger);margin:8px 0 4px">✗ ${t("txt_unpaid")} (${unpaid.length})</h4>`;
     html += unpaid.map(s => `<div class="list-item"><div class="list-item-info"><span class="list-item-name">${escapeHtml(s.nom)}</span><span class="list-item-sub">${s.matricule} · ${escapeHtml(s.classe || "")}</span></div></div>`).join("");
   }
   if (paid.length > 0) {
-    html += `<h4 style="color:var(--primary);margin:12px 0 4px">✓ Payés (${paid.length})</h4>`;
+    html += `<h4 style="color:var(--primary);margin:12px 0 4px">✓ ${t("txt_paid")} (${paid.length})</h4>`;
     html += paid.map(s => `<div class="list-item"><div class="list-item-info"><span class="list-item-name">${escapeHtml(s.nom)}</span><span class="list-item-sub">${s.matricule} · ${escapeHtml(s.classe || "")}</span></div></div>`).join("");
   }
   if (allStudents.length === 0) {
-    html = `<p class="hint">Aucun élève inscrit.</p>`;
+    html = `<p class="hint">${t("msg_no_students")}</p>`;
   }
 
   results.innerHTML = html;
@@ -748,7 +795,7 @@ function setupParametres() {
 
   document.getElementById("btnExportBackup").addEventListener("click", () => {
     Storage.exportBackup();
-    toast("Sauvegarde téléchargée.");
+    toast(t("msg_backup_downloaded"));
     checkExportWarning();
     updateLastExportInfo();
   });
@@ -757,12 +804,11 @@ function setupParametres() {
 
   document.getElementById("btnExportCsv").addEventListener("click", () => {
     const students = Storage.getAllStudents();
-    if (students.length === 0) return toast("Aucun élève à exporter.");
+    if (students.length === 0) return toast(t("msg_no_students_export"));
     Storage.exportCsv();
-    toast("Fichier CSV téléchargé.");
+    toast(t("msg_csv_downloaded"));
   });
 
-  // Tap 5x sur "À propos" → code dev ou reset
   let aboutTaps = 0;
   let aboutTimer = null;
   document.getElementById("aboutText").addEventListener("click", () => {
@@ -771,22 +817,21 @@ function setupParametres() {
     aboutTimer = setTimeout(() => { aboutTaps = 0; }, 3000);
     if (aboutTaps >= 5) {
       aboutTaps = 0;
-      const code = prompt("Code développeur / administrateur :");
+      const code = prompt(t("txt_dev_prompt"));
       if (!code) return;
       if (code === CONFIG.codeResetAdmin) {
-        // Choix : panneau dev ou reset
-        const action = prompt("Tapez DEV pour configurer, ou RESET pour réinitialiser :");
+        const action = prompt(t("txt_dev_action_prompt"));
         if (action && action.toUpperCase() === "RESET") {
-          if (confirm("⚠️ Supprimer TOUTES les données ? Cette action est irréversible.")) {
+          if (confirm(t("txt_reset_confirm"))) {
             Storage.resetAllData();
-            toast("Données réinitialisées.");
+            toast(t("msg_data_reset"));
             setTimeout(() => location.reload(), 1000);
           }
         } else if (action && action.toUpperCase() === "DEV") {
           openDevPanel();
         }
       } else {
-        toast("Code incorrect.");
+        toast(t("msg_code_wrong"));
       }
     }
   });
@@ -803,19 +848,17 @@ function openDevPanel() {
   document.getElementById("setColorAccent").value = s.couleurAccent || "#c5972c";
   document.getElementById("setCodeAcces").value = CONFIG.getClientCode() || "";
   panel.scrollIntoView({ behavior: "smooth" });
-  toast("Panneau développeur ouvert.");
+  toast(t("msg_dev_panel_opened"));
 }
 
 function loadSettingsForm() {
   const s = CONFIG.getSettings();
 
-  // Affichage lecture seule des infos école
   document.getElementById("readonlyNomFr").textContent = s.nomFr;
   document.getElementById("readonlyNomAr").textContent = s.nomAr;
   document.getElementById("readonlyAdresse").textContent = s.adresse;
   document.getElementById("readonlyTelephones").textContent = s.telephones.join(" / ");
 
-  // Champs dev (remplis quand le panneau est ouvert)
   document.getElementById("setNomFr").value = s.nomFr;
   document.getElementById("setNomAr").value = s.nomAr;
   document.getElementById("setAdresse").value = s.adresse;
@@ -830,8 +873,8 @@ function loadSettingsForm() {
   debutSelect.innerHTML = "";
   finSelect.innerHTML = "";
   for (let i = 1; i <= 12; i++) {
-    debutSelect.innerHTML += `<option value="${i}" ${i === s.debutAnnee ? "selected" : ""}>${MONTH_NAMES_FR[i]}</option>`;
-    finSelect.innerHTML += `<option value="${i}" ${i === s.finAnnee ? "selected" : ""}>${MONTH_NAMES_FR[i]}</option>`;
+    debutSelect.innerHTML += `<option value="${i}" ${i === s.debutAnnee ? "selected" : ""}>${monthName(i)}</option>`;
+    finSelect.innerHTML += `<option value="${i}" ${i === s.finAnnee ? "selected" : ""}>${monthName(i)}</option>`;
   }
 
   renderClassesList();
@@ -858,7 +901,7 @@ function saveSchoolInfo() {
     applyBranding();
     loadSettingsForm();
     document.getElementById("devPanel").classList.add("hidden");
-    toast("Configuration développeur enregistrée.");
+    toast(t("msg_dev_config_saved"));
   };
 
   if (logoFile) {
@@ -874,25 +917,25 @@ function renderClassesList() {
   const s = CONFIG.getSettings();
   const list = document.getElementById("classesList");
   if (s.classes.length === 0) {
-    list.innerHTML = `<p class="hint">Aucune classe créée.</p>`;
+    list.innerHTML = `<p class="hint">${t("msg_no_class_created")}</p>`;
     return;
   }
   list.innerHTML = s.classes.map(c => `
     <div class="classe-item">
       <span>${escapeHtml(c)}</span>
-      <button data-classe="${escapeHtml(c)}" title="Supprimer">✕</button>
+      <button data-classe="${escapeHtml(c)}" title="${t("msg_class_deleted")}">✕</button>
     </div>
   `).join("");
 
   list.querySelectorAll(".classe-item button").forEach(btn => {
     btn.addEventListener("click", () => {
       const name = btn.dataset.classe;
-      if (!confirm(`Supprimer la classe "${name}" ?`)) return;
+      if (!confirm(t("txt_delete_class_confirm", { name }))) return;
       const s = CONFIG.getSettings();
       s.classes = s.classes.filter(c => c !== name);
       Storage.saveSettings({ classes: s.classes });
       renderClassesList();
-      toast("Classe supprimée.");
+      toast(t("msg_class_deleted"));
     });
   });
 }
@@ -900,14 +943,14 @@ function renderClassesList() {
 function addClasse() {
   const input = document.getElementById("newClasseName");
   const name = input.value.trim();
-  if (!name) return toast("Saisis un nom de classe.");
+  if (!name) return toast(t("msg_enter_class_name"));
   const s = CONFIG.getSettings();
-  if (s.classes.includes(name)) return toast("Cette classe existe déjà.");
+  if (s.classes.includes(name)) return toast(t("msg_class_exists"));
   s.classes.push(name);
   Storage.saveSettings({ classes: s.classes });
   input.value = "";
   renderClassesList();
-  toast("Classe ajoutée : " + name);
+  toast(t("msg_class_added", { name }));
 }
 
 function saveFrais() {
@@ -915,7 +958,7 @@ function saveFrais() {
     fraisInscription: parseInt(document.getElementById("setFraisInscription").value) || 0,
     fraisMensuels: parseInt(document.getElementById("setFraisMensuels").value) || 0
   });
-  toast("Montants enregistrés.");
+  toast(t("msg_amounts_saved"));
 }
 
 function saveAnnee() {
@@ -924,7 +967,7 @@ function saveAnnee() {
     finAnnee: parseInt(document.getElementById("setFinAnnee").value),
     prefixeMatricule: document.getElementById("setPrefixeMatricule").value.trim() || "MEI"
   });
-  toast("Paramètres enregistrés.");
+  toast(t("msg_settings_saved"));
 }
 
 function handleImport(e) {
@@ -934,12 +977,12 @@ function handleImport(e) {
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
-      if (!confirm(`Importer ${data.students?.length ?? 0} élève(s) et ${data.payments?.length ?? 0} paiement(s) ?\nCeci remplacera les données actuelles.`)) return;
+      if (!confirm(t("txt_import_confirm", { students: data.students?.length ?? 0, payments: data.payments?.length ?? 0 }))) return;
       Storage.importBackup(data);
-      toast("Sauvegarde importée.");
+      toast(t("msg_backup_imported"));
       location.reload();
     } catch (err) {
-      alert("Import impossible : " + err.message);
+      alert(t("msg_import_error", { error: err.message }));
     }
   };
   reader.readAsText(file);
@@ -959,7 +1002,7 @@ function setupShareButtons(selector, previewId) {
       if (type === "whatsapp") await PdfExport.shareWhatsapp(previewEl, currentReceipt);
       if (type === "print") {
         try { await PrintEscPos.printViaRawBT(currentReceipt); }
-        catch (err) { toast("Erreur impression : " + err.message); }
+        catch (err) { toast(t("msg_print_error", { error: err.message })); }
       }
     });
   });
@@ -974,8 +1017,8 @@ function checkExportWarning() {
   if (count === 0) { el.classList.add("hidden"); return; }
   if (days === null || days >= 7) {
     el.textContent = days === null
-      ? "⚠️ Aucune sauvegarde exportée. Fais-le dans Paramètres."
-      : `⚠️ Dernière sauvegarde il y a ${days} jours.`;
+      ? "⚠️ " + t("msg_no_backup")
+      : "⚠️ " + t("msg_backup_days_ago", { days });
     el.classList.remove("hidden");
   } else {
     el.classList.add("hidden");
@@ -986,9 +1029,9 @@ function updateLastExportInfo() {
   const days = Storage.daysSinceLastExport();
   const el = document.getElementById("lastExportInfo");
   if (!el) return;
-  el.textContent = days === null ? "Aucune sauvegarde exportée." :
-    days === 0 ? "Dernière sauvegarde : aujourd'hui." :
-    `Dernière sauvegarde : il y a ${days} jour(s).`;
+  el.textContent = days === null ? t("msg_no_backup_yet") :
+    days === 0 ? t("msg_backup_today") :
+    t("msg_backup_ago", { days });
 }
 
 function setupInstallBanner() {

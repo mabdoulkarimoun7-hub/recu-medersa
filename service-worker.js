@@ -1,9 +1,10 @@
-const CACHE_NAME = "recu-medersa-v8";
+const CACHE_NAME = "recu-medersa-v9";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./app/style.css",
   "./app/config.js",
+  "./app/i18n.js",
   "./app/firebase-config.js",
   "./app/storage.js",
   "./app/app.js",

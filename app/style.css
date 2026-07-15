@@ -111,20 +111,17 @@ body {
   display: block;
 }
 
-.login-title-ar {
+.login-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+}
+
+.lang-ar .login-title {
   font-family: "Amiri", serif;
   font-size: 22px;
   font-weight: 700;
-  color: var(--primary-dark);
-  direction: rtl;
-  margin-bottom: 2px;
-}
-
-.login-title-fr {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 20px;
 }
 
 .login-input {
@@ -163,17 +160,8 @@ body {
   color: var(--muted);
 }
 
-/* ===== Labels bilingues ===== */
-.label-ar {
-  font-family: "Amiri", serif;
-  font-size: 14px;
-  direction: rtl;
-  text-align: right;
-  color: var(--text);
-  display: block;
-}
-
-.label-fr {
+/* ===== Labels ===== */
+label[data-i18n] {
   font-size: 12px;
   color: var(--muted);
   text-transform: uppercase;
@@ -182,15 +170,11 @@ body {
   display: block;
 }
 
-h3 .label-ar {
-  font-size: 16px;
-  color: var(--secondary);
+.lang-ar label[data-i18n] {
+  font-family: "Amiri", serif;
+  font-size: 14px;
   text-transform: none;
-}
-
-h3 .label-fr {
-  font-size: 13px;
-  color: var(--secondary);
+  letter-spacing: 0;
 }
 
 /* ===== Header bilingue ===== */
@@ -263,16 +247,17 @@ h3 .label-fr {
 
 .tab-btn .tab-icon { font-size: 18px; line-height: 1; }
 
-.tab-btn .tab-label-ar {
-  font-family: "Amiri", serif;
-  font-size: 12px;
-  direction: rtl;
-}
-
-.tab-btn .tab-label-fr {
-  font-size: 9px;
+.tab-btn [data-i18n] {
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+}
+
+.lang-ar .tab-btn [data-i18n] {
+  font-family: "Amiri", serif;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .tab-btn::after {
@@ -820,4 +805,84 @@ input[type="search"] {
 @keyframes sync-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
+}
+
+/* ===== Language switcher ===== */
+.lang-switcher {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-switch-btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.lang-switch-btn:active { transform: scale(0.97); }
+
+.lang-switch-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.lang-switch-btn[data-lang="ar"] {
+  font-family: "Amiri", serif;
+  font-size: 16px;
+}
+
+/* ===== RTL support ===== */
+[dir="rtl"] body {
+  font-family: "Amiri", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+[dir="rtl"] select {
+  background-position: left 12px center;
+  padding-right: 14px;
+  padding-left: 32px;
+}
+
+[dir="rtl"] .sync-indicator {
+  right: auto;
+  left: 12px;
+}
+
+[dir="rtl"] .edit-btn {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+[dir="rtl"] .list-item-badge {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .rp-field {
+  direction: rtl;
+}
+
+[dir="rtl"] .student-info-row {
+  direction: rtl;
+}
+
+[dir="rtl"] .field {
+  text-align: right;
+}
+
+[dir="rtl"] input, [dir="rtl"] select {
+  text-align: right;
+}
+
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="number"],
+[dir="rtl"] input[type="color"] {
+  text-align: left;
 }

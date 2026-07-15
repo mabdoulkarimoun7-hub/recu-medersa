@@ -290,10 +290,12 @@ function openForm(code) {
       img.src = c.logo;
       img.classList.remove("hidden");
     }
+    loadI18nOverrides(c.i18nOverrides);
   } else {
     document.getElementById("formTitle").textContent = "Nouveau client";
     formClasses = [];
     formModes = ["Espèces", "Mynita", "Amanata"];
+    loadI18nOverrides(null);
   }
 
   renderClassesTags();
@@ -335,8 +337,41 @@ function buildClientObj() {
     actif: document.getElementById("cfgActif").value === "true",
     dateCreation: editingCode
       ? (clients.find(c => c.codeAcces === editingCode)?.dateCreation || new Date().toISOString().slice(0, 10))
-      : new Date().toISOString().slice(0, 10)
+      : new Date().toISOString().slice(0, 10),
+    i18nOverrides: collectI18nOverrides()
   };
+}
+
+function collectI18nOverrides() {
+  const overrides = {};
+  document.querySelectorAll(".i18n-row[data-key]").forEach(row => {
+    const key = row.dataset.key;
+    row.querySelectorAll("input[data-lang]").forEach(input => {
+      const val = input.value.trim();
+      if (val) {
+        const lang = input.dataset.lang;
+        if (!overrides[lang]) overrides[lang] = {};
+        overrides[lang][key] = val;
+      }
+    });
+  });
+  return Object.keys(overrides).length > 0 ? overrides : undefined;
+}
+
+function loadI18nOverrides(i18nOverrides) {
+  document.querySelectorAll(".i18n-row[data-key] input[data-lang]").forEach(input => {
+    input.value = "";
+  });
+  if (!i18nOverrides) return;
+  document.querySelectorAll(".i18n-row[data-key]").forEach(row => {
+    const key = row.dataset.key;
+    row.querySelectorAll("input[data-lang]").forEach(input => {
+      const lang = input.dataset.lang;
+      if (i18nOverrides[lang] && i18nOverrides[lang][key]) {
+        input.value = i18nOverrides[lang][key];
+      }
+    });
+  });
 }
 
 async function pushToGitHub(clientObj) {

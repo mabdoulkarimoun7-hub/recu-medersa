@@ -70,15 +70,24 @@
 <div id="loginScreen" class="login-screen hidden">
   <div class="login-card">
     <img src="assets/logo.png" alt="Logo" class="login-logo" id="loginLogo">
-    <h2 class="login-title-ar">رمز الدخول</h2>
-    <h3 class="login-title-fr">Code d'accès</h3>
-    <input type="password" id="loginCode" class="login-input" placeholder="••••••••" autocomplete="off">
-    <button type="button" id="loginBtn" class="primary-btn login-btn">
-      <span class="label-ar">دخول</span>
-      <span class="label-fr">Entrer</span>
-    </button>
-    <div id="loginError" class="login-error hidden">Code incorrect</div>
+    <h2 class="login-title" data-i18n="login_title"></h2>
+    <input type="password" id="loginCode" class="login-input" data-i18n-placeholder="login_placeholder" autocomplete="off">
+    <button type="button" id="loginBtn" class="primary-btn login-btn" data-i18n="btn_login"></button>
+    <div id="loginError" class="login-error hidden"></div>
     <div class="login-footer">© Midenty</div>
+  </div>
+</div>
+
+<!-- ========== LANGUAGE SELECT SCREEN ========== -->
+<div id="languageSelectScreen" class="login-screen hidden">
+  <div class="login-card" style="text-align:center">
+    <div style="font-size:48px;margin-bottom:16px">🌍</div>
+    <h3 style="margin-bottom:4px;font-family:'Amiri',serif">اختر لغتك</h3>
+    <h3 style="margin-bottom:4px">Choisissez votre langue</h3>
+    <h3 style="margin-bottom:20px">Choose your language</h3>
+    <button class="primary-btn login-btn lang-option" data-lang="ar" style="width:100%;margin-bottom:10px;font-family:'Amiri',serif;font-size:18px">العربية</button>
+    <button class="primary-btn login-btn lang-option" data-lang="fr" style="width:100%;margin-bottom:10px">Français</button>
+    <button class="primary-btn login-btn lang-option" data-lang="en" style="width:100%;margin-bottom:10px">English</button>
   </div>
 </div>
 
@@ -101,30 +110,26 @@
 <nav class="tabs">
   <button class="tab-btn active" data-tab="inscription">
     <span class="tab-icon">📝</span>
-    <span class="tab-label-ar">التسجيل</span>
-    <span class="tab-label-fr">Inscription</span>
+    <span data-i18n="tab_inscription"></span>
   </button>
   <button class="tab-btn" data-tab="classes">
     <span class="tab-icon">📚</span>
-    <span class="tab-label-ar">الأقسام</span>
-    <span class="tab-label-fr">Classes</span>
+    <span data-i18n="tab_classes"></span>
   </button>
   <button class="tab-btn" data-tab="mensuel">
     <span class="tab-icon">💰</span>
-    <span class="tab-label-ar">الرسوم</span>
-    <span class="tab-label-fr">Mensuel</span>
+    <span data-i18n="tab_mensuel"></span>
   </button>
   <button class="tab-btn" data-tab="parametres">
     <span class="tab-icon">⚙️</span>
-    <span class="tab-label-ar">الإعدادات</span>
-    <span class="tab-label-fr">Paramètres</span>
+    <span data-i18n="tab_parametres"></span>
   </button>
 </nav>
 
 <div id="installBanner" class="install-banner hidden">
-  📲 Installe cette application sur ton écran d'accueil.
-  <button id="installBtn">Installer</button>
-  <button id="dismissInstallBtn" class="link-btn">Plus tard</button>
+  📲 <span data-i18n="txt_install_banner"></span>
+  <button id="installBtn" data-i18n="btn_install"></button>
+  <button id="dismissInstallBtn" class="link-btn" data-i18n="btn_later"></button>
 </div>
 
 <div id="exportWarning" class="export-warning hidden"></div>
@@ -134,50 +139,39 @@
 
   <form id="inscriptionForm">
     <div class="field">
-      <label class="label-ar">الرقم التسلسلي</label>
-      <label class="label-fr">Matricule</label>
+      <label data-i18n="label_matricule"></label>
       <input type="text" id="matriculePreview" readonly class="input-readonly">
     </div>
 
     <div class="field">
-      <label class="label-ar">الاسم الكامل</label>
-      <label class="label-fr" for="studentNom">Nom complet</label>
-      <input type="text" id="studentNom" placeholder="الاسم الكامل / Nom complet" required>
+      <label data-i18n="label_nom_complet" for="studentNom"></label>
+      <input type="text" id="studentNom" data-i18n-placeholder="label_nom_complet" required>
     </div>
 
     <div class="field">
-      <label class="label-ar">هاتف التلميذ</label>
-      <label class="label-fr" for="studentTel">Téléphone de l'élève</label>
-      <input type="tel" id="studentTel" placeholder="Optionnel">
+      <label data-i18n="label_tel_eleve" for="studentTel"></label>
+      <input type="tel" id="studentTel" data-i18n-placeholder="placeholder_tel">
     </div>
 
     <div class="field">
-      <label class="label-ar">هاتف ولي الأمر</label>
-      <label class="label-fr" for="studentTelParent">Téléphone du parent</label>
-      <input type="tel" id="studentTelParent" placeholder="Optionnel">
+      <label data-i18n="label_tel_parent" for="studentTelParent"></label>
+      <input type="tel" id="studentTelParent" data-i18n-placeholder="placeholder_tel">
     </div>
 
     <div class="field">
-      <label class="label-ar">القسم</label>
-      <label class="label-fr" for="studentClasse">Classe</label>
+      <label data-i18n="label_classe" for="studentClasse"></label>
       <select id="studentClasse" required>
-        <option value="">-- Choisir / اختر --</option>
+        <option value="" data-i18n="label_choose"></option>
       </select>
     </div>
 
     <div class="actions-row">
-      <button type="button" id="btnInscrire" class="primary-btn">
-        <span class="label-ar">تسجيل</span>
-        <span class="label-fr">Inscrire</span>
-      </button>
+      <button type="button" id="btnInscrire" class="primary-btn" data-i18n="btn_inscrire"></button>
     </div>
   </form>
 
   <section id="inscriptionReceiptSection" class="hidden">
-    <h3>
-      <span class="label-ar">إيصال التسجيل</span>
-      <span class="label-fr">Reçu d'inscription</span>
-    </h3>
+    <h3 data-i18n="title_receipt_inscription"></h3>
     <div id="inscriptionReceiptPreview" class="receipt-preview"></div>
     <div class="actions-grid">
       <button class="action-btn btn-share" data-type="pdf">📄 PDF</button>
@@ -188,42 +182,36 @@
   </section>
 
   <section class="section-divider">
-    <h3>
-      <span class="label-ar">قائمة التلاميذ المسجلين</span>
-      <span class="label-fr">Élèves inscrits</span>
-    </h3>
-    <input type="search" id="searchStudents" placeholder="🔍 Rechercher / بحث...">
-    <button type="button" id="btnExportStudentsPdf" class="secondary-btn">📄 Liste PDF</button>
+    <h3 data-i18n="title_students_list"></h3>
+    <input type="search" id="searchStudents" data-i18n-placeholder="placeholder_search">
+    <button type="button" id="btnExportStudentsPdf" class="secondary-btn">📄 <span data-i18n="btn_list_pdf"></span></button>
   </section>
   <div id="studentsList" class="list-container"></div>
 
   <!-- Modale modification élève -->
   <div id="editStudentModal" class="modal-overlay hidden">
     <div class="modal-card">
-      <h3>
-        <span class="label-ar">تعديل التلميذ</span>
-        <span class="label-fr">Modifier l'élève</span>
-      </h3>
+      <h3 data-i18n="title_edit_student"></h3>
       <div class="field">
-        <label class="label-fr">Nom</label>
+        <label data-i18n="label_nom"></label>
         <input type="text" id="editStudentNom">
       </div>
       <div class="field">
-        <label class="label-fr">Tél. élève</label>
+        <label data-i18n="label_tel_eleve_short"></label>
         <input type="tel" id="editStudentTel">
       </div>
       <div class="field">
-        <label class="label-fr">Tél. parent</label>
+        <label data-i18n="label_tel_parent_short"></label>
         <input type="tel" id="editStudentTelParent">
       </div>
       <div class="field">
-        <label class="label-fr">Classe</label>
+        <label data-i18n="label_classe"></label>
         <select id="editStudentClasse"></select>
       </div>
       <input type="hidden" id="editStudentId">
       <div class="actions-row">
-        <button type="button" id="btnSaveEdit" class="primary-btn">Enregistrer</button>
-        <button type="button" id="btnCancelEdit" class="secondary-btn">Annuler</button>
+        <button type="button" id="btnSaveEdit" class="primary-btn" data-i18n="btn_save"></button>
+        <button type="button" id="btnCancelEdit" class="secondary-btn" data-i18n="btn_cancel"></button>
       </div>
     </div>
   </div>
@@ -232,10 +220,9 @@
 <!-- ========== ONGLET 2 : CLASSES ========== -->
 <main id="tab-classes" class="tab-content hidden">
   <div class="field">
-    <label class="label-ar">اختر القسم</label>
-    <label class="label-fr" for="classeFilter">Choisir une classe</label>
+    <label data-i18n="label_choose_class" for="classeFilter"></label>
     <select id="classeFilter">
-      <option value="">-- Toutes les classes / جميع الأقسام --</option>
+      <option value="" data-i18n="label_all_classes"></option>
     </select>
   </div>
 
@@ -244,7 +231,7 @@
       <h3 id="classeInfoTitle"></h3>
       <span id="classeInfoCount" class="badge"></span>
     </div>
-    <button type="button" id="btnExportClassePdf" class="secondary-btn">📄 Exporter PDF</button>
+    <button type="button" id="btnExportClassePdf" class="secondary-btn">📄 <span data-i18n="btn_export_pdf"></span></button>
   </div>
 
   <div id="classeStudentsList" class="list-container"></div>
@@ -254,61 +241,47 @@
 <main id="tab-mensuel" class="tab-content hidden">
 
   <div class="field">
-    <label class="label-ar">الرقم التسلسلي</label>
-    <label class="label-fr" for="mensuelMatricule">Matricule de l'élève</label>
-    <input type="text" id="mensuelMatricule" placeholder="MEI-001" autocomplete="off">
-    <button type="button" id="btnSearchMatricule" class="secondary-btn" style="margin-top:8px">
-      <span class="label-ar">بحث</span>
-      <span class="label-fr">Rechercher</span>
-    </button>
+    <label data-i18n="label_matricule_eleve" for="mensuelMatricule"></label>
+    <input type="text" id="mensuelMatricule" data-i18n-placeholder="placeholder_matricule" autocomplete="off">
+    <button type="button" id="btnSearchMatricule" class="secondary-btn" style="margin-top:8px" data-i18n="btn_search"></button>
   </div>
 
   <div id="mensuelStudentInfo" class="student-info-card hidden">
     <div class="student-info-row">
-      <span class="label-fr">Nom :</span>
+      <span data-i18n="label_name"></span>
       <strong id="mensuelNom"></strong>
     </div>
     <div class="student-info-row">
-      <span class="label-fr">Classe :</span>
+      <span data-i18n="label_class"></span>
       <span id="mensuelClasse"></span>
     </div>
     <div class="student-info-row">
-      <span class="label-fr">Tél. parent :</span>
+      <span data-i18n="label_parent_tel"></span>
       <span id="mensuelTelParent"></span>
     </div>
   </div>
 
   <div id="mensuelMonthsSection" class="hidden">
-    <h3>
-      <span class="label-ar">اختر الشهر</span>
-      <span class="label-fr">Sélectionner le(s) mois à payer</span>
-    </h3>
+    <h3 data-i18n="title_select_months"></h3>
     <div id="monthsGrid" class="months-grid"></div>
 
     <div class="field" style="margin-top:12px">
-      <label class="label-ar">طريقة الدفع</label>
-      <label class="label-fr" for="mensuelPaiement">Mode de paiement</label>
+      <label data-i18n="label_payment_mode" for="mensuelPaiement"></label>
       <select id="mensuelPaiement"></select>
     </div>
 
     <div class="total-general">
-      <span>Total</span>
+      <span data-i18n="label_total"></span>
       <strong id="mensuelTotal">0 FCFA</strong>
     </div>
 
     <div class="actions-row">
-      <button type="button" id="btnPayerMensuel" class="primary-btn">
-        <span class="label-ar">إنشاء الإيصال</span>
-        <span class="label-fr">Générer le reçu</span>
-      </button>
+      <button type="button" id="btnPayerMensuel" class="primary-btn" data-i18n="btn_generate_receipt"></button>
     </div>
   </div>
 
   <section id="mensuelReceiptSection" class="hidden">
-    <h3>
-      <span class="label-ar">إيصال الرسوم</span>
-      <span class="label-fr">Reçu des frais</span>
-    </h3>
+    <h3 data-i18n="title_receipt_fees"></h3>
     <div id="mensuelReceiptPreview" class="receipt-preview"></div>
     <div class="actions-grid">
       <button class="action-btn btn-share-mensuel" data-type="pdf">📄 PDF</button>
@@ -319,13 +292,10 @@
   </section>
 
   <section class="section-divider">
-    <h3>
-      <span class="label-ar">استشارة</span>
-      <span class="label-fr">Consultation des paiements</span>
-    </h3>
+    <h3 data-i18n="title_payment_consult"></h3>
     <div class="field">
       <select id="consultMonth">
-        <option value="">-- Choisir un mois --</option>
+        <option value="" data-i18n="label_choose_month"></option>
       </select>
     </div>
     <div id="consultResults" class="list-container"></div>
@@ -335,12 +305,19 @@
 <!-- ========== ONGLET 4 : PARAMÈTRES ========== -->
 <main id="tab-parametres" class="tab-content hidden">
 
-  <!-- Infos école en lecture seule (le client ne peut pas modifier) -->
+  <!-- Sélecteur de langue -->
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">معلومات المدرسة</span>
-      <span class="label-fr">Informations de l'école</span>
-    </h3>
+    <h3 data-i18n="title_language"></h3>
+    <div class="lang-switcher">
+      <button class="lang-switch-btn" data-lang="ar">العربية</button>
+      <button class="lang-switch-btn" data-lang="fr">Français</button>
+      <button class="lang-switch-btn" data-lang="en">English</button>
+    </div>
+  </section>
+
+  <!-- Infos école en lecture seule -->
+  <section class="settings-block">
+    <h3 data-i18n="title_school_info"></h3>
     <div class="school-info-readonly">
       <p><strong id="readonlyNomFr"></strong></p>
       <p class="ar-text" id="readonlyNomAr"></p>
@@ -349,127 +326,99 @@
     </div>
   </section>
 
-  <!-- Panneau développeur caché (visible uniquement après code admin) -->
+  <!-- Panneau développeur caché -->
   <section class="settings-block hidden" id="devPanel">
-    <h3>
-      <span class="label-ar">إعدادات المطور</span>
-      <span class="label-fr">Configuration développeur</span>
-    </h3>
+    <h3 data-i18n="title_dev_config"></h3>
     <div class="field">
-      <label class="label-fr">Nom (français)</label>
+      <label data-i18n="label_nom_fr"></label>
       <input type="text" id="setNomFr">
     </div>
     <div class="field">
-      <label class="label-ar">الاسم بالعربية</label>
-      <label class="label-fr">Nom (arabe)</label>
+      <label data-i18n="label_nom_ar"></label>
       <input type="text" id="setNomAr" dir="rtl">
     </div>
     <div class="field">
-      <label class="label-fr">Adresse</label>
+      <label data-i18n="label_adresse"></label>
       <input type="text" id="setAdresse">
     </div>
     <div class="field">
-      <label class="label-fr">Téléphone(s)</label>
-      <input type="text" id="setTelephones" placeholder="Séparés par des virgules">
+      <label data-i18n="label_telephones"></label>
+      <input type="text" id="setTelephones">
     </div>
     <div class="field">
-      <label class="label-fr">Logo de l'école</label>
+      <label data-i18n="label_logo"></label>
       <input type="file" id="setLogo" accept="image/*">
     </div>
     <div class="field">
-      <label class="label-fr">Couleur principale</label>
+      <label data-i18n="label_color_primary"></label>
       <input type="color" id="setColorPrimary" value="#0d7a3d">
     </div>
     <div class="field">
-      <label class="label-fr">Couleur secondaire</label>
+      <label data-i18n="label_color_secondary"></label>
       <input type="color" id="setColorSecondary" value="#0b3d91">
     </div>
     <div class="field">
-      <label class="label-fr">Couleur accent</label>
+      <label data-i18n="label_color_accent"></label>
       <input type="color" id="setColorAccent" value="#c5972c">
     </div>
     <div class="field">
-      <label class="label-fr">Code d'accès client</label>
+      <label data-i18n="label_code_acces"></label>
       <input type="text" id="setCodeAcces">
     </div>
-    <button type="button" id="btnSaveSchoolInfo" class="primary-btn">
-      <span class="label-ar">حفظ</span>
-      <span class="label-fr">Enregistrer (dev)</span>
-    </button>
+    <button type="button" id="btnSaveSchoolInfo" class="primary-btn" data-i18n="btn_save_dev"></button>
   </section>
 
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">الأقسام</span>
-      <span class="label-fr">Gestion des classes</span>
-    </h3>
+    <h3 data-i18n="title_class_management"></h3>
     <div id="classesList" class="classes-list"></div>
     <div class="field" style="margin-top:8px">
-      <input type="text" id="newClasseName" placeholder="Nom de la classe / اسم القسم">
+      <input type="text" id="newClasseName" data-i18n-placeholder="placeholder_class_name">
     </div>
-    <button type="button" id="btnAddClasse" class="secondary-btn">+ Ajouter une classe</button>
+    <button type="button" id="btnAddClasse" class="secondary-btn" data-i18n="btn_add_class"></button>
   </section>
 
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">الرسوم</span>
-      <span class="label-fr">Montants des frais</span>
-    </h3>
+    <h3 data-i18n="title_fee_amounts"></h3>
     <div class="field">
-      <label class="label-fr">Frais d'inscription (FCFA)</label>
+      <label data-i18n="label_inscription_fee"></label>
       <input type="number" id="setFraisInscription" min="0">
     </div>
     <div class="field">
-      <label class="label-fr">Frais mensuels (FCFA)</label>
+      <label data-i18n="label_monthly_fee"></label>
       <input type="number" id="setFraisMensuels" min="0">
     </div>
-    <button type="button" id="btnSaveFrais" class="primary-btn">
-      <span class="label-ar">حفظ</span>
-      <span class="label-fr">Enregistrer</span>
-    </button>
+    <button type="button" id="btnSaveFrais" class="primary-btn" data-i18n="btn_save"></button>
   </section>
 
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">السنة الدراسية</span>
-      <span class="label-fr">Année scolaire</span>
-    </h3>
+    <h3 data-i18n="title_school_year"></h3>
     <div class="field">
-      <label class="label-fr">Mois de début</label>
+      <label data-i18n="label_start_month"></label>
       <select id="setDebutAnnee"></select>
     </div>
     <div class="field">
-      <label class="label-fr">Mois de fin</label>
+      <label data-i18n="label_end_month"></label>
       <select id="setFinAnnee"></select>
     </div>
     <div class="field">
-      <label class="label-fr">Préfixe matricule</label>
+      <label data-i18n="label_matricule_prefix"></label>
       <input type="text" id="setPrefixeMatricule" maxlength="6">
     </div>
-    <button type="button" id="btnSaveAnnee" class="primary-btn">
-      <span class="label-ar">حفظ</span>
-      <span class="label-fr">Enregistrer</span>
-    </button>
+    <button type="button" id="btnSaveAnnee" class="primary-btn" data-i18n="btn_save"></button>
   </section>
 
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">النسخ الاحتياطي</span>
-      <span class="label-fr">Sauvegarde des données</span>
-    </h3>
-    <p class="hint">Exporte une sauvegarde régulièrement.</p>
-    <button id="btnExportBackup" class="primary-btn">⬇️ Exporter une sauvegarde</button>
-    <button id="btnExportCsv" class="secondary-btn" style="margin-top:8px">📊 Exporter en Excel/CSV</button>
-    <label for="importFile" class="secondary-btn file-label" style="margin-top:8px">⬆️ Importer une sauvegarde</label>
+    <h3 data-i18n="title_backup"></h3>
+    <p class="hint" data-i18n="hint_backup"></p>
+    <button id="btnExportBackup" class="primary-btn">⬇️ <span data-i18n="btn_export_backup"></span></button>
+    <button id="btnExportCsv" class="secondary-btn" style="margin-top:8px">📊 <span data-i18n="btn_export_csv"></span></button>
+    <label for="importFile" class="secondary-btn file-label" style="margin-top:8px">⬆️ <span data-i18n="btn_import_backup"></span></label>
     <input type="file" id="importFile" accept="application/json" class="hidden">
     <p id="lastExportInfo" class="hint"></p>
   </section>
 
   <section class="settings-block">
-    <h3>
-      <span class="label-ar">حول التطبيق</span>
-      <span class="label-fr">À propos</span>
-    </h3>
+    <h3 data-i18n="title_about"></h3>
     <p class="hint" id="aboutText" style="line-height:1.6">
       Cette application a été développée par <strong>Midenty</strong>.<br>
       Pour toute assistance technique ou information,<br>
@@ -500,6 +449,7 @@
 <script src="app/storage.js"></script>
 <script src="app/pdf-export.js"></script>
 <script src="app/print-escpos.js"></script>
+<script src="app/i18n.js"></script>
 <script src="app/app.js"></script>
 </body>
 </html>

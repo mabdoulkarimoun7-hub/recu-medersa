@@ -37,7 +37,7 @@ const PdfExport = {
     const file = new File([blob], `${receipt.numero}.png`, { type: "image/png" });
     const s = CONFIG.getSettings();
     const montant = receipt.montantTotal ?? receipt.montant ?? 0;
-    const text = `Reçu ${receipt.numero} — ${s.nomFr} — ${montant.toLocaleString("fr-FR")} ${s.devise}`;
+    const text = `${t("receipt_number")} ${receipt.numero} — ${s.nomFr} — ${montant.toLocaleString("fr-FR")} ${s.devise}`;
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
@@ -57,7 +57,7 @@ const PdfExport = {
     a.remove();
     URL.revokeObjectURL(url);
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
-    toast("Image téléchargée — joins-la manuellement dans WhatsApp.");
+    toast(t("msg_image_downloaded"));
   },
 
   _renderArabicText(text, font, fontSize, maxWidth) {
@@ -111,17 +111,17 @@ const PdfExport = {
       pdf.text(s.nomFr, ml, y);
       y += 7;
       pdf.setFontSize(11);
-      pdf.text("Liste des élèves inscrits", ml, y);
+      pdf.text(t("pdf_students_list"), ml, y);
       y += 5;
       pdf.setFontSize(9);
-      pdf.text(`Exporté le ${new Date().toLocaleDateString("fr-FR")} — ${students.length} élève(s)`, ml, y);
+      pdf.text(t("pdf_exported_on", { date: new Date().toLocaleDateString("fr-FR"), count: students.length }), ml, y);
       y += 8;
       pdf.setFont(undefined, "bold");
       pdf.setFontSize(10);
-      pdf.text("Nom", colNom, y);
-      pdf.text("Matricule", colMat, y);
-      pdf.text("Classe", colClasse, y);
-      pdf.text("Tél. parent", colTel, y);
+      pdf.text(t("pdf_col_name"), colNom, y);
+      pdf.text(t("pdf_col_matricule"), colMat, y);
+      pdf.text(t("pdf_col_class"), colClasse, y);
+      pdf.text(t("pdf_col_parent_tel"), colTel, y);
       y += 2;
       pdf.line(ml, y, 195, y);
       y += 6;
@@ -178,17 +178,17 @@ const PdfExport = {
       pdf.text(s.nomFr, ml, y);
       y += 7;
       pdf.setFontSize(12);
-      pdf.text(`Classe : ${className}`, ml, y);
+      pdf.text(`${t("pdf_col_class")} : ${className}`, ml, y);
       y += 5;
       pdf.setFontSize(9);
-      pdf.text(`${students.length} élève(s) — ${new Date().toLocaleDateString("fr-FR")}`, ml, y);
+      pdf.text(`${t("pdf_exported_on", { date: new Date().toLocaleDateString("fr-FR"), count: students.length })}`, ml, y);
       y += 8;
       pdf.setFont(undefined, "bold");
       pdf.setFontSize(10);
-      pdf.text("N°", ml, y);
-      pdf.text("Nom", colNom, y);
-      pdf.text("Matricule", colMat, y);
-      pdf.text("Tél. parent", colTel, y);
+      pdf.text(t("pdf_col_number"), ml, y);
+      pdf.text(t("pdf_col_name"), colNom, y);
+      pdf.text(t("pdf_col_matricule"), colMat, y);
+      pdf.text(t("pdf_col_parent_tel"), colTel, y);
       y += 2;
       pdf.line(ml, y, 195, y);
       y += 6;

@@ -89,6 +89,11 @@ const CONFIG = {
 
     const merged = { ...existing, ...overrides };
     localStorage.setItem("medersa_settings", JSON.stringify(merged));
+
+    if (cfg.i18nOverrides && typeof I18n !== "undefined") {
+      localStorage.setItem("medersa_i18n_overrides", JSON.stringify(cfg.i18nOverrides));
+      I18n.setOverrides(cfg.i18nOverrides);
+    }
   },
 
   getClientCode() {

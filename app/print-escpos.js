@@ -86,21 +86,21 @@ async function buildEncodedReceipt(receipt, { columns, withImages }) {
     .line(s.telephones.join(" / "))
     .align("left")
     .rule()
-    .line(`Reçu N° ${receipt.numero}`)
-    .line(`Date : ${formatDateFr(receipt.date)}`);
+    .line(`${t("receipt_number")} ${receipt.numero}`)
+    .line(`${t("receipt_date")} ${formatDateFr(receipt.date)}`);
 
   if (receipt.type === "inscription") {
     encoder
-      .line(`Élève : ${receipt.student.nom}`)
-      .line(`Matricule : ${receipt.student.matricule}`)
-      .line(`Classe : ${receipt.student.classe || "-"}`)
+      .line(`${t("receipt_student")} ${receipt.student.nom}`)
+      .line(`${t("receipt_matricule")} ${receipt.student.matricule}`)
+      .line(`${t("receipt_class")} ${receipt.student.classe || "-"}`)
       .rule()
-      .line(`Inscription : ${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}`)
+      .line(`${t("receipt_inscription")} ${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}`)
       .rule()
-      .bold(true).line(`TOTAL : ${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}`).bold(false)
+      .bold(true).line(`${t("receipt_total")} ${receipt.montant.toLocaleString("fr-FR")} ${receipt.devise}`).bold(false)
       .rule()
       .align("center")
-      .line(`Matricule: ${receipt.student.matricule}`);
+      .line(`${t("receipt_matricule")} ${receipt.student.matricule}`);
 
     if (withImages !== false) {
       try {
@@ -114,20 +114,20 @@ async function buildEncodedReceipt(receipt, { columns, withImages }) {
   } else if (receipt.type === "mensuel") {
     const moisLabels = (receipt.moisPayes || []).map(k => {
       const m = parseInt(k.split("-")[1], 10);
-      return MONTH_NAMES_FR[m] || k;
+      return monthName(m) || k;
     }).join(", ");
 
     encoder
-      .line(`Élève : ${receipt.student.nom}`)
-      .line(`Matricule : ${receipt.student.matricule}`)
-      .line(`Classe : ${receipt.student.classe || "-"}`)
-      .line(`Paiement : ${receipt.modePaiement || "-"}`)
+      .line(`${t("receipt_student")} ${receipt.student.nom}`)
+      .line(`${t("receipt_matricule")} ${receipt.student.matricule}`)
+      .line(`${t("receipt_class")} ${receipt.student.classe || "-"}`)
+      .line(`${t("receipt_payment_mode")} ${receipt.modePaiement || "-"}`)
       .rule()
-      .line(`Frais mensuels`)
-      .line(`Mois : ${moisLabels}`)
+      .line(t("receipt_monthly_fees"))
+      .line(`${t("receipt_month")} : ${moisLabels}`)
       .line(`${receipt.moisPayes.length} × ${receipt.montantParMois.toLocaleString("fr-FR")} ${receipt.devise}`)
       .rule()
-      .bold(true).line(`TOTAL : ${receipt.montantTotal.toLocaleString("fr-FR")} ${receipt.devise}`).bold(false);
+      .bold(true).line(`${t("receipt_total")} ${receipt.montantTotal.toLocaleString("fr-FR")} ${receipt.devise}`).bold(false);
   }
 
   encoder.rule().align("center").line(s.messageFinalFr);

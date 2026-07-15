@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Guide — Transformer la PWA en Application Android (Play Store)</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 25mm 18mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px; line-height: 1.6; color: #222;
+    background: #fff; padding: 40px; max-width: 210mm; margin: 0 auto;
+  }
+  .cover {
+    page-break-after: always; text-align: center;
+    padding-top: 100px; min-height: 90vh;
+  }
+  .cover h1 { font-size: 32px; color: #0b3d91; margin-bottom: 10px; }
+  .cover .subtitle { font-size: 18px; color: #0d7a3d; margin-bottom: 40px; }
+  .cover .version { font-size: 14px; color: #666; margin-bottom: 50px; }
+  .cover .visual {
+    font-size: 60px; margin: 30px 0;
+  }
+  .cover .info-box {
+    display: inline-block; text-align: left; background: #eef3ff;
+    border-left: 4px solid #0b3d91; padding: 20px 30px;
+    border-radius: 0 8px 8px 0; font-size: 14px; line-height: 2;
+  }
+  .toc { page-break-after: always; }
+  .toc h2 { color: #0b3d91; font-size: 24px; margin-bottom: 20px; border-bottom: 3px solid #0b3d91; padding-bottom: 8px; }
+  .toc ol { list-style: none; counter-reset: toc; }
+  .toc > ol > li { counter-increment: toc; padding: 8px 0; border-bottom: 1px dotted #ccc; font-size: 15px; }
+  .toc > ol > li::before { content: counter(toc) ". "; color: #0b3d91; font-weight: bold; margin-right: 8px; }
+
+  h2.section-title {
+    color: #fff; background: #0b3d91; padding: 10px 20px;
+    font-size: 20px; border-radius: 6px; margin: 30px 0 15px;
+    page-break-after: avoid;
+  }
+  h3 { color: #0d7a3d; font-size: 16px; margin: 20px 0 8px; border-bottom: 2px solid #e0e0e0; padding-bottom: 4px; }
+  h4 { color: #333; font-size: 14px; margin: 14px 0 6px; }
+  p { margin: 6px 0; }
+
+  .info-box { background: #e8f5e9; border-left: 4px solid #0d7a3d; padding: 12px 16px; margin: 10px 0; border-radius: 0 6px 6px 0; }
+  .warn-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 16px; margin: 10px 0; border-radius: 0 6px 6px 0; }
+  .blue-box { background: #eef3ff; border-left: 4px solid #0b3d91; padding: 12px 16px; margin: 10px 0; border-radius: 0 6px 6px 0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12.5px; }
+  th { background: #0b3d91; color: #fff; padding: 8px 12px; text-align: left; font-size: 12px; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e0e0e0; }
+  tr:nth-child(even) { background: #f9f9f9; }
+
+  .steps { counter-reset: step; list-style: none; padding: 0; }
+  .steps li {
+    counter-increment: step; padding: 8px 0 8px 40px;
+    position: relative; margin: 4px 0;
+  }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 6px;
+    width: 28px; height: 28px; background: #0b3d91; color: #fff;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: bold; font-size: 13px;
+  }
+
+  .vs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;
+  }
+  .vs-card {
+    border: 2px solid #e0e0e0; border-radius: 12px; padding: 16px;
+  }
+  .vs-card h4 { text-align: center; margin-bottom: 10px; font-size: 16px; }
+  .vs-card ul { margin: 0 0 0 16px; font-size: 13px; }
+  .vs-card.winner { border-color: #0d7a3d; background: #f0faf3; }
+
+  .timeline {
+    border-left: 3px solid #0b3d91; margin: 16px 0 16px 20px; padding: 0;
+    list-style: none;
+  }
+  .timeline li {
+    padding: 10px 0 10px 24px; position: relative;
+  }
+  .timeline li::before {
+    content: ""; position: absolute; left: -9px; top: 14px;
+    width: 14px; height: 14px; background: #0b3d91;
+    border-radius: 50%; border: 2px solid #fff;
+  }
+  .timeline li strong { color: #0b3d91; }
+
+  .page-break { page-break-before: always; }
+
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+  }
+  .btn-print {
+    position: fixed; top: 20px; right: 20px; background: #0b3d91;
+    color: #fff; border: none; padding: 12px 24px; border-radius: 8px;
+    font-size: 16px; cursor: pointer; z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .btn-print:hover { background: #092e6e; }
+</style>
+</head>
+<body>
+
+<button class="btn-print no-print" onclick="window.print()">Imprimer / Sauvegarder PDF</button>
+
+<!-- ======================== COVER ======================== -->
+<div class="cover">
+  <div class="visual">📱 ➜ 🏪</div>
+  <h1>DE LA PWA A L'APPLICATION ANDROID</h1>
+  <div class="subtitle">Guide complet pour publier sur le Google Play Store</div>
+  <div class="version">Gestion Medersa by Midenty — Juillet 2026</div>
+
+  <div class="info-box">
+    <strong>Ce guide repond a :</strong><br>
+    ✅ Faut-il recoder l'application ?<br>
+    ✅ Quelles sont les options techniques ?<br>
+    ✅ Combien ca coute ?<br>
+    ✅ Combien de temps ca prend ?<br>
+    ✅ Comment on fait, etape par etape ?
+  </div>
+</div>
+
+<!-- ======================== TOC ======================== -->
+<div class="toc">
+  <h2>Table des matieres</h2>
+  <ol>
+    <li>PWA vs Application Android : quelle difference ?</li>
+    <li>Pourquoi passer sur le Play Store ?</li>
+    <li>Les 3 options techniques</li>
+    <li>Option recommandee : Capacitor (hybride)</li>
+    <li>Ce qu'on garde et ce qu'on change</li>
+    <li>Les prerequis (ce qu'il faut installer)</li>
+    <li>Les etapes concretes, pas a pas</li>
+    <li>Ce que Claude peut faire pour vous</li>
+    <li>Planning realiste</li>
+    <li>Couts</li>
+    <li>Questions frequentes (FAQ)</li>
+  </ol>
+</div>
+
+<!-- ======================== 1 ======================== -->
+<h2 class="section-title">1. PWA vs Application Android : quelle difference ?</h2>
+
+<div class="vs-grid">
+  <div class="vs-card">
+    <h4>📄 PWA (ce qu'on a maintenant)</h4>
+    <p style="font-size:12px;color:#666;text-align:center;margin-bottom:10px;">Progressive Web App — une page web avancee</p>
+    <ul>
+      <li>S'ouvre dans le navigateur</li>
+      <li>Installable sur l'ecran d'accueil</li>
+      <li>Pas sur le Play Store</li>
+      <li>Mises a jour automatiques</li>
+      <li>Ne peut pas tourner en arriere-plan</li>
+      <li>Pas de notifications push fiables</li>
+      <li>Blocage a distance : delai de 7 jours max</li>
+    </ul>
+  </div>
+  <div class="vs-card winner">
+    <h4>📱 Application Android</h4>
+    <p style="font-size:12px;color:#666;text-align:center;margin-bottom:10px;">Vraie application Android (fichier APK)</p>
+    <ul>
+      <li>S'ouvre comme une vraie application</li>
+      <li>Installee depuis le Play Store</li>
+      <li><strong>Visible sur le Play Store</strong> (credibilite)</li>
+      <li>Mises a jour via le Play Store</li>
+      <li><strong>Peut tourner en arriere-plan</strong></li>
+      <li><strong>Notifications push</strong> possibles</li>
+      <li><strong>Blocage instantane a distance</strong></li>
+    </ul>
+  </div>
+</div>
+
+<div class="info-box">
+  <strong>En resume :</strong> Une application Android, c'est comme passer d'une maison en location (PWA) a une maison que vous avez construite. Vous avez le controle total.
+</div>
+
+<!-- ======================== 2 ======================== -->
+<h2 class="section-title">2. Pourquoi passer sur le Play Store ?</h2>
+
+<table>
+  <tr><th>Avantage</th><th>Explication</th></tr>
+  <tr>
+    <td><strong>🏪 Presence sur le Play Store</strong></td>
+    <td>Les clients trouvent l'app en cherchant "gestion medersa" sur le Play Store. Ca donne de la credibilite et de la visibilite.</td>
+  </tr>
+  <tr>
+    <td><strong>🔒 Blocage instantane</strong></td>
+    <td>Quand vous desactivez un client, l'app peut verifier en arriere-plan et se bloquer immediatement — pas besoin d'attendre 7 jours.</td>
+  </tr>
+  <tr>
+    <td><strong>🔔 Notifications push</strong></td>
+    <td>Envoyer des rappels aux clients : "Vous avez 3 paiements en retard", "Nouvelle mise a jour disponible", etc.</td>
+  </tr>
+  <tr>
+    <td><strong>🔄 Synchronisation en arriere-plan</strong></td>
+    <td>Les donnees se synchronisent meme quand l'app est fermee — plus de risque de perte de donnees.</td>
+  </tr>
+  <tr>
+    <td><strong>📷 Acces au materiel</strong></td>
+    <td>Camera (scanner des documents), Bluetooth (impression plus fiable), stockage local securise.</td>
+  </tr>
+  <tr>
+    <td><strong>⚡ Meilleures performances</strong></td>
+    <td>L'app demarre plus vite et fonctionne de maniere plus fluide.</td>
+  </tr>
+  <tr>
+    <td><strong>💼 Image professionnelle</strong></td>
+    <td>"Telechargez notre application sur le Play Store" — ca fait plus serieux que "ouvrez ce lien".</td>
+  </tr>
+</table>
+
+<!-- ======================== 3 ======================== -->
+<div class="page-break"></div>
+<h2 class="section-title">3. Les 3 options techniques</h2>
+
+<p>Il existe 3 facons de transformer une PWA en application Android :</p>
+
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Principe</th>
+    <th>Effort</th>
+    <th>Resultat</th>
+    <th>Code a refaire ?</th>
+  </tr>
+  <tr>
+    <td><strong>A. TWA / Bubblewrap</strong></td>
+    <td>Emballer la PWA dans une coquille Android. C'est comme mettre un site web dans une boite.</td>
+    <td>⭐ Tres facile<br>(1-2 jours)</td>
+    <td>⭐⭐ Correct<br>Mais reste une page web deguisee</td>
+    <td>Non, zero code a changer</td>
+  </tr>
+  <tr style="background:#f0faf3;">
+    <td><strong>B. Capacitor (Ionic)</strong> ✅</td>
+    <td>Garder le code HTML/CSS/JS actuel et ajouter une couche Android par-dessus. Le meilleur des deux mondes.</td>
+    <td>⭐⭐ Moyen<br>(3-5 jours)</td>
+    <td>⭐⭐⭐⭐ Tres bon<br>Vraie app Android complete</td>
+    <td>Non ! On garde 90% du code actuel</td>
+  </tr>
+  <tr>
+    <td><strong>C. Kotlin (tout recoder)</strong></td>
+    <td>Recoder toute l'application en Kotlin (le langage d'Android). Tout refaire de zero.</td>
+    <td>⭐⭐⭐⭐⭐ Enorme<br>(2-3 mois)</td>
+    <td>⭐⭐⭐⭐⭐ Parfait<br>Performance maximale</td>
+    <td>Oui, tout recoder</td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <strong>Recommandation :</strong> L'option <strong>B (Capacitor)</strong> est la meilleure pour nous. On garde tout le code qui marche deja, on ajoute les fonctionnalites Android (notifications, arriere-plan, blocage instantane), et on publie sur le Play Store. Le tout en quelques jours, pas en mois.
+</div>
+
+<!-- ======================== 4 ======================== -->
+<h2 class="section-title">4. Option recommandee : Capacitor</h2>
+
+<h3>C'est quoi Capacitor ?</h3>
+<p><strong>Capacitor</strong> est un outil gratuit (cree par Ionic/Google) qui prend une application web (HTML/CSS/JS) et la transforme en vraie application Android ou iOS. C'est comme un traducteur : il traduit votre application web en langage Android.</p>
+
+<h3>Comment ca marche ?</h3>
+<div style="text-align:center;margin:20px 0;font-size:14px;">
+  <div style="display:inline-block;background:#f0f7f3;border:2px solid #0d7a3d;padding:12px 20px;border-radius:8px;margin:4px;">
+    Votre code actuel<br><small>HTML / CSS / JS</small>
+  </div>
+  <span style="font-size:28px;margin:0 10px;">+</span>
+  <div style="display:inline-block;background:#eef3ff;border:2px solid #0b3d91;padding:12px 20px;border-radius:8px;margin:4px;">
+    Capacitor<br><small>Couche Android</small>
+  </div>
+  <span style="font-size:28px;margin:0 10px;">=</span>
+  <div style="display:inline-block;background:#0d7a3d;color:#fff;padding:12px 20px;border-radius:8px;margin:4px;">
+    Application Android<br><small>Fichier APK / Play Store</small>
+  </div>
+</div>
+
+<h3>Avantages de Capacitor pour nous</h3>
+<ul style="margin:10px 0 10px 20px;">
+  <li>✅ <strong>On ne recode RIEN</strong> — le code HTML/CSS/JS actuel est reutilise tel quel</li>
+  <li>✅ <strong>Firebase fonctionne</strong> — Firestore, Auth, tout reste compatible</li>
+  <li>✅ <strong>Plugins Android</strong> — notifications push, arriere-plan, camera, Bluetooth</li>
+  <li>✅ <strong>Gratuit</strong> — Capacitor est open source</li>
+  <li>✅ <strong>Meme code pour Android ET iOS</strong> — si un jour on veut aller sur iPhone</li>
+  <li>✅ <strong>Claude peut tout faire</strong> — les commandes sont simples, on les fait ensemble</li>
+</ul>
+
+<!-- ======================== 5 ======================== -->
+<div class="page-break"></div>
+<h2 class="section-title">5. Ce qu'on garde et ce qu'on change</h2>
+
+<table>
+  <tr><th>Element</th><th>On garde ?</th><th>Detail</th></tr>
+  <tr><td>index.html</td><td>✅ Oui</td><td>La page principale ne change pas</td></tr>
+  <tr><td>app/app.js</td><td>✅ Oui</td><td>Toute la logique reste identique</td></tr>
+  <tr><td>app/style.css</td><td>✅ Oui</td><td>Le design reste le meme</td></tr>
+  <tr><td>app/config.js</td><td>✅ Oui</td><td>La gestion des clients reste</td></tr>
+  <tr><td>app/storage.js</td><td>✅ Oui</td><td>Firebase Firestore reste</td></tr>
+  <tr><td>app/pdf-export.js</td><td>✅ Oui</td><td>Les recus PDF restent</td></tr>
+  <tr><td>app/print-escpos.js</td><td>⚙️ A adapter</td><td>L'impression Bluetooth sera plus fiable avec un plugin Android</td></tr>
+  <tr><td>service-worker.js</td><td>❌ Remplace</td><td>Capacitor gere le hors-ligne differemment</td></tr>
+  <tr><td>manifest.json</td><td>❌ Remplace</td><td>L'app a son propre manifeste Android</td></tr>
+  <tr><td>Panneau admin</td><td>✅ Oui</td><td>Reste une page web sur Netlify (pas dans l'APK)</td></tr>
+</table>
+
+<div class="blue-box">
+  <strong>En clair :</strong> Sur 10 fichiers de code, on en garde 8 tels quels, on en adapte 1, et on en remplace 1. Le travail principal, c'est la configuration de Capacitor et la compilation, pas du recodage.
+</div>
+
+<!-- ======================== 6 ======================== -->
+<h2 class="section-title">6. Les prerequis (ce qu'il faut installer)</h2>
+
+<table>
+  <tr><th>Outil</th><th>C'est quoi ?</th><th>Cout</th><th>Ou le trouver</th></tr>
+  <tr>
+    <td><strong>Node.js</strong></td>
+    <td>Moteur JavaScript pour executer des commandes sur l'ordinateur</td>
+    <td>Gratuit</td>
+    <td>nodejs.org</td>
+  </tr>
+  <tr>
+    <td><strong>Android Studio</strong></td>
+    <td>L'outil officiel de Google pour creer des applications Android</td>
+    <td>Gratuit</td>
+    <td>developer.android.com/studio</td>
+  </tr>
+  <tr>
+    <td><strong>Capacitor</strong></td>
+    <td>L'outil qui transforme le code web en app Android</td>
+    <td>Gratuit</td>
+    <td>S'installe via Node.js (commande)</td>
+  </tr>
+  <tr>
+    <td><strong>Compte Google Play</strong></td>
+    <td>Pour publier l'application sur le Play Store</td>
+    <td><strong>25 $ (une seule fois, a vie)</strong></td>
+    <td>play.google.com/console</td>
+  </tr>
+  <tr>
+    <td><strong>Java JDK 17</strong></td>
+    <td>Langage necessaire pour compiler Android</td>
+    <td>Gratuit</td>
+    <td>Inclus avec Android Studio</td>
+  </tr>
+</table>
+
+<div class="warn-box">
+  <strong>Espace disque :</strong> Android Studio necessite environ <strong>8 Go</strong> d'espace disque. Assurez-vous d'avoir suffisamment de place sur votre ordinateur.
+</div>
+
+<!-- ======================== 7 ======================== -->
+<div class="page-break"></div>
+<h2 class="section-title">7. Les etapes concretes, pas a pas</h2>
+
+<h3>Phase 1 : Preparation (30 minutes)</h3>
+<ol class="steps">
+  <li><strong>Installer Node.js</strong> — Telecharger depuis nodejs.org, installer comme un logiciel normal</li>
+  <li><strong>Installer Android Studio</strong> — Telecharger depuis le site officiel, l'installer (ca prend du temps, ~30 min)</li>
+  <li><strong>Creer un compte Google Play Console</strong> — Aller sur play.google.com/console, payer les 25 $</li>
+</ol>
+
+<h3>Phase 2 : Configuration du projet (1 heure)</h3>
+<ol class="steps">
+  <li><strong>Initialiser Capacitor</strong> dans le projet — Claude execute les commandes pour vous</li>
+  <li><strong>Configurer</strong> le nom de l'application, l'icone, les couleurs</li>
+  <li><strong>Ajouter la plateforme Android</strong> — Capacitor cree le dossier Android</li>
+  <li><strong>Copier le code web</strong> dans le projet Android — une seule commande</li>
+</ol>
+
+<h3>Phase 3 : Fonctionnalites Android (2-3 heures)</h3>
+<ol class="steps">
+  <li><strong>Ajouter les notifications push</strong> — Plugin Capacitor + Firebase Cloud Messaging</li>
+  <li><strong>Ajouter la verification en arriere-plan</strong> — Pour le blocage instantane</li>
+  <li><strong>Adapter l'impression Bluetooth</strong> — Plugin Android pour une meilleure compatibilite</li>
+  <li><strong>Tester sur un telephone Android</strong> — Brancher un telephone et lancer l'app</li>
+</ol>
+
+<h3>Phase 4 : Publication (1-2 heures)</h3>
+<ol class="steps">
+  <li><strong>Generer le fichier APK/AAB</strong> — La version finale de l'application</li>
+  <li><strong>Signer l'application</strong> — Certificat de securite (Claude vous guide)</li>
+  <li><strong>Creer la fiche Play Store</strong> — Description, captures d'ecran, icone</li>
+  <li><strong>Soumettre pour examen</strong> — Google verifie l'app (1-7 jours)</li>
+  <li><strong>Publication !</strong> — L'app est disponible sur le Play Store</li>
+</ol>
+
+<!-- ======================== 8 ======================== -->
+<div class="page-break"></div>
+<h2 class="section-title">8. Ce que Claude peut faire pour vous</h2>
+
+<p>Voici exactement ce que nous ferons ensemble :</p>
+
+<table>
+  <tr><th>Etape</th><th>Claude fait</th><th>Vous faites</th></tr>
+  <tr>
+    <td>Installer Node.js</td>
+    <td>Vous guide pas a pas</td>
+    <td>Cliquer "Suivant" dans l'installeur</td>
+  </tr>
+  <tr>
+    <td>Installer Android Studio</td>
+    <td>Vous guide pas a pas</td>
+    <td>Cliquer "Suivant" dans l'installeur</td>
+  </tr>
+  <tr>
+    <td>Configurer Capacitor</td>
+    <td>Execute toutes les commandes</td>
+    <td>Rien — Claude fait tout</td>
+  </tr>
+  <tr>
+    <td>Ajouter les plugins Android</td>
+    <td>Ecrit le code et configure</td>
+    <td>Rien — Claude fait tout</td>
+  </tr>
+  <tr>
+    <td>Compiler l'application</td>
+    <td>Execute les commandes de build</td>
+    <td>Rien — Claude fait tout</td>
+  </tr>
+  <tr>
+    <td>Tester sur telephone</td>
+    <td>Lance l'app sur votre telephone</td>
+    <td>Brancher le telephone en USB</td>
+  </tr>
+  <tr>
+    <td>Creer la fiche Play Store</td>
+    <td>Redige la description, prepare les images</td>
+    <td>Verifier et valider</td>
+  </tr>
+  <tr>
+    <td>Publier</td>
+    <td>Vous guide dans la console Play Store</td>
+    <td>Cliquer "Publier"</td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <strong>Votre role :</strong> Vous n'avez pas besoin de coder. Claude fait tout le travail technique. Vous decidez, vous validez, vous testez. C'est le meme mode de travail qu'aujourd'hui.
+</div>
+
+<!-- ======================== 9 ======================== -->
+<h2 class="section-title">9. Planning realiste</h2>
+
+<ul class="timeline">
+  <li><strong>Jour 1 — Preparation</strong><br>Installer Node.js + Android Studio + creer le compte Google Play</li>
+  <li><strong>Jour 2 — Configuration</strong><br>Initialiser Capacitor, configurer le projet, premier build de test</li>
+  <li><strong>Jour 3 — Fonctionnalites Android</strong><br>Notifications push, verification en arriere-plan, tests</li>
+  <li><strong>Jour 4 — Tests et corrections</strong><br>Tester sur telephone reel, corriger les bugs, optimiser</li>
+  <li><strong>Jour 5 — Publication</strong><br>Generer l'APK final, creer la fiche Play Store, soumettre</li>
+  <li><strong>Jours 6-12 — Attente</strong><br>Google examine l'application (1 a 7 jours en general)</li>
+  <li><strong>Jour 12+ — En ligne !</strong><br>L'application est disponible sur le Play Store</li>
+</ul>
+
+<div class="blue-box">
+  <strong>Estimation totale :</strong> 5 jours de travail + 1 semaine d'attente Google = <strong>environ 2 semaines</strong> du debut a la publication.
+</div>
+
+<!-- ======================== 10 ======================== -->
+<div class="page-break"></div>
+<h2 class="section-title">10. Couts</h2>
+
+<table>
+  <tr><th>Element</th><th>Cout</th><th>Frequence</th></tr>
+  <tr>
+    <td>Node.js</td>
+    <td>Gratuit</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>Android Studio</td>
+    <td>Gratuit</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>Capacitor</td>
+    <td>Gratuit (open source)</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><strong>Compte Google Play Console</strong></td>
+    <td><strong>25 $ (~15 000 FCFA)</strong></td>
+    <td><strong>Une seule fois, a vie</strong></td>
+  </tr>
+  <tr>
+    <td>Hebergement Netlify (panneau admin)</td>
+    <td>Gratuit</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>Firebase (donnees)</td>
+    <td>Gratuit (plan Spark)</td>
+    <td>—</td>
+  </tr>
+  <tr style="background:#f0faf3;">
+    <td><strong>TOTAL</strong></td>
+    <td><strong>25 $ (~15 000 FCFA)</strong></td>
+    <td><strong>Pour toujours</strong></td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <strong>Aucun abonnement :</strong> Une fois les 25 $ payes pour le compte Google Play, vous pouvez publier autant d'applications que vous voulez, pour toujours. Pas de frais mensuels, pas de frais par application.
+</div>
+
+<!-- ======================== 11 ======================== -->
+<h2 class="section-title">11. Questions frequentes (FAQ)</h2>
+
+<h3>Est-ce que la PWA actuelle va disparaitre ?</h3>
+<p><strong>Non.</strong> L'application Android et la PWA peuvent coexister. Les clients actuels continuent avec la PWA (via le lien). Les nouveaux clients peuvent telecharger depuis le Play Store. Les deux utilisent les memes donnees Firebase.</p>
+
+<h3>Est-ce que je peux publier une app par ecole ?</h3>
+<p><strong>Oui, c'est possible.</strong> Avec Capacitor, on peut generer un APK par client avec son propre nom, logo et couleurs. Mais une seule app multi-tenant (comme maintenant) est plus simple a maintenir.</p>
+
+<h3>Est-ce que les mises a jour sont automatiques ?</h3>
+<p>Sur le Play Store, les mises a jour sont <strong>automatiques</strong> si l'utilisateur a active cette option (c'est le cas par defaut). Sinon, il recoit une notification "Mise a jour disponible".</p>
+
+<h3>Et si Google refuse l'application ?</h3>
+<p>Google peut refuser une app si elle ne respecte pas leurs regles (contenu inapproprie, securite, etc.). Notre application est une app de gestion scolaire — il n'y a aucune raison de refus. Si ca arrive, Google explique pourquoi et on corrige.</p>
+
+<h3>Est-ce que ca marche aussi sur iPhone ?</h3>
+<p>Capacitor supporte aussi <strong>iOS</strong> (iPhone/iPad). Mais publier sur l'App Store d'Apple necessite un Mac + un compte Apple Developer (99 $/an). C'est une etape future possible.</p>
+
+<h3>Est-ce qu'il faut un serveur ?</h3>
+<p><strong>Non.</strong> L'architecture reste la meme : Firebase pour les donnees, Netlify pour le panneau admin. Pas de serveur a gerer ni a payer.</p>
+
+<h3>Est-ce que Claude peut faire toute la conversion ?</h3>
+<p><strong>Oui.</strong> Claude execute les commandes, ecrit le code, configure tout. Vous supervisez et testez. C'est exactement comme on a construit l'application actuelle.</p>
+
+<div style="margin-top:40px;text-align:center;color:#888;font-size:12px;border-top:1px solid #eee;padding-top:20px;">
+  <strong>Guide — De la PWA a l'Application Android</strong><br>
+  Gestion Medersa by Midenty — Juillet 2026<br>
+  Document de reference interne<br><br>
+  Midenty — +227 88 81 10 81 — mabdoulkarimoun7@gmail.com
+</div>
+
+</body>
+</html>

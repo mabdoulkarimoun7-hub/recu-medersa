@@ -78,7 +78,12 @@ function setupLogin() {
       showApp();
     } catch (err) {
       if (err.message === "inactive") {
-        error.textContent = "Ce compte est désactivé. Contactez Midenty.";
+        error.innerHTML =
+          'Ce compte est désactivé.<br>' +
+          '<a href="https://wa.me/22788811081?text=Bonjour%20Midenty%2C%20mon%20compte%20a%20%C3%A9t%C3%A9%20d%C3%A9sactiv%C3%A9.%20Code%20%3A%20' + encodeURIComponent(code) + '" ' +
+          'target="_blank" ' +
+          'style="display:inline-block;margin-top:10px;padding:10px 20px;background:#25d366;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold">' +
+          '💬 Contacter Midenty sur WhatsApp</a>';
       } else {
         error.textContent = "Code incorrect / رمز غير صحيح";
       }

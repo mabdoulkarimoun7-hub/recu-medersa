@@ -242,7 +242,10 @@
 
   <div class="field">
     <label data-i18n="label_matricule_eleve" for="mensuelMatricule"></label>
-    <input type="text" id="mensuelMatricule" data-i18n-placeholder="placeholder_matricule" autocomplete="off">
+    <div class="matricule-input-group">
+      <span class="matricule-prefix" id="mensuelMatriculePrefix">MEI-</span>
+      <input type="text" id="mensuelMatricule" inputmode="numeric" data-i18n-placeholder="placeholder_matricule_num" autocomplete="off">
+    </div>
     <button type="button" id="btnSearchMatricule" class="secondary-btn" style="margin-top:8px" data-i18n="btn_search"></button>
   </div>
 

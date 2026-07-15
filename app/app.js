@@ -592,6 +592,8 @@ function setupMensuel() {
   document.getElementById("consultMonth").addEventListener("change", handleConsultMonth);
 
   const s = CONFIG.getSettings();
+  document.getElementById("mensuelMatriculePrefix").textContent = s.prefixeMatricule + "-";
+
   const modeSelect = document.getElementById("mensuelPaiement");
   modeSelect.innerHTML = s.modesPaiement.map(m => `<option value="${m}">${m}</option>`).join("");
 
@@ -600,8 +602,10 @@ function setupMensuel() {
 }
 
 function handleSearchMatricule() {
-  const matricule = document.getElementById("mensuelMatricule").value.trim();
-  if (!matricule) return toast(t("msg_enter_matricule"));
+  const num = document.getElementById("mensuelMatricule").value.trim();
+  if (!num) return toast(t("msg_enter_matricule"));
+  const prefix = document.getElementById("mensuelMatriculePrefix").textContent;
+  const matricule = prefix + num;
 
   const student = Storage.findStudentByMatricule(matricule);
   if (!student) {

@@ -204,7 +204,8 @@ const TRANSLATIONS = {
 
     // Séparateurs visuels
     placeholder_tel: "Optionnel",
-    placeholder_matricule: "MEI-001"
+    placeholder_matricule: "MEI-001",
+    placeholder_matricule_num: "001"
   },
 
   ar: {
@@ -386,7 +387,8 @@ const TRANSLATIONS = {
     print_use_number: "استخدموا هذا الرقم:",
 
     placeholder_tel: "اختياري",
-    placeholder_matricule: "MEI-001"
+    placeholder_matricule: "MEI-001",
+    placeholder_matricule_num: "001"
   },
 
   en: {
@@ -568,7 +570,8 @@ const TRANSLATIONS = {
     print_use_number: "Use this number:",
 
     placeholder_tel: "Optional",
-    placeholder_matricule: "MEI-001"
+    placeholder_matricule: "MEI-001",
+    placeholder_matricule_num: "001"
   }
 };
 

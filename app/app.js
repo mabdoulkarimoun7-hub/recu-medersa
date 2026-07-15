@@ -72,6 +72,7 @@ function setupLogin() {
     try {
       const cfg = await CONFIG.loadClientConfig(code);
       CONFIG.applyClientConfig(cfg);
+      markVerified();
       sessionStorage.setItem("medersa_logged_in", "1");
       document.getElementById("loginScreen").classList.add("hidden");
       showApp();
@@ -94,7 +95,17 @@ function setupLogin() {
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
 }
 
+const VERIFICATION_KEY = "medersa_last_verified";
+const VERIFICATION_INTERVAL_DAYS = 7;
+
 function showApp() {
+  const daysSince = daysSinceLastVerification();
+
+  if (daysSince !== null && daysSince >= VERIFICATION_INTERVAL_DAYS) {
+    showVerificationScreen();
+    return;
+  }
+
   document.getElementById("appMain").classList.remove("hidden");
   applyBranding();
   setupTabs();
@@ -104,6 +115,99 @@ function showApp() {
   setupParametres();
   checkExportWarning();
   initSyncIndicator();
+}
+
+function daysSinceLastVerification() {
+  const ts = localStorage.getItem(VERIFICATION_KEY);
+  if (!ts) return null;
+  return Math.floor((Date.now() - parseInt(ts, 10)) / (1000 * 60 * 60 * 24));
+}
+
+function markVerified() {
+  localStorage.setItem(VERIFICATION_KEY, String(Date.now()));
+}
+
+function showVerificationScreen() {
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("appMain").classList.add("hidden");
+
+  let overlay = document.getElementById("verificationOverlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "verificationOverlay";
+    overlay.className = "login-screen";
+    overlay.innerHTML = `
+      <div class="login-card" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:16px">🔄</div>
+        <h2 style="margin-bottom:8px">Vérification requise</h2>
+        <p id="verifyMessage" style="color:#666;margin-bottom:20px;font-size:14px;line-height:1.5">
+          Connectez-vous à internet pour continuer à utiliser l'application.<br>
+          Cette vérification est nécessaire tous les 7 jours.
+        </p>
+        <button type="button" id="btnRetryVerify" class="primary-btn login-btn" style="width:100%">
+          Vérifier maintenant
+        </button>
+        <div id="verifyError" class="login-error hidden" style="margin-top:12px"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  overlay.classList.remove("hidden");
+
+  const btn = document.getElementById("btnRetryVerify");
+  const errDiv = document.getElementById("verifyError");
+  const msgDiv = document.getElementById("verifyMessage");
+
+  btn.onclick = async () => {
+    btn.disabled = true;
+    btn.textContent = "Vérification...";
+    errDiv.classList.add("hidden");
+
+    const code = CONFIG.getClientCode();
+    if (!code) {
+      sessionStorage.removeItem("medersa_logged_in");
+      overlay.classList.add("hidden");
+      document.getElementById("loginScreen").classList.remove("hidden");
+      setupLogin();
+      return;
+    }
+
+    try {
+      const resp = await fetch("clients/" + encodeURIComponent(code) + ".json");
+      if (!resp.ok) throw new Error("not_found");
+      const cfg = await resp.json();
+
+      if (!cfg.actif) {
+        msgDiv.innerHTML =
+          "Ce compte a été <strong>désactivé</strong>.<br>" +
+          "Contactez Midenty au <strong>+227 88 81 10 81</strong>.";
+        btn.style.display = "none";
+        errDiv.classList.add("hidden");
+        return;
+      }
+
+      CONFIG.applyClientConfig(cfg);
+      markVerified();
+      overlay.classList.add("hidden");
+
+      document.getElementById("appMain").classList.remove("hidden");
+      applyBranding();
+      setupTabs();
+      setupInscription();
+      setupClasses();
+      setupMensuel();
+      setupParametres();
+      checkExportWarning();
+      initSyncIndicator();
+    } catch (err) {
+      errDiv.textContent = "Pas de connexion internet. Réessayez.";
+      errDiv.classList.remove("hidden");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Vérifier maintenant";
+    }
+  };
 }
 
 function initSyncIndicator() {

@@ -37,7 +37,7 @@ const GITHUB_OWNER = "mabdoulkarimoun7-hub";
 const GITHUB_REPO = "recu-medersa";
 const GITHUB_BRANCH = "master";
 const GITHUB_TOKEN_KEY = "midenty_github_token";
-const APP_URL = "https://recu-medersa.vercel.app";
+const APP_URL = "https://midenty-edu.vercel.app";
 
 const STORAGE_KEY = "midenty_admin_clients";
 

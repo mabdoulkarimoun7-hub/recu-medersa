@@ -37,7 +37,7 @@ const GITHUB_OWNER = "mabdoulkarimoun7-hub";
 const GITHUB_REPO = "recu-medersa";
 const GITHUB_BRANCH = "master";
 const GITHUB_TOKEN_KEY = "midenty_github_token";
-const APP_URL = "https://midenty-medersa.netlify.app";
+const APP_URL = "https://recu-medersa.vercel.app";
 
 const STORAGE_KEY = "midenty_admin_clients";
 
@@ -48,17 +48,32 @@ let formModes = ["Espèces", "Mynita", "Amanata"];
 let logoBase64 = null;
 let firebaseEnabled = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   firebaseEnabled = initAdminFirebase();
-  loadClients();
+  await loadClients();
   setupAdminLogin();
   setupListView();
   setupFormView();
 });
 
-function loadClients() {
+async function loadClients() {
   const raw = localStorage.getItem(STORAGE_KEY);
-  clients = raw ? JSON.parse(raw) : [];
+  if (raw) {
+    clients = JSON.parse(raw);
+    return;
+  }
+  try {
+    const resp = await fetch("../clients/index.json");
+    if (!resp.ok) return;
+    const codes = await resp.json();
+    for (const code of codes) {
+      const r = await fetch("../clients/" + encodeURIComponent(code) + ".json");
+      if (r.ok) clients.push(await r.json());
+    }
+    if (clients.length > 0) saveClients();
+  } catch (e) {
+    console.warn("Auto-chargement clients échoué:", e);
+  }
 }
 
 function saveClients() {
@@ -423,6 +438,40 @@ async function pushToGitHub(clientObj) {
   }
 }
 
+async function pushClientsIndex() {
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (!token) return;
+
+  const codes = clients.map(c => c.codeAcces);
+  const content = JSON.stringify(codes, null, 2);
+  const contentBase64 = btoa(unescape(encodeURIComponent(content)));
+  const path = "clients/index.json";
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+  const headers = {
+    "Authorization": "token " + token,
+    "Accept": "application/vnd.github.v3+json",
+    "Content-Type": "application/json"
+  };
+
+  try {
+    let sha = null;
+    const getResp = await fetch(apiUrl + "?ref=" + GITHUB_BRANCH, { headers });
+    if (getResp.ok) {
+      const existing = await getResp.json();
+      sha = existing.sha;
+    }
+    const body = {
+      message: "Mise à jour index clients",
+      content: contentBase64,
+      branch: GITHUB_BRANCH
+    };
+    if (sha) body.sha = sha;
+    await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify(body) });
+  } catch (err) {
+    console.error("Erreur push index:", err);
+  }
+}
+
 function showClientLink(code) {
   const link = APP_URL + "?c=" + encodeURIComponent(code);
   const linkDiv = document.getElementById("clientLinkDiv");
@@ -467,6 +516,7 @@ async function handleSaveClient(e) {
     toast("Déploiement en cours...");
     const ok = await pushToGitHub(obj);
     if (ok) {
+      await pushClientsIndex();
       toast("Déployé ! Le lien sera actif dans ~1 minute.");
       showClientLink(obj.codeAcces);
     }
@@ -475,11 +525,13 @@ async function handleSaveClient(e) {
   showList();
 }
 
-function deleteClient(code) {
+async function deleteClient(code) {
   if (!confirm("Supprimer le client " + code + " ?")) return;
   clients = clients.filter(c => c.codeAcces !== code);
   saveClients();
   renderClientsList();
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (token) await pushClientsIndex();
   toast("Client supprimé.");
 }
 

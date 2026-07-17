@@ -1,5 +1,6 @@
 {
   "codeAcces": "ABRAR-2026-469",
+  "typeEtablissement": "",
   "nomFr": "Médersa Al-Abrar",
   "nomAr": "مدرسة الأبرار",
   "adresse": "Dan Zama Koira - Niamey - Niger",
@@ -13,8 +14,14 @@
   "classes": [],
   "fraisInscription": 5000,
   "fraisMensuels": 5000,
-  "debutAnnee": 10,
-  "finAnnee": 7,
+  "debutAnnee": {
+    "mois": 10,
+    "annee": 2026
+  },
+  "finAnnee": {
+    "mois": 7,
+    "annee": 2027
+  },
   "prefixeMatricule": "ABR",
   "devise": "FCFA",
   "modesPaiement": [
@@ -43,7 +50,7 @@
   "guideConfig": {
     "sections": [],
     "forfaits": {
-      "afficher": true,
+      "afficher": false,
       "modesPaiementAbonnement": []
     },
     "messagePersonnalise": {}

@@ -25,5 +25,24 @@
   "messageFinalFr": "Que le Coran soit une lumière pour vous",
   "messageFinalAr": "ليكن القرآن نوراً لكم",
   "actif": true,
-  "dateCreation": "2026-07-14"
+  "dateCreation": "2026-07-14",
+  "modules": {
+    "inscription": true,
+    "classes": true,
+    "paiements": true,
+    "parametres": true,
+    "guide": true,
+    "presences": false,
+    "bulletins": false,
+    "attestations": false,
+    "dashboard": false,
+    "enseignants": false,
+    "historique": false
+  },
+  "forfait": "essentiel",
+  "guideConfig": {
+    "sections": [],
+    "forfaits": { "afficher": true, "modesPaiementAbonnement": [] },
+    "messagePersonnalise": {}
+  }
 }

@@ -136,6 +136,54 @@ const Storage = {
     const current = this.getSettings();
     const merged = { ...current, ...overrides };
     localStorage.setItem(KEYS.settings, JSON.stringify(merged));
+    this._pushConfigToFirestore(merged);
+  },
+
+  _pushConfigToFirestore(settings) {
+    if (!isFirebaseReady()) return;
+    const path = getSchoolCollectionPath("config");
+    if (!path) return;
+    getDb().doc(path + "/settings").set({
+      classes: settings.classes,
+      fraisInscription: settings.fraisInscription,
+      fraisMensuels: settings.fraisMensuels,
+      modesPaiement: settings.modesPaiement,
+      debutAnnee: settings.debutAnnee,
+      finAnnee: settings.finAnnee,
+      prefixeMatricule: settings.prefixeMatricule,
+      devise: settings.devise,
+      updatedAt: new Date().toISOString()
+    }, { merge: true }).catch(err => console.error("Erreur sync config Firestore:", err));
+  },
+
+  // Lecture unique de la config éditable depuis Firestore (au démarrage de l'app).
+  // Priorité : Firestore d'abord (source de vérité pour l'état courant),
+  // JSON GitHub en secours si Firestore est inaccessible.
+  async pullConfigFromFirestore() {
+    if (!isFirebaseReady()) return false;
+    const path = getSchoolCollectionPath("config");
+    if (!path) return false;
+    try {
+      const doc = await getDb().doc(path + "/settings").get();
+      if (!doc.exists) return false;
+      const data = doc.data();
+      const editableFields = [
+        "classes", "fraisInscription", "fraisMensuels",
+        "modesPaiement", "debutAnnee", "finAnnee",
+        "prefixeMatricule", "devise"
+      ];
+      const overrides = {};
+      editableFields.forEach(f => { if (data[f] !== undefined) overrides[f] = data[f]; });
+      if (Object.keys(overrides).length > 0) {
+        const current = this.getSettings();
+        const merged = { ...current, ...overrides };
+        localStorage.setItem(KEYS.settings, JSON.stringify(merged));
+      }
+      return true;
+    } catch (err) {
+      console.warn("Lecture config Firestore échouée (hors-ligne ?) :", err.message);
+      return false;
+    }
   },
 
   // ==================== Matricules ====================

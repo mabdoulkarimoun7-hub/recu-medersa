@@ -17,7 +17,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ==================== Splash & Login ==================== */
 
-function showSplash() {
+function playMidentyIntro() {
+  return new Promise(resolve => {
+    const overlay = document.getElementById("splashMidenty");
+    const message = document.getElementById("midentyMessage");
+    if (!overlay) { resolve(); return; }
+
+    setTimeout(() => {
+      message.classList.add("visible");
+    }, 1600);
+
+    setTimeout(() => {
+      overlay.classList.add("fade-out");
+      setTimeout(() => {
+        overlay.classList.add("hidden");
+        resolve();
+      }, 600);
+    }, 3400);
+  });
+}
+
+async function showSplash() {
+  await playMidentyIntro();
+
   if (!window._brandingApplied && !window._urlClientCode) {
     const s = CONFIG.getSettings();
     if (s.nomAr) document.getElementById("splashNameAr").textContent = s.nomAr;
@@ -121,7 +143,7 @@ function showLanguageSelect() {
 const VERIFICATION_KEY = "medersa_last_verified";
 const VERIFICATION_INTERVAL_DAYS = 7;
 
-function showApp() {
+async function showApp() {
   const daysSince = daysSinceLastVerification();
 
   if (daysSince !== null && daysSince >= VERIFICATION_INTERVAL_DAYS) {
@@ -134,14 +156,22 @@ function showApp() {
     return;
   }
 
+  if (typeof initFirebase === "function") initFirebase();
+  if (typeof isFirebaseReady === "function" && isFirebaseReady()) {
+    await Storage.pullConfigFromFirestore();
+  }
+
   applyLanguage();
   document.getElementById("appMain").classList.remove("hidden");
   applyBranding();
+  ModulesManager.init(CONFIG.getSettings());
+  ModulesManager.applyToDOM();
   setupTabs();
   setupInscription();
   setupClasses();
   setupMensuel();
   setupParametres();
+  setupGuide();
   checkExportWarning();
   initSyncIndicator();
   setupLanguageSwitcher();
@@ -227,14 +257,22 @@ function showVerificationScreen() {
       markVerified();
       overlay.classList.add("hidden");
 
+      if (typeof initFirebase === "function") initFirebase();
+      if (typeof isFirebaseReady === "function" && isFirebaseReady()) {
+        await Storage.pullConfigFromFirestore();
+      }
+
       document.getElementById("appMain").classList.remove("hidden");
       applyLanguage();
       applyBranding();
+      ModulesManager.init(CONFIG.getSettings());
+      ModulesManager.applyToDOM();
       setupTabs();
       setupInscription();
       setupClasses();
       setupMensuel();
       setupParametres();
+      setupGuide();
       checkExportWarning();
       initSyncIndicator();
       setupLanguageSwitcher();
@@ -793,6 +831,94 @@ function handleConsultMonth() {
   results.innerHTML = html;
 }
 
+/* ==================== ONGLET : Guide d'utilisation ==================== */
+
+const GUIDE_SECTIONS_BASE = ["inscription", "classes", "paiement", "recus"];
+const GUIDE_SECTIONS_MODULES = {
+  presences: "presences",
+  bulletins: "bulletins",
+  attestations: "attestations",
+  dashboard: "dashboard"
+};
+
+function setupGuide() {
+  if (!ModulesManager.isActive("guide")) return;
+
+  const s = CONFIG.getSettings();
+  const guideConfig = s.guideConfig || {};
+  const videoUrls = {};
+  (guideConfig.sections || []).forEach(sec => {
+    if (sec.key && sec.videoUrl) videoUrls[sec.key] = sec.videoUrl;
+  });
+
+  const msgEl = document.getElementById("guideCustomMessage");
+  const lang = I18n.getLang();
+  const customMsg = guideConfig.messagePersonnalise && guideConfig.messagePersonnalise[lang];
+  if (customMsg) {
+    msgEl.textContent = customMsg;
+    msgEl.classList.remove("hidden");
+  } else {
+    msgEl.classList.add("hidden");
+  }
+
+  const keys = [...GUIDE_SECTIONS_BASE];
+  Object.keys(GUIDE_SECTIONS_MODULES).forEach(mod => {
+    if (ModulesManager.isActive(mod)) keys.push(mod);
+  });
+
+  const container = document.getElementById("guideSections");
+  container.innerHTML = keys.map(key => renderGuideSection(key, videoUrls[key])).join("");
+
+  container.querySelectorAll(".guide-video-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const wrap = btn.closest(".guide-video-wrap");
+      const url = btn.dataset.url;
+      wrap.innerHTML = `<iframe class="guide-video-iframe" src="${escapeHtml(url)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    });
+  });
+
+  renderGuideForfaits(guideConfig);
+  renderGuidePaymentModes(guideConfig, s);
+}
+
+function renderGuideSection(key, videoUrl) {
+  let videoHtml = "";
+  if (videoUrl) {
+    videoHtml = `
+      <div class="guide-video-wrap">
+        <button type="button" class="secondary-btn guide-video-btn" data-url="${escapeHtml(videoUrl)}">${t("guide_video_btn")}</button>
+      </div>`;
+  }
+  return `
+    <section class="settings-block">
+      <h3>${t("guide_section_" + key + "_title")}</h3>
+      <p class="hint">${t("guide_section_" + key + "_desc")}</p>
+      ${videoHtml}
+    </section>`;
+}
+
+function renderGuideForfaits(guideConfig) {
+  const block = document.getElementById("guideForfaitsBlock");
+  const afficher = !guideConfig.forfaits || guideConfig.forfaits.afficher !== false;
+  if (!afficher) {
+    block.classList.add("hidden");
+    return;
+  }
+  block.classList.remove("hidden");
+  const forfaits = ["essentiel", "complet", "premium"];
+  document.getElementById("guideForfaitsList").innerHTML = forfaits.map(f => `
+    <div class="school-info-readonly" style="margin-bottom:10px">
+      <p><strong>${t("guide_forfait_" + f + "_name")}</strong></p>
+      <p>${t("guide_forfait_" + f + "_desc")}</p>
+    </div>`).join("");
+}
+
+function renderGuidePaymentModes(guideConfig, s) {
+  const configured = guideConfig.forfaits && guideConfig.forfaits.modesPaiementAbonnement;
+  const modes = (configured && configured.length > 0) ? configured : (s.modesPaiement || []);
+  document.getElementById("guidePaymentModes").textContent = modes.join(" · ");
+}
+
 /* ==================== ONGLET 4 : Paramètres ==================== */
 
 function setupParametres() {
@@ -887,6 +1013,15 @@ function loadSettingsForm() {
 
   renderClassesList();
   updateLastExportInfo();
+
+  const whatsappMsg = encodeURIComponent(t("whatsapp_help_message"));
+  document.getElementById("aboutText").innerHTML =
+    t("about_line1") + "<br>" + t("about_line2") +
+    '<br><a href="https://wa.me/22788811081?text=' + whatsappMsg + '" ' +
+    'target="_blank" rel="noopener" ' +
+    'style="display:inline-block;margin-top:10px;margin-bottom:10px;padding:10px 20px;background:#25d366;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold">' +
+    '💬 ' + t("msg_contact_whatsapp") + '</a>' +
+    "<br>" + t("about_copyright");
 }
 
 function saveSchoolInfo() {

@@ -10,10 +10,20 @@
 <link rel="icon" href="assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app/style.css">
 </head>
 <body>
+
+<!-- ========== SPLASH MIDENTY (branding) ========== -->
+<div id="splashMidenty" class="midenty-splash">
+  <img src="assets/midenty-logo.png" alt="Midenty" class="midenty-splash-logo" id="midentyLogo">
+  <div class="midenty-splash-message" id="midentyMessage">
+    <p class="midenty-msg-ar" dir="rtl">مرحباً بكم في ميدنتي، تطبيق إدارة المؤسسات التعليمية</p>
+    <p class="midenty-msg-fr">Bienvenue dans MIDENTY, l'application de gestion pour l'écosystème éducatif</p>
+    <p class="midenty-msg-en">Welcome to MIDENTY, the management app for educational institutions</p>
+  </div>
+</div>
 
 <!-- ========== SPLASH SCREEN ========== -->
 <div id="splashScreen" class="splash-screen" style="visibility:hidden">
@@ -127,19 +137,23 @@
 </header>
 
 <nav class="tabs">
-  <button class="tab-btn active" data-tab="inscription">
+  <button class="tab-btn active" data-tab="inscription" data-module="inscription">
     <span class="tab-icon">📝</span>
     <span data-i18n="tab_inscription"></span>
   </button>
-  <button class="tab-btn" data-tab="classes">
+  <button class="tab-btn" data-tab="classes" data-module="classes">
     <span class="tab-icon">📚</span>
     <span data-i18n="tab_classes"></span>
   </button>
-  <button class="tab-btn" data-tab="mensuel">
+  <button class="tab-btn" data-tab="mensuel" data-module="paiements">
     <span class="tab-icon">💰</span>
     <span data-i18n="tab_mensuel"></span>
   </button>
-  <button class="tab-btn" data-tab="parametres">
+  <button class="tab-btn" data-tab="guide" data-module="guide">
+    <span class="tab-icon">📖</span>
+    <span data-i18n="tab_guide"></span>
+  </button>
+  <button class="tab-btn" data-tab="parametres" data-module="parametres">
     <span class="tab-icon">⚙️</span>
     <span data-i18n="tab_parametres"></span>
   </button>
@@ -154,7 +168,7 @@
 <div id="exportWarning" class="export-warning hidden"></div>
 
 <!-- ========== ONGLET 1 : INSCRIPTION ========== -->
-<main id="tab-inscription" class="tab-content">
+<main id="tab-inscription" class="tab-content" data-module="inscription">
 
   <form id="inscriptionForm">
     <div class="field">
@@ -237,7 +251,7 @@
 </main>
 
 <!-- ========== ONGLET 2 : CLASSES ========== -->
-<main id="tab-classes" class="tab-content hidden">
+<main id="tab-classes" class="tab-content hidden" data-module="classes">
   <div class="field">
     <label data-i18n="label_choose_class" for="classeFilter"></label>
     <select id="classeFilter">
@@ -257,7 +271,7 @@
 </main>
 
 <!-- ========== ONGLET 3 : FRAIS MENSUELS ========== -->
-<main id="tab-mensuel" class="tab-content hidden">
+<main id="tab-mensuel" class="tab-content hidden" data-module="paiements">
 
   <div class="field">
     <label data-i18n="label_matricule_eleve" for="mensuelMatricule"></label>
@@ -324,8 +338,29 @@
   </section>
 </main>
 
+<!-- ========== ONGLET : GUIDE D'UTILISATION ========== -->
+<main id="tab-guide" class="tab-content hidden" data-module="guide">
+  <section class="settings-block">
+    <h3 data-i18n="guide_title"></h3>
+    <p class="hint" data-i18n="guide_intro"></p>
+    <p class="hint hidden" id="guideCustomMessage"></p>
+  </section>
+
+  <div id="guideSections"></div>
+
+  <section class="settings-block" id="guideForfaitsBlock">
+    <h3 data-i18n="guide_forfaits_title"></h3>
+    <div id="guideForfaitsList"></div>
+  </section>
+
+  <section class="settings-block" id="guidePaymentBlock">
+    <h3 data-i18n="guide_payment_title"></h3>
+    <div id="guidePaymentModes" class="hint"></div>
+  </section>
+</main>
+
 <!-- ========== ONGLET 4 : PARAMÈTRES ========== -->
-<main id="tab-parametres" class="tab-content hidden">
+<main id="tab-parametres" class="tab-content hidden" data-module="parametres">
 
   <!-- Sélecteur de langue -->
   <section class="settings-block">
@@ -441,12 +476,7 @@
 
   <section class="settings-block">
     <h3 data-i18n="title_about"></h3>
-    <p class="hint" id="aboutText" style="line-height:1.6">
-      Cette application a été développée par <strong>Midenty</strong>.<br>
-      Pour toute assistance technique ou information,<br>
-      veuillez nous contacter au <strong>+227 88 81 10 81</strong>.<br><br>
-      © Midenty — Tous droits réservés
-    </p>
+    <p class="hint" id="aboutText" style="line-height:1.6"></p>
   </section>
 </main>
 
@@ -472,6 +502,7 @@
 <script src="app/pdf-export.js"></script>
 <script src="app/print-escpos.js"></script>
 <script src="app/i18n.js"></script>
+<script src="app/modules-manager.js"></script>
 <script src="app/app.js"></script>
 </body>
 </html>

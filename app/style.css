@@ -78,6 +78,61 @@ body {
   color: rgba(255,255,255,0.9);
 }
 
+/* ===== Splash Midenty (branding) ===== */
+.midenty-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  transition: opacity 0.6s ease;
+}
+
+.midenty-splash.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.midenty-splash-logo {
+  width: 160px;
+  max-width: 55vw;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: midentyLogoIn 0.8s ease forwards;
+}
+
+@keyframes midentyLogoIn {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.midenty-splash-message {
+  margin-top: 24px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.midenty-splash-message.visible { opacity: 1; }
+
+.midenty-msg-ar {
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  direction: rtl;
+  margin-bottom: 10px;
+}
+
+.midenty-msg-fr, .midenty-msg-en {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
 /* ===== Login Screen ===== */
 .login-screen {
   position: fixed;
@@ -790,6 +845,15 @@ h3 {
 /* ===== Hint ===== */
 .hint { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 6px; }
 .hint a { color: var(--primary); }
+
+/* ===== Guide d'utilisation ===== */
+.guide-video-wrap { margin-top: 10px; }
+.guide-video-iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  border: none;
+}
 
 /* ===== Search ===== */
 input[type="search"] {

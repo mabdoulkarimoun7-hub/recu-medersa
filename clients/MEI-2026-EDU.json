@@ -32,5 +32,24 @@
       "tab_classes": "الفصول",
       "label_classe": "الفصل"
     }
+  },
+  "modules": {
+    "inscription": true,
+    "classes": true,
+    "paiements": true,
+    "parametres": true,
+    "guide": true,
+    "presences": false,
+    "bulletins": false,
+    "attestations": false,
+    "dashboard": false,
+    "enseignants": false,
+    "historique": false
+  },
+  "forfait": "essentiel",
+  "guideConfig": {
+    "sections": [],
+    "forfaits": { "afficher": true, "modesPaiementAbonnement": [] },
+    "messagePersonnalise": {}
   }
 }

@@ -3,24 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guide Confidentiel — Midenty</title>
+  <title>Guide Confidentiel — Midenty Éducation</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-    .card { background: #fff; border-radius: 12px; padding: 40px; max-width: 500px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 40px; max-width: 560px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
     h1 { color: #c0392b; font-size: 22px; margin-bottom: 8px; }
-    p { color: #555; margin-bottom: 24px; font-size: 14px; }
-    .warning { background: #fef3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 24px; font-size: 13px; color: #856404; }
+    h2 { color: #2c3e50; font-size: 15px; margin-bottom: 16px; font-weight: normal; }
+    p { color: #555; margin-bottom: 20px; font-size: 14px; line-height: 1.5; }
+    .warning { background: #fef3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 13px; color: #856404; text-align: left; }
+    .version { color: #7f8c8d; font-size: 12px; margin-bottom: 20px; }
     button { background: #c0392b; color: #fff; border: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; cursor: pointer; }
     button:hover { background: #a93226; }
+    .sections { text-align: left; background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 12px; color: #555; }
+    .sections strong { color: #2c3e50; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>DOCUMENT CONFIDENTIEL</h1>
-    <p>Guide d'utilisation et codes secrets de l'application Médersa — par Midenty</p>
-    <div class="warning">Ce document contient des informations sensibles. Ne le partagez qu'avec les personnes autorisées.</div>
+    <h1>GUIDE CONFIDENTIEL</h1>
+    <h2>Plateforme Midenty Éducation — Version 1.0</h2>
+    <div class="version">Document destiné au comité de révision — Juillet 2026</div>
+    <div class="warning">
+      <strong>Document confidentiel.</strong> Contient les codes d'accès, tokens et informations d'administration. Ne le partagez qu'avec les personnes de confiance autorisées.
+    </div>
+    <div class="sections">
+      <strong>Contenu du guide :</strong><br>
+      1. Présentation de Midenty<br>
+      2. Codes secrets et accès<br>
+      3. Utilisation de l'application (côté client)<br>
+      4. Panneau Admin Midenty<br>
+      5. Comment l'application fonctionne (grand public)<br>
+      6. Architecture technique — fichier par fichier<br>
+      7. Sécurité et confidentialité<br>
+      8. Vision future — Plateforme panafricaine<br>
+      9. Version actuelle de la plateforme<br>
+      10. Glossaire<br>
+      11. Support et contact<br>
+      12. Validation du comité
+    </div>
     <button onclick="generateGuide()">Télécharger le guide PDF</button>
   </div>
 
@@ -29,67 +51,138 @@ function generateGuide() {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ unit: "mm", format: "a4" });
   const W = pdf.internal.pageSize.getWidth();
+  const H = pdf.internal.pageSize.getHeight();
   const ml = 20;
   const mr = W - 20;
   let y = 20;
+  let pageNum = 1;
 
+  // ===== HELPERS =====
   function title(text, size) {
+    checkPage(20);
     pdf.setFontSize(size || 16);
     pdf.setFont(undefined, "bold");
     pdf.setTextColor(192, 57, 43);
     pdf.text(text, ml, y);
-    y += size ? size * 0.5 : 8;
+    y += (size ? size * 0.5 : 8) + 2;
     pdf.setTextColor(0, 0, 0);
     pdf.setFont(undefined, "normal");
   }
 
   function subtitle(text) {
-    pdf.setFontSize(13);
+    checkPage(12);
+    pdf.setFontSize(12);
     pdf.setFont(undefined, "bold");
     pdf.setTextColor(44, 62, 80);
     pdf.text(text, ml, y);
-    y += 7;
+    y += 6;
     pdf.setFont(undefined, "normal");
     pdf.setTextColor(0, 0, 0);
-    pdf.setFontSize(11);
+    pdf.setFontSize(10.5);
   }
 
   function line(text, indent) {
     const x = ml + (indent || 0);
     const lines = pdf.splitTextToSize(text, mr - x);
+    checkPage(lines.length * 5 + 2);
+    pdf.setFontSize(10.5);
     pdf.text(lines, x, y);
-    y += lines.length * 5.5;
+    y += lines.length * 5;
   }
 
-  function sep() {
-    y += 3;
-    pdf.setDrawColor(200);
-    pdf.line(ml, y, mr, y);
+  function bold(text, indent) {
+    pdf.setFont(undefined, "bold");
+    line(text, indent);
+    pdf.setFont(undefined, "normal");
+  }
+
+  function code(text, indent) {
+    const x = ml + (indent || 0);
+    checkPage(7);
+    pdf.setFillColor(240, 240, 240);
+    pdf.rect(x - 2, y - 4, mr - x + 4, 6, "F");
+    pdf.setFont("courier", "normal");
+    pdf.setFontSize(10);
+    pdf.text(text, x, y);
+    pdf.setFont(undefined, "normal");
+    pdf.setFontSize(10.5);
     y += 6;
   }
 
+  function fileBox(name, role, desc) {
+    checkPage(24);
+    pdf.setFillColor(248, 249, 250);
+    pdf.setDrawColor(220, 220, 220);
+    const startY = y - 4;
+    pdf.setFont("courier", "bold");
+    pdf.setFontSize(10);
+    pdf.setTextColor(11, 61, 145);
+    pdf.text(name, ml + 2, y);
+    pdf.setFont(undefined, "italic");
+    pdf.setFontSize(9);
+    pdf.setTextColor(120, 120, 120);
+    pdf.text(role, ml + 2, y + 5);
+    pdf.setFont(undefined, "normal");
+    pdf.setFontSize(10);
+    pdf.setTextColor(0, 0, 0);
+    const lines = pdf.splitTextToSize(desc, mr - ml - 4);
+    pdf.text(lines, ml + 2, y + 11);
+    const boxHeight = 11 + lines.length * 4.5 + 3;
+    pdf.rect(ml, startY, mr - ml, boxHeight);
+    y = startY + boxHeight + 3;
+  }
+
+  function sep() {
+    checkPage(8);
+    y += 2;
+    pdf.setDrawColor(200);
+    pdf.line(ml, y, mr, y);
+    y += 5;
+  }
+
+  function space(n) { y += (n || 3); }
+
   function checkPage(needed) {
-    if (y + (needed || 30) > 270) {
+    if (y + (needed || 30) > H - 15) {
+      addFooter();
       pdf.addPage();
+      pageNum++;
       y = 20;
     }
   }
 
-  // ===== PAGE 1 : COUVERTURE =====
+  function addFooter() {
+    pdf.setFontSize(8);
+    pdf.setTextColor(150);
+    pdf.text("Midenty — Confidentiel", ml, H - 8);
+    pdf.text("Page " + pageNum, W - ml, H - 8, { align: "right" });
+    pdf.setTextColor(0);
+  }
+
+  function newPage() {
+    addFooter();
+    pdf.addPage();
+    pageNum++;
+    y = 20;
+  }
+
+  // ===== COUVERTURE =====
   pdf.setFillColor(192, 57, 43);
-  pdf.rect(0, 0, W, 60, "F");
+  pdf.rect(0, 0, W, 70, "F");
   pdf.setTextColor(255, 255, 255);
-  pdf.setFontSize(24);
+  pdf.setFontSize(26);
   pdf.setFont(undefined, "bold");
-  pdf.text("GUIDE CONFIDENTIEL", W / 2, 28, { align: "center" });
+  pdf.text("GUIDE CONFIDENTIEL", W / 2, 30, { align: "center" });
   pdf.setFontSize(14);
   pdf.setFont(undefined, "normal");
-  pdf.text("Application de Gestion — Médersa", W / 2, 38, { align: "center" });
+  pdf.text("Plateforme Midenty Éducation", W / 2, 42, { align: "center" });
+  pdf.setFontSize(11);
+  pdf.text("Version 1.0 — Juillet 2026", W / 2, 52, { align: "center" });
   pdf.setFontSize(10);
-  pdf.text("Par Midenty — +227 88 81 10 81", W / 2, 48, { align: "center" });
+  pdf.text("Document destiné au comité de révision", W / 2, 60, { align: "center" });
 
   pdf.setTextColor(0, 0, 0);
-  y = 75;
+  y = 85;
   pdf.setFontSize(12);
   pdf.setFont(undefined, "bold");
   pdf.text("AVERTISSEMENT", W / 2, y, { align: "center" });
@@ -97,201 +190,990 @@ function generateGuide() {
   pdf.setFont(undefined, "normal");
   pdf.setFontSize(10);
   const warn = pdf.splitTextToSize(
-    "Ce document est strictement confidentiel. Il contient les codes d'accès, " +
-    "les codes de réinitialisation et toutes les informations nécessaires à l'administration " +
-    "de l'application. Ne le partagez qu'avec les personnes de confiance autorisées à gérer l'application.",
+    "Ce document est strictement confidentiel. Il contient les codes d'accès, les codes de réinitialisation, les tokens et toutes les informations nécessaires à l'administration de la plateforme. Ne le partagez qu'avec les personnes de confiance.",
     mr - ml
   );
   pdf.text(warn, ml, y);
-  y += warn.length * 5 + 10;
+  y += warn.length * 5 + 8;
 
-  sep();
+  pdf.setFillColor(248, 249, 250);
+  pdf.setDrawColor(220);
+  pdf.rect(ml, y, mr - ml, 40, "FD");
+  y += 6;
+  pdf.setFontSize(10);
+  pdf.setFont(undefined, "bold");
+  pdf.text("Coordonnées de la plateforme", ml + 4, y);
+  y += 6;
+  pdf.setFont(undefined, "normal");
+  pdf.text("Application : midenty-edu.vercel.app", ml + 4, y); y += 5;
+  pdf.text("Panneau admin : midenty-edu.vercel.app/admin/", ml + 4, y); y += 5;
+  pdf.text("Éditeur : Midenty — +227 88 81 10 81", ml + 4, y); y += 5;
+  pdf.text("Email : mabdoulkarimoun7@gmail.com", ml + 4, y); y += 8;
 
-  // ===== SECTION 1 : CODES SECRETS =====
-  title("1. CODES SECRETS");
-  y += 4;
+  y += 8;
+  pdf.setFont(undefined, "bold");
+  pdf.setFontSize(11);
+  pdf.text("TABLE DES MATIÈRES", ml, y); y += 8;
+  pdf.setFont(undefined, "normal");
+  pdf.setFontSize(10.5);
+  const toc = [
+    "1. Présentation de Midenty",
+    "2. Codes secrets et accès",
+    "3. Utilisation de l'application (côté client)",
+    "4. Panneau Admin Midenty",
+    "5. Comment l'application fonctionne (grand public)",
+    "6. Architecture technique — fichier par fichier",
+    "7. Sécurité et confidentialité",
+    "8. Vision future — Plateforme panafricaine",
+    "9. Version actuelle de la plateforme",
+    "10. Glossaire",
+    "11. Support et contact",
+    "12. Validation du comité"
+  ];
+  toc.forEach(t => { pdf.text(t, ml + 5, y); y += 6; });
 
-  subtitle("Code d'accès à l'application");
-  line("Ce code est demandé à chaque ouverture de l'application.");
-  line("Code : MEI-2026-EDU", 5);
-  y += 3;
-  line("Donnez ce code uniquement au directeur de l'école et aux personnes");
-  line("autorisées à utiliser l'application.");
-  y += 4;
+  // ===== SECTION 1 : PRÉSENTATION =====
+  newPage();
+  title("1. PRÉSENTATION DE MIDENTY");
+  space();
 
-  subtitle("Code de réinitialisation (ADMIN)");
-  line("Ce code permet d'effacer TOUTES les données de l'application.");
-  line("Code : MIDENTY-RESET-2026", 5);
-  y += 3;
-  line("ATTENTION : La réinitialisation est IRRÉVERSIBLE. Toutes les données");
-  line("(élèves, paiements, reçus) seront supprimées définitivement.");
-  y += 3;
-  line("Pour réinitialiser :");
+  subtitle("Qu'est-ce que Midenty ?");
+  line("Midenty est une plateforme de gestion pour les établissements éducatifs en Afrique. Elle permet de gérer les inscriptions d'élèves/étudiants, le suivi des paiements, et la génération de reçus (PDF, image, WhatsApp, impression thermique Bluetooth).");
+  space();
+
+  subtitle("Une seule application pour tous");
+  line("Midenty est conçue comme une plateforme unique qui couvre TOUT l'écosystème éducatif : écoles coraniques (médersas), écoles privées, universités arabes, universités, instituts supérieurs, centres de formation professionnelle. Chaque établissement a sa propre configuration (nom, logo, couleurs, frais, classes) chargée via un code d'accès unique.");
+  space();
+
+  subtitle("Vision panafricaine");
+  line("Midenty a pour ambition de devenir la référence de la gestion éducative en Afrique. La plateforme est conçue pour être déployée dans plusieurs pays :");
+  line("• Niger (siège et premier marché)", 5);
+  line("• Burkina Faso", 5);
+  line("• Mali", 5);
+  line("• Nigeria", 5);
+  line("• Et progressivement dans toute l'Afrique de l'Ouest et au-delà", 5);
+  space();
+  line("Un seul panneau d'administration central permet de gérer tous les clients, quel que soit leur pays ou leur type d'établissement.");
+  space(5);
+
+  subtitle("Caractéristiques principales");
+  line("• Application web progressive (PWA) : fonctionne comme une app native");
+  line("• Fonctionne hors-ligne : lecture immédiate, écritures mises en file et synchronisées automatiquement au retour du réseau");
+  line("• Interface trilingue : français, arabe et anglais");
+  line("• Hébergement cloud gratuit (Vercel + Firebase) — aucune infrastructure à maintenir");
+  line("• Données synchronisées en temps réel sur Firebase Firestore, avec cache local pour l'usage hors-ligne");
+  line("• Impression thermique Bluetooth via RawBT (imprimantes 58mm)");
+  space(5);
+
+  subtitle("Liens d'accès");
+  line("Application client :");
+  code("midenty-edu.vercel.app/?c=CODE_CLIENT", 3);
+  space(2);
+  line("Panneau d'administration :");
+  code("midenty-edu.vercel.app/admin/", 3);
+  space(2);
+  line("Ancienne URL (redirige automatiquement) :");
+  code("recu-medersa.vercel.app", 3);
+
+  // ===== SECTION 2 : CODES SECRETS =====
+  newPage();
+  title("2. CODES SECRETS ET ACCÈS");
+  space();
+  pdf.setFillColor(255, 243, 205);
+  pdf.rect(ml, y, mr - ml, 10, "F");
+  pdf.setFont(undefined, "bold");
+  pdf.setTextColor(133, 100, 4);
+  pdf.text("NE COMMUNIQUEZ CES CODES QU'AUX PERSONNES AUTORISÉES", ml + 3, y + 6);
+  pdf.setTextColor(0);
+  pdf.setFont(undefined, "normal");
+  y += 14;
+
+  subtitle("Codes d'accès clients");
+  line("Ces codes sont utilisés pour ouvrir l'application sur le téléphone du client.");
+  space(2);
+  bold("• Médersa d'Éducation Islamique");
+  code("MEI-2026-EDU", 5);
+  bold("• Médersa Al-Abrar");
+  code("ABRAR-2026-469", 5);
+  bold("• Centre Formation Tillabéri");
+  code("CFT-2026-TIL", 5);
+  space(3);
+  line("Chaque code peut aussi être utilisé en lien direct :");
+  code("midenty-edu.vercel.app/?c=CODE_CLIENT", 5);
+  space(3);
+
+  subtitle("Rotation annuelle des codes");
+  line("Les codes contiennent l'année scolaire (ex : -2026). À chaque nouvelle année scolaire, générer de nouveaux codes (ex : MEI-2027-EDU) via le panneau admin, puis communiquer les nouveaux codes aux clients.");
+  space(3);
+
+  subtitle("En cas de fuite d'un code");
+  line("1. Se connecter au panneau admin", 5);
+  line("2. Ouvrir la fiche du client concerné", 5);
+  line("3. Désactiver le client (statut → Désactivé)", 5);
+  line("4. Générer un nouveau code d'accès", 5);
+  line("5. Sauvegarder — le déploiement automatique se fait en ~1 min", 5);
+  line("6. Communiquer le nouveau code au client", 5);
+  space(3);
+
+  subtitle("Code de réinitialisation admin");
+  line("Ce code permet d'effacer TOUTES les données de l'application sur un appareil.");
+  code("MIDENTY-RESET-2026", 5);
+  space(2);
+  bold("ATTENTION : La réinitialisation est IRRÉVERSIBLE !");
+  space(2);
+  line("Procédure de réinitialisation :");
   line("1. Aller dans l'onglet Paramètres", 5);
   line("2. Descendre jusqu'à la section « À propos »", 5);
   line("3. Taper 5 fois rapidement sur le texte « À propos »", 5);
   line("4. Un champ de mot de passe apparaît", 5);
   line("5. Saisir le code : MIDENTY-RESET-2026", 5);
-  line("6. Confirmer la suppression", 5);
-  y += 3;
-  line("Ne donnez JAMAIS ce code aux enseignants ou au personnel de l'école.");
+  line("6. Choisir DEV (panneau dev) ou RESET (tout effacer)", 5);
+  space(2);
+  bold("Ne donnez JAMAIS ce code aux enseignants ou au personnel de l'école.");
+  space(3);
 
-  sep();
-  checkPage(60);
+  subtitle("Connexion au panneau admin");
+  line("Le panneau admin utilise Firebase Authentication (email/mot de passe).");
+  line("Adresse : midenty-edu.vercel.app/admin/");
+  line("Les comptes admin sont créés dans la console Firebase par Midenty uniquement (Console Firebase → Authentication → Users → Add user).");
+  space(3);
 
-  // ===== SECTION 2 : INSTALLATION =====
-  title("2. INSTALLATION DE L'APPLICATION");
-  y += 4;
-
-  subtitle("Sur Android (Chrome)");
-  line("1. Ouvrir Chrome sur le téléphone");
-  line("2. Aller à l'adresse de l'application (URL fournie par Midenty)");
-  line("3. Attendre que la bannière « Installer » apparaisse");
-  line("4. Cliquer sur « Installer »");
-  line("5. L'application apparaît sur l'écran d'accueil comme une app native");
-  y += 4;
-
-  subtitle("Première utilisation");
-  line("1. Ouvrir l'application");
-  line("2. L'écran de démarrage (splash) s'affiche avec le logo");
-  line("3. Saisir le code d'accès : MEI-2026-EDU");
-  line("4. L'application s'ouvre sur l'onglet « Inscription »");
-
-  sep();
-  checkPage(80);
+  subtitle("Token GitHub (déploiement automatique)");
+  line("Un token GitHub (Personal Access Token) est configuré dans le panneau admin. Il permet de pousser automatiquement les fichiers clients sur GitHub, ce qui déclenche un redéploiement automatique sur Vercel.");
+  space(2);
+  bold("Important : le token n'est visible qu'une seule fois lors de sa création. Le stocker en lieu sûr.");
+  space(2);
+  line("Pour configurer/changer le token :");
+  line("1. Aller sur github.com → Settings → Developer settings", 5);
+  line("2. Personal access tokens → Tokens (classic)", 5);
+  line("3. Generate new token — droits 'repo' (lecture/écriture)", 5);
+  line("4. Copier le token AVANT de fermer la page", 5);
+  line("5. Coller le token dans le panneau admin (section Paramètres)", 5);
 
   // ===== SECTION 3 : UTILISATION =====
-  title("3. GUIDE D'UTILISATION");
-  y += 4;
+  newPage();
+  title("3. UTILISATION DE L'APPLICATION (CÔTÉ CLIENT)");
+  space();
 
-  subtitle("Onglet 1 : Inscription (التسجيل)");
-  line("Cet onglet permet d'inscrire de nouveaux élèves.");
-  y += 2;
-  line("• Le matricule (MEI-001, MEI-002...) est généré automatiquement");
+  subtitle("Installation sur Android");
+  line("1. Ouvrir Google Chrome sur le téléphone", 5);
+  line("2. Aller à : midenty-edu.vercel.app/?c=CODE_CLIENT", 5);
+  line("3. Appuyer sur les 3 points en haut à droite de Chrome", 5);
+  line("4. Choisir « Ajouter à l'écran d'accueil »", 5);
+  line("5. L'application apparaît sur l'écran d'accueil comme une app native", 5);
+  space(2);
+  line("Alternative : envoyer le lien direct par WhatsApp au client.");
+  space(3);
+
+  subtitle("Installation sur iPhone");
+  line("1. Ouvrir Safari (obligatoire — ne fonctionne pas avec Chrome iOS)", 5);
+  line("2. Aller à : midenty-edu.vercel.app/?c=CODE_CLIENT", 5);
+  line("3. Appuyer sur le bouton « Partager » en bas de l'écran", 5);
+  line("4. Choisir « Sur l'écran d'accueil »", 5);
+  line("5. Confirmer — l'icône apparaît sur l'écran d'accueil", 5);
+  space(3);
+
+  subtitle("Première connexion");
+  line("1. Ouvrir l'application (ou le lien direct)", 5);
+  line("2. L'écran de démarrage (splash) s'affiche avec le logo de l'école", 5);
+  line("3. Si besoin, saisir le code d'accès", 5);
+  line("4. L'application s'ouvre sur l'onglet « Inscription »", 5);
+  space(3);
+
+  subtitle("Onglet 1 : Inscription");
+  line("Permet d'inscrire de nouveaux élèves.");
+  line("• Le matricule (ex : MEI-001, MEI-002...) est généré automatiquement");
+  line("• Le préfixe (MEI, ABRAR, CFT...) correspond au code client");
   line("• Remplir : nom complet, téléphone élève, téléphone parent, classe");
-  line("• Cliquer sur « Inscrire » pour enregistrer l'élève");
-  line("• Un reçu d'inscription est généré automatiquement");
-  line("• Le reçu affiche le matricule — c'est ce numéro que le parent");
-  line("  utilisera pour payer les frais mensuels chaque mois");
-  y += 2;
-  line("Important : Un élève inscrit NE PEUT PAS être supprimé (protection");
-  line("contre la fraude). On peut seulement modifier son nom ou sa classe.");
+  line("• Cliquer sur « Inscrire » pour enregistrer");
+  line("• Un reçu d'inscription est généré avec le matricule");
+  space(2);
+  bold("Règle : un élève inscrit NE PEUT PAS être supprimé (protection anti-fraude). On peut seulement modifier son nom ou sa classe.");
+  space(3);
 
-  checkPage(50);
-  y += 4;
-
-  subtitle("Onglet 2 : Classes (الأقسام)");
-  line("Cet onglet affiche la liste des classes et leurs élèves.");
-  y += 2;
+  subtitle("Onglet 2 : Classes");
+  line("Affiche la liste des classes et leurs élèves.");
   line("• Sélectionner une classe dans le menu déroulant");
   line("• La liste des élèves de cette classe s'affiche");
   line("• Possibilité d'exporter la liste en PDF");
+  space(3);
 
-  checkPage(60);
-  y += 4;
-
-  subtitle("Onglet 3 : Frais mensuels (الرسوم الشهرية)");
-  line("Cet onglet permet de collecter les frais mensuels.");
-  y += 2;
-  line("Étapes pour enregistrer un paiement :");
-  line("1. Saisir le matricule de l'élève (ex: MEI-001)", 5);
+  subtitle("Onglet 3 : Frais mensuels");
+  line("Permet de collecter et suivre les paiements mensuels.");
+  line("1. Saisir le matricule de l'élève (ex : MEI-001)", 5);
   line("2. Cliquer sur « Rechercher »", 5);
-  line("3. Les informations de l'élève s'affichent automatiquement", 5);
-  line("4. La grille des mois apparaît (vert = payé, gris = impayé)", 5);
-  line("5. Cliquer sur le(s) mois à payer (ils deviennent bleus)", 5);
-  line("6. Choisir le mode de paiement (Espèces, Mynita, Amanata)", 5);
+  line("3. Les informations de l'élève s'affichent", 5);
+  line("4. La grille des mois apparaît :", 5);
+  line("   Vert = payé | Gris = impayé | Bleu = sélectionné", 5);
+  line("5. Cliquer sur le(s) mois à payer", 5);
+  line("6. Choisir le mode de paiement (Espèces, Mynita, Amanata...)", 5);
   line("7. Cliquer sur « Payer » pour générer le reçu", 5);
-  y += 3;
-  line("Section « Consultation » : en bas de page, choisir un mois pour voir");
-  line("la liste des élèves qui ont payé et ceux qui n'ont pas encore payé.");
+  space(2);
+  line("Section Consultation : voir les listes de payés/impayés par mois.");
+  space(3);
 
-  checkPage(60);
-  y += 4;
+  subtitle("Onglet 4 : Paramètres");
+  line("Configuration de l'application :");
+  line("• Informations de l'école : nom, adresse, téléphones, logo");
+  line("• Classes : ajouter ou supprimer des classes");
+  line("• Frais : montant inscription et frais mensuels");
+  line("• Année scolaire : mois de début et de fin");
+  line("• Préfixe matricule : changer le préfixe (ex : MEI)");
+  line("• Sauvegarde : exporter/importer les données en JSON");
+  space(2);
+  line("Note : les informations verrouillées (nom, logo, couleurs) ne peuvent être modifiées que par Midenty via le panneau admin.");
+  space(3);
 
-  subtitle("Onglet 4 : Paramètres (الإعدادات)");
-  line("Cet onglet permet de configurer l'application.");
-  y += 2;
-  line("• Informations de l'école : nom (FR/AR), adresse, téléphones, logo");
-  line("• Classes : créer ou supprimer des classes");
-  line("• Frais : modifier le montant de l'inscription et des frais mensuels");
-  line("• Année scolaire : choisir le mois de début et de fin");
-  line("• Préfixe matricule : changer le préfixe (par défaut: MEI)");
-  line("• Sauvegarde : exporter/importer les données en fichier JSON");
-
-  sep();
-  checkPage(50);
-
-  // ===== SECTION 4 : REÇUS =====
-  title("4. LES REÇUS");
-  y += 4;
-
+  subtitle("Les reçus — 4 modes de partage");
   line("Chaque reçu peut être partagé de 4 façons :");
-  y += 2;
-  line("• PDF — télécharge un fichier PDF du reçu");
-  line("• Image — télécharge une image PNG du reçu");
-  line("• WhatsApp — partage le reçu directement via WhatsApp");
-  line("• Imprimer — envoie le reçu vers une imprimante Bluetooth");
-  y += 3;
+  line("• PDF : télécharge un fichier PDF du reçu");
+  line("• Image : télécharge une image PNG");
+  line("• WhatsApp : partage directement via WhatsApp");
+  line("• Imprimer : envoie vers une imprimante Bluetooth (via RawBT)");
+  space(3);
 
-  subtitle("Impression Bluetooth");
-  line("L'application utilise l'app RawBT pour imprimer sur une imprimante");
-  line("thermique Bluetooth (58mm). Pour configurer :");
+  subtitle("Impression Bluetooth (thermique 58mm)");
   line("1. Installer l'app « RawBT » depuis Google Play Store", 5);
   line("2. Connecter l'imprimante Bluetooth dans les paramètres Android", 5);
   line("3. Ouvrir RawBT et sélectionner l'imprimante", 5);
-  line("4. Dans l'application Médersa, cliquer sur « Imprimer »", 5);
+  line("4. Dans l'app Midenty, cliquer sur « Imprimer »", 5);
+  space(3);
 
-  sep();
-  checkPage(50);
+  subtitle("Sauvegarde des données");
+  line("Les données (élèves, paiements) sont automatiquement enregistrées en ligne sur Firebase. Si le téléphone est perdu ou réinitialisé, les données sont récupérables depuis un autre appareil.");
+  space(2);
+  line("En plus de la synchronisation automatique, une sauvegarde manuelle est disponible en fichier JSON. Utile pour :");
+  line("• Archivage annuel", 5);
+  line("• Migration entre projets Firebase", 5);
+  line("• Audit comptable", 5);
+  space(2);
+  line("Exporter : Paramètres → Sauvegarde → Exporter (fichier JSON)");
+  line("Importer : Paramètres → Sauvegarde → Importer (sélectionner le fichier)");
 
-  // ===== SECTION 5 : SAUVEGARDE =====
-  title("5. SAUVEGARDE DES DONNÉES");
-  y += 4;
+  // ===== SECTION 4 : PANNEAU ADMIN =====
+  newPage();
+  title("4. PANNEAU ADMIN MIDENTY");
+  space();
 
+  subtitle("Accès");
+  line("Adresse : midenty-edu.vercel.app/admin/");
+  line("Connexion : email + mot de passe (Firebase Authentication)");
+  line("Les comptes admin sont créés dans la console Firebase par Midenty uniquement.");
+  space(3);
+
+  subtitle("Créer un nouvel établissement");
+  line("Le formulaire de création comporte 9 sections :");
+  space(2);
+  bold("Section 1 : Identité de l'établissement");
+  line("Nom français, nom arabe, adresse, téléphones, logo (image)", 5);
+  bold("Section 2 : Couleurs du thème");
+  line("Couleur principale, secondaire, accent (personnalise l'interface)", 5);
+  bold("Section 3 : Accès");
+  line("Code d'accès (auto-généré ou manuel), statut actif/désactivé", 5);
+  bold("Section 4 : Scolarité");
+  line("Frais inscription, frais mensuels, début/fin année, préfixe matricule, devise", 5);
+  bold("Section 5 : Classes");
+  line("Liste des classes (ajout libre : CP1, 6ème, Niveau 1, etc.)", 5);
+  bold("Section 6 : Modes de paiement");
+  line("Espèces, Mynita, Amanata... (modifiable selon l'établissement)", 5);
+  bold("Section 7 : SMS (fonctionnalité optionnelle)");
+  line("Notifications SMS via Africa's Talking, Twilio ou opérateur générique. Fonctionnalité implémentée via Firebase Cloud Functions.", 5);
+  bold("Section 8 : Messages sur les reçus");
+  line("Message final en français et en arabe (affiché sur chaque reçu)", 5);
+  bold("Section 9 : Personnalisation des textes (i18n)");
+  line("Labels des onglets, boutons, champs — par langue (FR/AR/EN)", 5);
+  space(3);
+
+  subtitle("Déploiement automatique");
+  line("Quand vous sauvegardez un client avec le token GitHub configuré :");
+  line("1. Le fichier JSON du client est poussé sur GitHub", 5);
+  line("2. L'index des clients (clients/index.json) est mis à jour", 5);
+  line("3. Vercel détecte le changement et redéploie automatiquement (~1 min)", 5);
+  line("4. Le client peut se connecter avec son code d'accès", 5);
+  space(3);
+
+  subtitle("Autres fonctions de l'admin");
+  line("• Modifier un client existant (cliquer sur le crayon)");
+  line("• Désactiver un client (changer le statut à « Désactivé »)");
+  line("• Supprimer un client");
+  line("• Copier le lien direct du client");
+  line("• Télécharger le JSON d'un client");
+  line("• Import/Export de tous les clients en JSON");
+
+  // ===== SECTION 5 : COMMENT ÇA FONCTIONNE =====
+  newPage();
+  title("5. COMMENT L'APPLICATION FONCTIONNE");
+  space();
+  line("Cette section explique le fonctionnement de Midenty en termes simples, sans jargon technique. Pour les détails techniques fichier par fichier, voir Section 6.");
+  space(3);
+
+  subtitle("L'application coûte très peu à faire tourner");
+  line("Midenty fonctionne comme un site web, pas comme une application classique. Il n'y a pas besoin de payer un serveur ou un abonnement mensuel dans les quotas gratuits Vercel + Firebase (largement suffisants pour des dizaines d'établissements). Au-delà, les coûts sont variables selon l'usage réel.");
+  space(2);
+  line("Résultat :");
+  line("• Zéro frais d'hébergement dans les quotas gratuits", 5);
+  line("• Zéro frais de maintenance technique", 5);
+  line("• L'application tourne toute seule, 24h/24", 5);
+  space(3);
+
+  subtitle("L'application fonctionne même sans internet");
+  line("Quand un client ouvre l'application pour la première fois, elle se télécharge automatiquement dans son téléphone. Après ça, elle fonctionne même sans connexion internet (hors-ligne). C'est pour ça qu'elle marche bien au Niger, même dans les zones avec un réseau instable.");
+  space(3);
+
+  subtitle("Chaque établissement a sa propre fiche de configuration");
+  line("Quand tu crées un client dans le panneau admin, une fiche est créée pour cet établissement. Cette fiche contient : le nom, le logo, les couleurs, les frais, les classes, etc. C'est cette fiche qui personnalise l'application pour chaque établissement. Quand le client entre son code d'accès, sa fiche est chargée.");
+  space(3);
+
+  subtitle("Les données sont enregistrées en ligne (Firebase)");
+  line("Toutes les données (élèves, paiements, reçus) sont enregistrées en ligne sur Firebase (base de données Google). Cela signifie :");
+  line("• Les données sont en sécurité dans le cloud", 5);
+  line("• Si le téléphone est perdu ou réinitialisé, rien n'est perdu", 5);
+  line("• Les données peuvent être consultées depuis un autre appareil", 5);
+  line("• Les données sont hébergées dans les serveurs Google Cloud (région configurable lors du setup Firebase)", 5);
+  space(3);
+
+  subtitle("Synchronisation automatique (online/offline)");
+  line("L'application utilise une technologie intelligente :");
+  space(2);
+  line("• Quand il y a internet : les données sont enregistrées directement sur Firebase en temps réel", 5);
+  space(1);
+  line("• Quand il n'y a PAS internet : les données sont stockées temporairement dans le téléphone (en local)", 5);
+  space(1);
+  line("• Quand la connexion revient : les données locales sont automatiquement synchronisées avec Firebase", 5);
+  space(2);
+  line("Le client n'a rien à faire — tout se passe automatiquement en arrière-plan. Un petit indicateur dans l'application montre si les données sont synchronisées.");
+  space(3);
+
+  subtitle("Le déploiement est automatique");
+  line("Quand tu crées ou modifies un client dans le panneau admin :");
+  line("1. La fiche du client est envoyée sur GitHub (stockage du code)", 5);
+  line("2. Vercel détecte le changement et met à jour l'application (~1 min)", 5);
+  line("3. Le client peut utiliser l'application avec son code", 5);
+  space(2);
+  line("Tu n'as rien à faire de technique — tout est automatique.");
+  space(3);
+
+  subtitle("Les outils utilisés");
+  line("• Vercel : héberge l'application gratuitement (midenty-edu.vercel.app)");
+  line("• GitHub : stocke le code et les fiches clients en sécurité");
+  line("• Firebase : base de données en ligne (Firestore) + connexion admin (Auth)");
+  line("• Firebase Cloud Functions : envoie les SMS automatiques");
+  line("• WhatsApp/SMS : pour le support client et les notifications");
+
+  // ===== SECTION 6 : ARCHITECTURE TECHNIQUE =====
+  newPage();
+  title("6. ARCHITECTURE TECHNIQUE — FICHIER PAR FICHIER");
+  space();
+  line("Cette section explique tous les fichiers du projet, en français simple. Objectif : même quelqu'un qui ne comprend pas la programmation doit pouvoir comprendre à quoi sert chaque fichier.");
+  space(4);
+
+  subtitle("Vue d'ensemble — 4 grands blocs");
+  line("Le projet est organisé en 4 grands blocs :");
+  space(2);
+  bold("1. L'application cliente");
+  line("Ce que le directeur d'école voit et utilise sur son téléphone.", 5);
+  bold("2. Le panneau admin");
+  line("Ce que Midenty utilise pour créer/gérer les clients.", 5);
+  bold("3. Les fiches clients");
+  line("Un fichier JSON par établissement, contenant sa configuration.", 5);
+  bold("4. L'infrastructure");
+  line("Firebase, Vercel, GitHub, service worker, règles de sécurité.", 5);
+  space(3);
+
+  // Fichiers racine
+  subtitle("6.1 — Fichiers racine du projet");
+  space(2);
+
+  fileBox("index.html",
+    "Page principale de l'application cliente (477 lignes)",
+    "C'est la porte d'entrée. Quand quelqu'un ouvre l'app, ce fichier se charge en premier. Il contient : l'écran de démarrage (splash), l'écran de connexion, les 4 onglets, les fenêtres popup. Il charge aussi la fiche du client (JSON) à partir du code dans l'URL (?c=MEI-2026-EDU), applique les couleurs, le logo et le nom, puis lance l'application.");
+
+  fileBox("manifest.json",
+    "Fiche d'identité de la PWA (25 lignes)",
+    "C'est comme la carte d'identité de l'application. Il dit à Android/iPhone : « Je suis une application, mon nom est X, mon icône est Y, mes couleurs sont Z. » C'est ce qui permet à l'application d'être installée sur l'écran d'accueil comme une vraie app native. Il est écrasé dynamiquement en JavaScript avec la fiche du client (nom, logo, couleurs personnalisés).");
+
+  fileBox("service-worker.js",
+    "Cerveau du mode hors-ligne (62 lignes)",
+    "C'est un petit programme qui tourne en arrière-plan dans le téléphone. Son rôle : mémoriser les fichiers de l'app pour qu'elle fonctionne sans internet. Version actuelle : v10. Stratégie : « network-first » (vérifie d'abord internet, sinon utilise la mémoire). Il n'enregistre PAS les fiches clients (clients/*.json) ni les données Firebase — celles-ci passent toujours par le réseau pour rester à jour.");
+
+  fileBox("firebase.json",
+    "Configuration Firebase (8 lignes)",
+    "Dit à Firebase quels fichiers utiliser pour les Functions et les règles Firestore. Utilisé lors du déploiement des Cloud Functions et des règles de sécurité.");
+
+  fileBox("firestore.rules",
+    "Règles de sécurité de la base de données (38 lignes)",
+    "C'est le gardien de la base de données. Il définit qui peut lire ou écrire quoi. Règle actuelle : seuls les utilisateurs authentifiés peuvent accéder aux données de « schools/{code}/... ». Par défaut, tout le reste est interdit.");
+
+  fileBox(".firebaserc",
+    "Lien vers le projet Firebase (5 lignes)",
+    "Indique quel projet Firebase utiliser. Ici : midenty-medersa.");
+
+  fileBox("README.md",
+    "Documentation pour développeur",
+    "Instructions pour installer, configurer et déployer le projet. Utile pour un nouveau développeur qui rejoint le projet.");
+
+  fileBox("CLAUDE.md",
+    "Instructions pour Claude (l'assistant IA)",
+    "Fichier lu automatiquement par Claude à chaque session. Contient : description du projet, décisions techniques, préférences de travail de l'utilisateur, historique des sessions récentes.");
+
+  // Application
+  subtitle("6.2 — L'application cliente (dossier app/)");
+  space(2);
+
+  fileBox("app/app.js",
+    "Cerveau de l'application (1088 lignes)",
+    "C'est le fichier principal. Il gère tout ce que fait l'app : afficher l'écran de démarrage, vérifier le code d'accès, afficher/changer les onglets, inscrire un élève, enregistrer un paiement, générer un reçu, sauvegarder/restaurer, gérer les paramètres. C'est le chef d'orchestre.");
+
+  fileBox("app/config.js",
+    "Configuration par défaut + chargement client (102 lignes)",
+    "Contient les valeurs par défaut (frais 5000 FCFA, préfixe MEI...) et surtout la fonction qui charge la fiche d'un client à partir de son code. Distingue les champs « verrouillés » (nom, logo, couleurs — écrasés à chaque login) et « éditables » (classes, frais — appliqués uniquement au premier login).");
+
+  fileBox("app/firebase-config.js",
+    "Initialisation Firebase (68 lignes)",
+    "Se connecte à Firebase avec les clés du projet. Active le mode hors-ligne (persistence Firestore) : les données sont copiées dans le téléphone pour lecture instantanée, même sans internet. Fournit les fonctions getDb() et getAuth() utilisées partout ailleurs.");
+
+  fileBox("app/storage.js",
+    "Gestion des données (450 lignes)",
+    "Le pont entre le téléphone (localStorage) et le cloud (Firestore). Deux rôles : (1) lire/écrire les élèves et paiements ; (2) synchroniser automatiquement en arrière-plan. Suit l'état de sync (synced / pending / offline) et l'affiche dans l'UI.");
+
+  fileBox("app/i18n.js",
+    "Système multilingue (670 lignes)",
+    "Contient toutes les traductions en 3 langues : français, arabe, anglais. 200+ clés par langue. Permet au client de basculer entre les langues à la volée. Peut être personnalisé par client via i18nOverrides dans sa fiche JSON (ex : appeler « élève » → « étudiant » pour une université).");
+
+  fileBox("app/style.css",
+    "Design et mise en page (922 lignes)",
+    "Toutes les règles visuelles : couleurs, tailles, boutons, formulaires, layout mobile, mode RTL pour l'arabe (texte de droite à gauche). Utilise des variables CSS pour permettre la personnalisation des couleurs par client.");
+
+  fileBox("app/pdf-export.js",
+    "Génération PDF et image (223 lignes)",
+    "Transforme un reçu affiché en PDF ou en image PNG téléchargeable. Utilise html2canvas + jsPDF. Gère aussi le partage WhatsApp : convertit le reçu en image et ouvre WhatsApp Web/mobile avec l'image en pièce jointe.");
+
+  fileBox("app/print-escpos.js",
+    "Impression thermique Bluetooth (163 lignes)",
+    "Envoie le reçu vers une imprimante thermique 58mm via l'app RawBT. Comme l'arabe n'est pas supporté directement par les imprimantes ESC/POS, le texte arabe est d'abord rendu en image, puis imprimé comme une image.");
+
+  fileBox("app/qr-manager.js",
+    "Génération de QR codes (14 lignes)",
+    "Petit utilitaire pour générer un QR code sur un reçu (facultatif). Simplifié — pas de scanner intégré.");
+
+  // Admin
+  subtitle("6.3 — Le panneau admin (dossier admin/)");
+  space(2);
+
+  fileBox("admin/index.html",
+    "Interface du panneau admin (379 lignes)",
+    "L'interface web que Midenty utilise pour gérer les clients. Comprend : écran de connexion (email/mot de passe), liste des clients avec statuts, formulaire de création/édition en 9 sections, boutons import/export.");
+
+  fileBox("admin/admin.js",
+    "Logique du panneau admin (753 lignes)",
+    "Gère toutes les actions de l'admin : connexion Firebase, chargement de la liste des clients, création/édition/suppression, sauvegarde vers GitHub (via l'API GitHub et un token), mise à jour de clients/index.json, import/export. C'est le point de contrôle de toute la plateforme.");
+
+  fileBox("admin/admin.css",
+    "Design du panneau admin (424 lignes)",
+    "Styles visuels du panneau admin : header, cartes clients, formulaire, modals. Design séparé de l'app cliente pour un look plus « backoffice ».");
+
+  // Clients
+  subtitle("6.4 — Les fiches clients (dossier clients/)");
+  space(2);
+
+  fileBox("clients/index.json",
+    "Manifeste — liste des codes clients (4 lignes)",
+    "Un simple tableau contenant tous les codes clients existants. Mis à jour automatiquement par l'admin. Sert à l'auto-chargement des clients dans le panneau admin sur un nouveau navigateur.");
+
+  fileBox("clients/MEI-2026-EDU.json",
+    "Fiche du client Médersa d'Éducation Islamique",
+    "Un fichier JSON qui contient TOUTE la configuration de ce client : nom (FR/AR), logo, adresse, téléphones, couleurs, frais, classes, modes de paiement, messages sur les reçus, personnalisation des textes (i18nOverrides). C'est ce fichier qui « habille » l'application quand un utilisateur entre le code MEI-2026-EDU.");
+
+  fileBox("clients/ABRAR-2026-469.json",
+    "Fiche du client Médersa Al-Abrar",
+    "Même structure que MEI-2026-EDU.json, mais avec les données propres à la Médersa Al-Abrar.");
+
+  fileBox("clients/CFT-2026-TIL.json",
+    "Fiche du client Centre Formation Tillabéri",
+    "Même structure, données du centre de formation de Tillabéri.");
+
+  // Assets
+  subtitle("6.5 — Les images (dossier assets/)");
+  space(2);
+
+  fileBox("assets/logo.png",
+    "Logo Midenty par défaut",
+    "Utilisé quand aucun client n'est chargé (page d'accueil sans code).");
+
+  fileBox("assets/icon-192.png / icon-512.png",
+    "Icônes PWA (192px et 512px)",
+    "Utilisées quand l'app est installée sur l'écran d'accueil du téléphone. Écrasées dynamiquement par le logo du client si configuré.");
+
+  // Functions
+  subtitle("6.6 — Firebase Cloud Functions (dossier functions/)");
+  space(2);
+
+  fileBox("functions/index.js",
+    "Fonctions serverless Firebase",
+    "Code qui tourne sur les serveurs Google. Rôle actuel : quand un paiement est créé dans Firestore, envoie automatiquement un SMS au parent avec le détail du paiement.");
+
+  fileBox("functions/sms-service.js",
+    "Service d'envoi SMS",
+    "Gère l'envoi effectif du SMS via le fournisseur configuré (Africa's Talking, Twilio ou générique).");
+
+  fileBox("functions/sms-templates.js",
+    "Modèles de messages SMS",
+    "Templates des SMS (inscription, paiement) en français et arabe, avec variables {nom}, {matricule}, {montant}...");
+
+  fileBox("functions/package.json",
+    "Dépendances Node.js pour les Functions",
+    "Liste des bibliothèques utilisées par les Cloud Functions.");
+
+  // Docs
+  subtitle("6.7 — Documentation (dossier docs/)");
+  space(2);
+
+  fileBox("docs/guide-confidentiel.html",
+    "Ce document (générateur PDF)",
+    "Fichier HTML qui, ouvert dans un navigateur, génère ce guide PDF confidentiel via jsPDF. Doit être mis à jour à chaque évolution de la plateforme.");
+
+  // Schéma des flux
+  subtitle("6.8 — Comment les fichiers travaillent ensemble");
+  space(2);
+  line("Voici le flux complet quand un client ouvre l'app :");
+  space(2);
+  line("1. Le client clique sur le lien : midenty-edu.vercel.app/?c=MEI-2026-EDU", 5);
+  line("2. Vercel envoie index.html au téléphone", 5);
+  line("3. index.html lit le code MEI-2026-EDU dans l'URL", 5);
+  line("4. index.html télécharge clients/MEI-2026-EDU.json", 5);
+  line("5. Les couleurs, logo, nom sont appliqués à l'interface", 5);
+  line("6. app.js démarre et affiche l'écran de connexion", 5);
+  line("7. Le client entre son code — validation", 5);
+  line("8. firebase-config.js se connecte à Firestore", 5);
+  line("9. storage.js charge les élèves/paiements depuis Firestore", 5);
+  line("10. i18n.js applique la langue choisie", 5);
+  line("11. service-worker.js met tout en cache pour la prochaine ouverture", 5);
+  line("12. L'application est prête à être utilisée", 5);
+
+  // ===== SECTION 7 : SÉCURITÉ =====
+  newPage();
+  title("7. SÉCURITÉ ET CONFIDENTIALITÉ");
+  space();
+  line("Section destinée particulièrement au comité de révision. Elle décrit comment les données des élèves et de l'établissement sont protégées.");
+  space(3);
+
+  subtitle("Qui contrôle les données ?");
+  line("• L'établissement client est propriétaire de ses données", 5);
+  line("• Midenty administre techniquement la plateforme", 5);
+  line("• Google (via Firebase) héberge les données sur ses serveurs cloud", 5);
+  line("• Vercel héberge le code de l'application (pas les données)", 5);
+  line("• GitHub stocke le code source et les fiches de configuration clients", 5);
+  space(3);
+
+  subtitle("Localisation des données");
+  line("Les données Firestore sont hébergées dans les datacenters Google Cloud. La région est configurable lors du setup Firebase. Pour l'Afrique, les régions les plus proches sont europe-west1 (Belgique) et europe-west9 (Paris). Cette information est visible dans la console Firebase du projet midenty-medersa.");
+  space(3);
+
+  subtitle("Chiffrement");
+  line("• Toutes les communications entre le téléphone et Firebase sont chiffrées via HTTPS (TLS 1.3)", 5);
+  line("• Les données au repos dans Firestore sont chiffrées côté Google (AES-256)", 5);
+  line("• Les mots de passe admin sont chiffrés par Firebase Authentication (jamais stockés en clair)", 5);
+  line("• Le token GitHub est stocké dans le navigateur admin uniquement (localStorage), jamais transmis à Midenty", 5);
+  space(3);
+
+  subtitle("Contrôle d'accès");
+  line("• Panneau admin : email + mot de passe Firebase (comptes créés par Midenty uniquement)", 5);
+  line("• Application cliente : code d'accès unique par établissement", 5);
+  line("• Base de données : règles Firestore — seuls les utilisateurs authentifiés peuvent lire/écrire", 5);
+  line("• Réinitialisation : nécessite un tap 5x + code secret + confirmation (double sécurité)", 5);
+  space(3);
+
+  subtitle("Protection contre la perte de données");
+  line("• Sauvegarde automatique en temps réel sur Firestore", 5);
+  line("• Cache local sur le téléphone (secours en cas de perte connexion)", 5);
+  line("• Sauvegarde manuelle possible en fichier JSON (à conserver hors-ligne par le client)", 5);
+  line("• Un élève inscrit ne peut jamais être supprimé (protection anti-fraude)", 5);
+  line("• Historique complet de tous les paiements conservé indéfiniment", 5);
+  space(3);
+
+  subtitle("Confidentialité (RGPD / Protection des données)");
+  line("Données collectées par la plateforme :");
+  line("• Nom complet de l'élève", 5);
+  line("• Téléphone de l'élève et du parent", 5);
+  line("• Classe et matricule", 5);
+  line("• Historique des paiements (mois payés, montants, modes)", 5);
+  space(2);
+  line("Aucune autre donnée personnelle n'est collectée (pas d'adresse, pas de photo, pas de date de naissance). Les données ne sont jamais partagées avec des tiers.");
+  space(2);
+  line("Droit à l'oubli : sur demande écrite du parent, Midenty peut anonymiser les données d'un élève (nom remplacé par « Ancien élève », téléphones supprimés). L'historique des paiements est conservé pour l'audit comptable.");
+  space(3);
+
+  subtitle("Disponibilité de la plateforme");
+  line("• Vercel : SLA 99.99% de disponibilité (plan Hobby)", 5);
+  line("• Firebase : SLA 99.95% de disponibilité", 5);
+  line("• L'application fonctionne hors-ligne — une panne serveur n'empêche pas le travail quotidien", 5);
+  space(3);
+
+  subtitle("Audit et traçabilité");
+  line("• Chaque paiement enregistré dans Firestore contient : date, heure, mois payé, montant, mode, matricule de l'élève", 5);
+  line("• Le panneau admin garde une trace des créations/modifications de clients via l'historique Git de GitHub", 5);
+  line("• Firebase conserve des logs d'authentification (qui s'est connecté au panneau admin et quand)", 5);
+
+  // ===== SECTION 8 : VISION FUTURE =====
+  newPage();
+  title("8. VISION FUTURE — PLATEFORME PANAFRICAINE");
+  space();
+
+  subtitle("La vision");
+  line("Midenty a pour objectif de devenir LA plateforme de référence pour la gestion des établissements éducatifs en Afrique. Une seule application, un seul panneau d'administration, pour gérer TOUS les types d'écoles et d'universités, dans TOUS les pays du continent.");
+  space(3);
+
+  subtitle("Expansion géographique");
+  line("Phase 1 — Niger (en cours, 2026) : premiers clients, validation du modèle");
+  line("Phase 2 — Afrique de l'Ouest (2027) : Burkina Faso, Mali, Nigeria");
+  line("Phase 3 — Afrique francophone et anglophone (2028+) : Sénégal, Côte d'Ivoire, Cameroun, Tchad, Ghana, et au-delà");
+  space(2);
+  line("Chaque pays aura des représentants locaux (bureaux Midenty) qui géreront les clients de leur zone via le même panneau d'administration central.");
+  space(4);
+
+  // Schéma amélioré : représentation visuelle
+  subtitle("Schéma : comment Midenty s'organise");
+  space(2);
+
+  // Centre : MIDENTY
+  const cx = W / 2;
+  pdf.setFillColor(192, 57, 43);
+  pdf.roundedRect(cx - 25, y, 50, 14, 2, 2, "F");
+  pdf.setTextColor(255, 255, 255);
   pdf.setFont(undefined, "bold");
-  line("TRÈS IMPORTANT : Faites une sauvegarde au moins une fois par semaine !");
+  pdf.setFontSize(11);
+  pdf.text("MIDENTY", cx, y + 6, { align: "center" });
+  pdf.setFontSize(8);
   pdf.setFont(undefined, "normal");
-  y += 3;
-  line("Les données sont stockées dans le navigateur du téléphone. Si le");
-  line("téléphone est perdu, volé ou réinitialisé, les données sont perdues.");
-  y += 3;
-  line("Pour sauvegarder :");
-  line("1. Aller dans Paramètres → Sauvegarde des données", 5);
-  line("2. Cliquer sur « Exporter une sauvegarde »", 5);
-  line("3. Un fichier JSON est téléchargé — gardez-le en lieu sûr", 5);
-  line("   (envoyez-le par email ou WhatsApp à vous-même)", 5);
-  y += 3;
-  line("Pour restaurer une sauvegarde :");
-  line("1. Aller dans Paramètres → Sauvegarde des données", 5);
-  line("2. Cliquer sur « Importer une sauvegarde »", 5);
-  line("3. Sélectionner le fichier JSON sauvegardé", 5);
+  pdf.text("Panneau Admin Central", cx, y + 11, { align: "center" });
+  y += 20;
+  pdf.setTextColor(0);
 
-  sep();
-  checkPage(40);
+  // Ligne vers les types
+  pdf.setDrawColor(180);
+  pdf.line(cx, y - 6, cx, y - 2);
+  pdf.line(ml + 15, y + 6, mr - 15, y + 6);
+  pdf.line(cx, y - 2, cx, y + 6);
 
-  // ===== SECTION 6 : CONTACT =====
-  title("6. SUPPORT ET CONTACT");
-  y += 4;
+  // 5 types d'établissements
+  const types = [
+    { label: "Médersa", status: "ACTIF", color: [39, 174, 96] },
+    { label: "École\nprivée", status: "À VENIR", color: [149, 165, 166] },
+    { label: "Université\narabe", status: "À VENIR", color: [149, 165, 166] },
+    { label: "Université", status: "À VENIR", color: [149, 165, 166] },
+    { label: "Centre\nformation", status: "À VENIR", color: [149, 165, 166] }
+  ];
+  const boxW = 30;
+  const gap = (mr - ml - 5 * boxW) / 4;
+  types.forEach((t, i) => {
+    const x = ml + i * (boxW + gap);
+    pdf.setFillColor(t.color[0], t.color[1], t.color[2]);
+    pdf.roundedRect(x, y + 6, boxW, 18, 2, 2, "F");
+    pdf.setTextColor(255);
+    pdf.setFont(undefined, "bold");
+    pdf.setFontSize(9);
+    const parts = t.label.split("\n");
+    parts.forEach((p, j) => {
+      pdf.text(p, x + boxW / 2, y + 12 + j * 4, { align: "center" });
+    });
+    pdf.setFontSize(7);
+    pdf.setFont(undefined, "normal");
+    pdf.text(t.status, x + boxW / 2, y + 22, { align: "center" });
+  });
+  y += 30;
 
-  line("Pour toute question, problème technique ou demande de modification :");
-  y += 3;
+  pdf.setTextColor(0);
   pdf.setFont(undefined, "bold");
-  line("Midenty");
-  pdf.setFont(undefined, "normal");
-  line("Téléphone / WhatsApp : +227 88 81 10 81");
-  line("Email : mabdoulkarimoun7@gmail.com");
+  pdf.setFontSize(10);
+  pdf.text("Pays desservis (progression) :", ml, y);
   y += 6;
+  pdf.setFont(undefined, "normal");
+  const pays = [
+    { name: "Niger", status: "actif" },
+    { name: "Burkina Faso", status: "prevu" },
+    { name: "Mali", status: "prevu" },
+    { name: "Nigeria", status: "prevu" },
+    { name: "Sénégal", status: "prevu" },
+    { name: "Cameroun", status: "prevu" }
+  ];
+  const paysW = (mr - ml - 5 * 2) / 6;
+  pays.forEach((p, i) => {
+    const x = ml + i * (paysW + 2);
+    if (p.status === "actif") {
+      pdf.setFillColor(39, 174, 96);
+      pdf.setTextColor(255);
+    } else {
+      pdf.setFillColor(236, 240, 241);
+      pdf.setTextColor(80);
+    }
+    pdf.roundedRect(x, y, paysW, 8, 1, 1, "F");
+    pdf.setFontSize(8);
+    pdf.text(p.name, x + paysW / 2, y + 5.5, { align: "center" });
+  });
+  y += 14;
+  pdf.setTextColor(0);
+  pdf.setFontSize(10.5);
 
-  // Footer
+  subtitle("Types d'établissements");
+  bold("1. Médersa / École coranique (fonctionnel)");
+  line("L'application gère déjà ce type : niveaux coraniques, frais d'inscription et mensuels, reçus en français, arabe ou anglais.", 5);
+  space(2);
+  bold("2. École privée (primaire et secondaire) — à venir");
+  line("Classes : CP1 à CM2 (primaire), 6ème à 3ème (collège), 2nde à Terminale (lycée). Frais de scolarité mensuels. Futur : bulletins de notes, relevés scolaires.", 5);
+  space(2);
+  bold("3. Université arabe / Institut islamique — à venir");
+  line("Structure par années et semestres. Frais semestriels. Interface en arabe avec support français.", 5);
+  space(2);
+  bold("4. Université / Institut supérieur — à venir");
+  line("Filières, niveaux Licence (L1-L3), Master (M1-M2). Droits universitaires et frais annexes.", 5);
+  space(2);
+  bold("5. Centre de formation professionnelle — à venir");
+  line("Sessions de formation, modules, durées variables. Futur : certificats et attestations de fin de formation.", 5);
+  space(3);
+
+  subtitle("Comment ça fonctionnera dans le panneau admin (futur)");
+  line("Quand Midenty crée un nouveau client, il choisit le type d'établissement. L'application remplit automatiquement les bons réglages :");
+  line("• Les classes sont pré-remplies selon le type (ex : CP1-CM2 pour école privée, L1-M2 pour université)", 5);
+  line("• Les mots dans l'application changent (ex : « Élève » devient « Étudiant » pour l'université)", 5);
+  line("• Les frais par défaut sont adaptés (ex : 5000 FCFA pour médersa, 25000 FCFA pour université)", 5);
+  line("• Les couleurs changent selon le type (ex : vert pour médersa, bleu pour université)", 5);
+  line("• Les messages sur les reçus sont adaptés", 5);
+  space(2);
+  line("Le client peut toujours personnaliser ces valeurs après la création.");
+  space(3);
+
+  subtitle("Fonctionnalités futures");
+  line("• Tableaux de bord avec statistiques (nombre d'élèves, revenus)");
+  line("• Bulletins de notes et relevés scolaires");
+  line("• Certificats et attestations de formation");
+  line("• Gestion des enseignants et emplois du temps");
+  line("• Notifications SMS automatiques aux parents (déjà en place, à étendre)");
+  line("• Application mobile dédiée (Android/iOS natives)");
+  line("• Tableau de bord central pour voir tous les clients Midenty");
+  line("• Support multi-devises (FCFA, Naira, etc.)");
+  space(3);
+
+  subtitle("Modèle commercial");
+  line("• Vente unique par client (pas d'abonnement mensuel)");
+  line("• Support illimité via WhatsApp + vidéos tutoriels");
+  line("• Midenty crée et configure chaque client via le panneau admin");
+  line("• Le client utilise l'application de manière autonome");
+  line("• Représentants locaux dans chaque pays (commissions sur les ventes locales)");
+
+  // ===== SECTION 9 : VERSION ACTUELLE =====
+  newPage();
+  title("9. VERSION ACTUELLE DE LA PLATEFORME");
+  space();
+  bold("Version 1.0 — Juillet 2026");
+  space(3);
+
+  subtitle("Fonctionnalités de la version actuelle");
+  line("• Système multi-clients : une seule URL pour tous les établissements");
+  line("• Connexion par code d'accès ou lien direct");
+  line("• 4 onglets : Inscription, Classes, Frais mensuels, Paramètres");
+  line("• Interface trilingue : français, arabe et anglais");
+  line("• Matricules automatiques (MEI-001, MEI-002...)");
+  line("• Grille de paiement mensuel avec suivi par mois");
+  line("• Reçus partageables : PDF, Image, WhatsApp, Imprimante Bluetooth");
+  line("• Impression thermique 58mm via RawBT");
+  space(3);
+
+  subtitle("Panneau d'administration");
+  line("• Connexion sécurisée par Firebase (email/mot de passe)");
+  line("• Création et gestion des clients (établissements)");
+  line("• 9 sections de configuration par client");
+  line("• Déploiement automatique via GitHub + Vercel");
+  line("• Import/export des clients");
+  line("• Notifications SMS via Firebase Cloud Functions");
+  line("• Personnalisation des textes par langue");
+  space(3);
+
+  subtitle("Données et synchronisation");
+  line("• Données enregistrées en ligne sur Firebase (Firestore)");
+  line("• Fonctionne hors-ligne grâce au stockage local temporaire");
+  line("• Synchronisation automatique quand internet revient");
+  line("• Sauvegarde supplémentaire possible en fichier JSON");
+  space(3);
+
+  subtitle("Hébergement");
+  line("• Hébergé gratuitement sur Vercel (plan Hobby)");
+  line("• Domaine : midenty-edu.vercel.app");
+  line("• Déploiement automatique à chaque modification");
+  line("• Code source sur GitHub (mabdoulkarimoun7-hub/recu-medersa)");
+  line("• Note : le repo GitHub garde son nom historique « recu-medersa » alors que la plateforme s'appelle midenty-edu");
+  space(3);
+
+  subtitle("Clients actifs au 16/07/2026");
+  line("• Médersa d'Éducation Islamique (MEI-2026-EDU) — actif");
+  line("• Médersa Al-Abrar (ABRAR-2026-469) — actif");
+  line("• Centre Formation Tillabéri (CFT-2026-TIL) — configuré");
+
+  // ===== SECTION 10 : GLOSSAIRE =====
+  newPage();
+  title("10. GLOSSAIRE");
+  space();
+  line("Définitions des termes techniques utilisés dans ce guide.");
+  space(3);
+
+  const glossary = [
+    ["PWA (Progressive Web App)", "Application web qui se comporte comme une app native : installable sur l'écran d'accueil, fonctionne hors-ligne, notifications. Pas besoin de passer par le Play Store."],
+    ["Firebase", "Ensemble d'outils cloud de Google pour les applications. Midenty utilise : Firestore (base de données), Authentication (connexion admin), Cloud Functions (SMS automatiques)."],
+    ["Firestore", "Base de données Firebase, en temps réel. Stocke les élèves et paiements. Fonctionne avec un cache local pour le hors-ligne."],
+    ["Vercel", "Plateforme d'hébergement gratuite pour sites web. Héberge midenty-edu.vercel.app. Se met à jour automatiquement quand le code change sur GitHub."],
+    ["GitHub", "Plateforme de stockage de code source. Le code de l'app y est stocké. Chaque modification déclenche un redéploiement Vercel."],
+    ["Service Worker", "Petit programme dans le navigateur qui permet à l'app de fonctionner hors-ligne. Il mémorise les fichiers de l'app."],
+    ["localStorage", "Petite mémoire dans le navigateur du téléphone. Sert de cache rapide et de secours hors-ligne."],
+    ["JSON", "Format de fichier texte structuré. Utilisé pour les fiches clients (nom, logo, frais, etc.)."],
+    ["Token GitHub", "Mot de passe long utilisé par le panneau admin pour envoyer les fichiers clients sur GitHub sans demander le mot de passe."],
+    ["RawBT", "Application Android qui permet d'imprimer sur des imprimantes Bluetooth. Utilisée pour les reçus thermiques 58mm."],
+    ["ESC/POS", "Langage standard des imprimantes thermiques. Utilisé pour envoyer texte et images à l'imprimante."],
+    ["RTL", "Right-To-Left (droite vers gauche). Sens de lecture de l'arabe. L'app change automatiquement le sens quand la langue arabe est sélectionnée."],
+    ["i18n", "Abréviation de « internationalization ». Système qui gère les langues multiples dans l'application."],
+    ["Firestore Rules", "Règles de sécurité qui décident qui peut lire ou écrire quoi dans la base de données Firebase."],
+    ["Cloud Functions", "Code qui tourne sur les serveurs Google (pas dans le téléphone). Utilisé pour envoyer les SMS automatiquement."],
+    ["SLA", "Service Level Agreement — engagement de disponibilité du fournisseur. Vercel : 99.99%, Firebase : 99.95%."],
+    ["RGPD", "Règlement Général sur la Protection des Données. Réglementation européenne sur la protection des données personnelles, référence internationale."],
+    ["HTTPS / TLS", "Protocole sécurisé qui chiffre les communications entre le téléphone et les serveurs. Empêche les interceptions."],
+    ["Matricule", "Numéro unique attribué à chaque élève à l'inscription. Format : PREFIXE-NUMERO (ex : MEI-001)."],
+    ["Splash screen", "Écran de démarrage qui s'affiche pendant que l'application se charge. Montre le logo de l'établissement."]
+  ];
+  glossary.forEach(([term, def]) => {
+    checkPage(14);
+    pdf.setFont(undefined, "bold");
+    pdf.setFontSize(10.5);
+    pdf.setTextColor(11, 61, 145);
+    pdf.text(term, ml, y);
+    y += 5;
+    pdf.setFont(undefined, "normal");
+    pdf.setTextColor(0);
+    const lines = pdf.splitTextToSize(def, mr - ml - 3);
+    pdf.text(lines, ml + 3, y);
+    y += lines.length * 5 + 3;
+  });
+
+  // ===== SECTION 11 : SUPPORT =====
+  newPage();
+  title("11. SUPPORT ET CONTACT");
+  space();
+  line("Pour toute question, problème technique ou demande de modification :");
+  space(5);
+
+  pdf.setFillColor(248, 249, 250);
+  pdf.setDrawColor(220);
+  pdf.rect(ml, y, mr - ml, 60, "FD");
+  y += 8;
+  pdf.setFont(undefined, "bold");
+  pdf.setFontSize(14);
+  pdf.setTextColor(192, 57, 43);
+  pdf.text("Midenty", W / 2, y, { align: "center" });
+  y += 8;
+  pdf.setFont(undefined, "normal");
+  pdf.setFontSize(11);
+  pdf.setTextColor(0);
+  pdf.text("Téléphone / WhatsApp : +227 88 81 10 81", W / 2, y, { align: "center" });
+  y += 6;
+  pdf.text("Email : mabdoulkarimoun7@gmail.com", W / 2, y, { align: "center" });
+  y += 6;
+  pdf.text("GitHub : github.com/mabdoulkarimoun7-hub", W / 2, y, { align: "center" });
+  y += 6;
+  pdf.text("Application : midenty-edu.vercel.app", W / 2, y, { align: "center" });
+  y += 12;
+
+  subtitle("Engagement de support");
+  line("• Support WhatsApp : réponse sous 24h ouvrées");
+  line("• Support urgent (application inaccessible) : sous 4h ouvrées");
+  line("• Formation initiale par vidéo ou en personne");
+  line("• Support illimité inclus dans la vente initiale");
+  space(3);
+
+  subtitle("Services proposés par Midenty");
+  line("• Création et configuration de votre espace sur la plateforme");
+  line("• Formation à l'utilisation de l'application (vidéo ou en personne)");
+  line("• Support technique illimité via WhatsApp");
+  line("• Modifications et mises à jour de l'application");
+  line("• Sauvegarde et récupération des données en cas de problème");
+  line("• Migration depuis un autre système de gestion (Excel, papier...)");
+
+  // ===== SECTION 12 : VALIDATION COMITÉ =====
+  newPage();
+  title("12. VALIDATION DU COMITÉ");
+  space();
+  line("Ce document a été soumis au comité de révision pour évaluation et validation.");
+  space(5);
+
+  subtitle("Objet de la validation");
+  line("Le comité est invité à évaluer :");
+  line("• L'exactitude technique des informations", 5);
+  line("• La cohérence de la vision panafricaine", 5);
+  line("• La sécurité et la protection des données", 5);
+  line("• La viabilité du modèle commercial", 5);
+  line("• La qualité de la documentation destinée aux clients", 5);
+  space(5);
+
+  subtitle("Observations du comité");
+  pdf.setDrawColor(180);
+  for (let i = 0; i < 6; i++) {
+    pdf.line(ml, y, mr, y);
+    y += 8;
+  }
+  space(5);
+
+  subtitle("Signatures");
+  space(3);
+  pdf.setFontSize(10);
+  const signW = (mr - ml - 10) / 2;
+  // Signature 1
+  pdf.rect(ml, y, signW, 30);
+  pdf.text("Représentant Midenty", ml + 3, y + 5);
+  pdf.setFont(undefined, "italic");
+  pdf.setTextColor(120);
+  pdf.text("Nom, fonction, date, signature", ml + 3, y + 10);
+  pdf.setFont(undefined, "normal");
+  pdf.setTextColor(0);
+
+  // Signature 2
+  pdf.rect(ml + signW + 10, y, signW, 30);
+  pdf.text("Président du comité", ml + signW + 13, y + 5);
+  pdf.setFont(undefined, "italic");
+  pdf.setTextColor(120);
+  pdf.text("Nom, fonction, date, signature", ml + signW + 13, y + 10);
+  pdf.setFont(undefined, "normal");
+  pdf.setTextColor(0);
+  y += 40;
+
+  subtitle("Décision du comité");
+  space(2);
+  pdf.rect(ml, y, 5, 5);
+  pdf.text("  Validé sans réserve", ml + 6, y + 4);
+  y += 8;
+  pdf.rect(ml, y, 5, 5);
+  pdf.text("  Validé avec observations (voir ci-dessus)", ml + 6, y + 4);
+  y += 8;
+  pdf.rect(ml, y, 5, 5);
+  pdf.text("  Nécessite des modifications avant validation", ml + 6, y + 4);
+  y += 8;
+  pdf.rect(ml, y, 5, 5);
+  pdf.text("  Non validé (voir observations)", ml + 6, y + 4);
+  y += 15;
+
+  // Fin
+  pdf.setFontSize(10);
+  pdf.setTextColor(120);
+  pdf.text("Midenty — Plateforme de gestion éducative", W / 2, y, { align: "center" });
+  y += 5;
+  pdf.text("Une seule application. Tous les établissements.", W / 2, y, { align: "center" });
+  y += 8;
+  pdf.setFont(undefined, "bold");
+  pdf.setTextColor(192, 57, 43);
+  pdf.text("midenty-edu.vercel.app", W / 2, y, { align: "center" });
+  y += 5;
+  pdf.setFont(undefined, "normal");
+  pdf.setTextColor(120);
   pdf.setFontSize(9);
-  pdf.setTextColor(150);
-  pdf.text(
-    "© Midenty — Tous droits réservés — Document généré le " + new Date().toLocaleDateString("fr-FR"),
-    W / 2, 280,
-    { align: "center" }
-  );
+  pdf.text("Document généré le " + new Date().toLocaleDateString("fr-FR") + " — Tous droits réservés", W / 2, y, { align: "center" });
 
-  pdf.save("GUIDE_CONFIDENTIEL_Medersa_Midenty.pdf");
+  addFooter();
+  pdf.save("GUIDE_CONFIDENTIEL_Midenty_Education_v1.0.pdf");
 }
   </script>
 </body>

@@ -45,8 +45,225 @@ let clients = [];
 let editingCode = null;
 let formClasses = [];
 let formModes = ["Espèces", "Mynita", "Amanata"];
+let formGuideModes = [];
 let logoBase64 = null;
 let firebaseEnabled = false;
+
+/* ==================== Modules & Forfaits ==================== */
+
+const MODULES_LIST = [
+  { key: "inscription", label: "Inscription", desc: "Inscrire de nouveaux élèves" },
+  { key: "classes", label: "Classes", desc: "Voir la liste des classes et élèves" },
+  { key: "paiements", label: "Paiements", desc: "Enregistrer les frais mensuels" },
+  { key: "parametres", label: "Paramètres", desc: "Réglages de l'application" },
+  { key: "guide", label: "Guide d'utilisation", desc: "Guide intégré pour le client" },
+  { key: "presences", label: "Présences", desc: "Appel oral et suivi des absences" },
+  { key: "bulletins", label: "Bulletins de notes", desc: "Saisie des notes et bulletins PDF" },
+  { key: "attestations", label: "Attestations", desc: "Génération d'attestations et certificats" },
+  { key: "dashboard", label: "Tableau de bord", desc: "Statistiques et vue d'ensemble" },
+  { key: "enseignants", label: "Gestion enseignants", desc: "Profils et affectations des enseignants" },
+  { key: "historique", label: "Historique pluriannuel", desc: "Promotion/redoublement, archivage" }
+];
+
+const FORFAIT_PRESETS = {
+  essentiel: {
+    inscription: true, classes: true, paiements: true, parametres: true, guide: true,
+    presences: false, bulletins: false, attestations: false, dashboard: false,
+    enseignants: false, historique: false
+  },
+  complet: {
+    inscription: true, classes: true, paiements: true, parametres: true, guide: true,
+    presences: true, bulletins: true, attestations: true, dashboard: true,
+    enseignants: false, historique: false
+  },
+  premium: {
+    inscription: true, classes: true, paiements: true, parametres: true, guide: true,
+    presences: true, bulletins: true, attestations: true, dashboard: true,
+    enseignants: true, historique: true
+  }
+};
+
+const GUIDE_VIDEO_KEYS = [
+  { key: "inscription", label: "Vidéo — Inscription" },
+  { key: "classes", label: "Vidéo — Classes" },
+  { key: "paiement", label: "Vidéo — Paiement" },
+  { key: "recus", label: "Vidéo — Reçus" },
+  { key: "presences", label: "Vidéo — Présences" },
+  { key: "bulletins", label: "Vidéo — Bulletins" },
+  { key: "attestations", label: "Vidéo — Attestations" },
+  { key: "dashboard", label: "Vidéo — Tableau de bord" }
+];
+
+function renderModulesGrid() {
+  const container = document.getElementById("cfgModulesGrid");
+  container.innerHTML = MODULES_LIST.map(m => `
+    <label class="module-checkbox">
+      <input type="checkbox" data-module="${m.key}">
+      <span>
+        <div class="module-label">${esc(m.label)}</div>
+        <div class="module-desc">${esc(m.desc)}</div>
+      </span>
+    </label>`).join("");
+}
+
+function renderGuideVideosGrid() {
+  const container = document.getElementById("cfgGuideVideosGrid");
+  container.innerHTML = GUIDE_VIDEO_KEYS.map(v => `
+    <div class="form-group">
+      <label>${esc(v.label)}</label>
+      <input type="url" data-guide-video="${v.key}" placeholder="https://www.youtube.com/embed/XXXXXXXXXXX">
+    </div>`).join("");
+}
+
+function setModulesForm(modulesObj) {
+  const mods = modulesObj || FORFAIT_PRESETS.essentiel;
+  document.querySelectorAll("#cfgModulesGrid input[data-module]").forEach(input => {
+    input.checked = mods[input.dataset.module] === true;
+  });
+}
+
+function getModulesFromForm() {
+  const mods = {};
+  document.querySelectorAll("#cfgModulesGrid input[data-module]").forEach(input => {
+    mods[input.dataset.module] = input.checked;
+  });
+  return mods;
+}
+
+function applyModulesPreset(name) {
+  const preset = FORFAIT_PRESETS[name];
+  if (!preset) return;
+  document.querySelectorAll("#cfgModulesGrid input[data-module]").forEach(input => {
+    input.checked = preset[input.dataset.module] === true;
+  });
+  document.getElementById("cfgForfait").value = name;
+}
+
+function setupModulesSection() {
+  renderModulesGrid();
+  setModulesForm(FORFAIT_PRESETS.essentiel);
+  document.getElementById("btnPresetEssentiel").addEventListener("click", () => applyModulesPreset("essentiel"));
+  document.getElementById("btnPresetComplet").addEventListener("click", () => applyModulesPreset("complet"));
+  document.getElementById("btnPresetPremium").addEventListener("click", () => applyModulesPreset("premium"));
+}
+
+/* ==================== Guide d'utilisation (config) ==================== */
+
+function resetGuideFields() {
+  renderGuideVideosGrid();
+  document.getElementById("cfgGuideAfficherForfaits").value = "true";
+  document.getElementById("cfgGuideMsgFr").value = "";
+  document.getElementById("cfgGuideMsgAr").value = "";
+  document.getElementById("cfgGuideMsgEn").value = "";
+  formGuideModes = [];
+  renderGuideModesTags();
+}
+
+function loadGuideConfig(guideConfig) {
+  renderGuideVideosGrid();
+  const cfg = guideConfig || {};
+  const sections = cfg.sections || [];
+  document.querySelectorAll("#cfgGuideVideosGrid input[data-guide-video]").forEach(input => {
+    const key = input.dataset.guideVideo;
+    const found = sections.find(s => s.key === key);
+    input.value = found ? (found.videoUrl || "") : "";
+  });
+  const forfaits = cfg.forfaits || {};
+  document.getElementById("cfgGuideAfficherForfaits").value = String(forfaits.afficher !== false);
+  formGuideModes = [...(forfaits.modesPaiementAbonnement || [])];
+  renderGuideModesTags();
+  const msg = cfg.messagePersonnalise || {};
+  document.getElementById("cfgGuideMsgFr").value = msg.fr || "";
+  document.getElementById("cfgGuideMsgAr").value = msg.ar || "";
+  document.getElementById("cfgGuideMsgEn").value = msg.en || "";
+}
+
+function buildGuideConfig() {
+  const sections = [];
+  document.querySelectorAll("#cfgGuideVideosGrid input[data-guide-video]").forEach(input => {
+    const url = input.value.trim();
+    if (url) sections.push({ key: input.dataset.guideVideo, videoUrl: url });
+  });
+  const msgFr = document.getElementById("cfgGuideMsgFr").value.trim();
+  const msgAr = document.getElementById("cfgGuideMsgAr").value.trim();
+  const msgEn = document.getElementById("cfgGuideMsgEn").value.trim();
+  const messagePersonnalise = {};
+  if (msgFr) messagePersonnalise.fr = msgFr;
+  if (msgAr) messagePersonnalise.ar = msgAr;
+  if (msgEn) messagePersonnalise.en = msgEn;
+
+  return {
+    sections,
+    forfaits: {
+      afficher: document.getElementById("cfgGuideAfficherForfaits").value === "true",
+      modesPaiementAbonnement: [...formGuideModes]
+    },
+    messagePersonnalise
+  };
+}
+
+function renderGuideModesTags() {
+  const container = document.getElementById("cfgGuideModesTags");
+  container.innerHTML = formGuideModes.map((m, i) =>
+    `<span class="class-tag">${esc(m)} <button type="button" data-idx="${i}">&times;</button></span>`
+  ).join("");
+  container.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      formGuideModes.splice(parseInt(btn.dataset.idx), 1);
+      renderGuideModesTags();
+    });
+  });
+}
+
+function addGuideModeTag() {
+  const input = document.getElementById("cfgGuideNewMode");
+  const name = input.value.trim();
+  if (!name) return;
+  if (formGuideModes.includes(name)) return toast("Mode déjà ajouté.");
+  formGuideModes.push(name);
+  input.value = "";
+  renderGuideModesTags();
+}
+
+/* ==================== État temps réel Firestore ==================== */
+
+function renderFirestoreLiveStatus(fsConfig) {
+  const statusEl = document.getElementById("firestoreLiveStatus");
+  const diffBox = document.getElementById("firestoreLiveDiff");
+
+  if (!fsConfig) {
+    statusEl.textContent = "Ce client n'a encore rien synchronisé depuis son application (aucune donnée Firestore trouvée). Les valeurs du formulaire proviennent du fichier JSON GitHub.";
+    diffBox.classList.add("hidden");
+    return;
+  }
+
+  const when = fsConfig.updatedAt ? new Date(fsConfig.updatedAt).toLocaleString("fr-FR") : "date inconnue";
+  statusEl.textContent = "Dernière modification par le client : " + when +
+    " — Classes : " + (fsConfig.classes || []).join(", ") +
+    " — Frais inscription : " + (fsConfig.fraisInscription ?? "-") +
+    " — Frais mensuels : " + (fsConfig.fraisMensuels ?? "-");
+
+  if (firestoreConfigDiffersFromForm(fsConfig)) {
+    diffBox.classList.remove("hidden");
+  } else {
+    diffBox.classList.add("hidden");
+  }
+}
+
+function loadFirestoreValuesIntoForm() {
+  if (!_latestFirestoreConfig) return;
+  const cfg = _latestFirestoreConfig;
+  if (cfg.classes) { formClasses = [...cfg.classes]; renderClassesTags(); }
+  if (cfg.modesPaiement) { formModes = [...cfg.modesPaiement]; renderModesTags(); }
+  if (cfg.fraisInscription !== undefined) document.getElementById("cfgFraisInscription").value = cfg.fraisInscription;
+  if (cfg.fraisMensuels !== undefined) document.getElementById("cfgFraisMensuels").value = cfg.fraisMensuels;
+  if (cfg.debutAnnee !== undefined) document.getElementById("cfgDebutAnnee").value = cfg.debutAnnee;
+  if (cfg.finAnnee !== undefined) document.getElementById("cfgFinAnnee").value = cfg.finAnnee;
+  if (cfg.prefixeMatricule) document.getElementById("cfgPrefixeMatricule").value = cfg.prefixeMatricule;
+  if (cfg.devise) document.getElementById("cfgDevise").value = cfg.devise;
+  document.getElementById("firestoreLiveDiff").classList.add("hidden");
+  toast("Valeurs Firestore chargées dans le formulaire. N'oubliez pas d'enregistrer.");
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   firebaseEnabled = initAdminFirebase();
@@ -212,6 +429,13 @@ function setupFormView() {
   document.getElementById("cfgNewMode").addEventListener("keydown", e => {
     if (e.key === "Enter") { e.preventDefault(); addModeTag(); }
   });
+
+  setupModulesSection();
+  document.getElementById("btnGuideAddMode").addEventListener("click", addGuideModeTag);
+  document.getElementById("cfgGuideNewMode").addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); addGuideModeTag(); }
+  });
+  document.getElementById("btnLoadFirestoreValues").addEventListener("click", loadFirestoreValuesIntoForm);
 }
 
 function renderClientsList() {
@@ -308,12 +532,26 @@ function openForm(code) {
     }
     loadI18nOverrides(c.i18nOverrides);
     loadSmsConfig(c.codeAcces);
+    setModulesForm(c.modules);
+    document.getElementById("cfgForfait").value = c.forfait || "essentiel";
+    loadGuideConfig(c.guideConfig);
+
+    if (firebaseEnabled) {
+      document.getElementById("firestoreLiveSection").classList.remove("hidden");
+      document.getElementById("firestoreLiveStatus").textContent = "Connexion en cours...";
+      startConfigListener(c.codeAcces, renderFirestoreLiveStatus);
+    }
   } else {
     document.getElementById("formTitle").textContent = "Nouveau client";
     formClasses = [];
     formModes = ["Espèces", "Mynita", "Amanata"];
     loadI18nOverrides(null);
     resetSmsFields();
+    setModulesForm(FORFAIT_PRESETS.essentiel);
+    document.getElementById("cfgForfait").value = "essentiel";
+    resetGuideFields();
+    document.getElementById("firestoreLiveSection").classList.add("hidden");
+    stopConfigListener();
   }
 
   renderClassesTags();
@@ -323,6 +561,7 @@ function openForm(code) {
 }
 
 function showList() {
+  stopConfigListener();
   document.getElementById("formView").classList.add("hidden");
   document.getElementById("listView").classList.remove("hidden");
   renderClientsList();
@@ -356,7 +595,10 @@ function buildClientObj() {
     dateCreation: editingCode
       ? (clients.find(c => c.codeAcces === editingCode)?.dateCreation || new Date().toISOString().slice(0, 10))
       : new Date().toISOString().slice(0, 10),
-    i18nOverrides: collectI18nOverrides()
+    i18nOverrides: collectI18nOverrides(),
+    modules: getModulesFromForm(),
+    forfait: document.getElementById("cfgForfait").value,
+    guideConfig: buildGuideConfig()
   };
 }
 
@@ -509,6 +751,7 @@ async function handleSaveClient(e) {
 
   saveClients();
   await saveSmsConfig(obj.codeAcces);
+  await pushConfigToFirestore(obj.codeAcces, obj);
   toast("Client enregistré : " + obj.nomFr);
 
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);

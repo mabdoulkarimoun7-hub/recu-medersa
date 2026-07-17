@@ -41,7 +41,7 @@ const PdfExport = {
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
-        await navigator.share({ files: [file], title: "Reçu", text });
+        await navigator.share({ files: [file], title: t("receipt_number"), text });
         return;
       } catch (err) {
         if (err.name === "AbortError") return;

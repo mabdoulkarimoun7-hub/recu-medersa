@@ -69,7 +69,8 @@ const CONFIG = {
     const lockedFields = [
       "nomFr", "nomAr", "adresse", "telephones", "logo",
       "couleurPrincipale", "couleurSecondaire", "couleurAccent",
-      "messageFinalFr", "messageFinalAr"
+      "messageFinalFr", "messageFinalAr",
+      "modules", "forfait", "abonnement", "guideConfig"
     ];
     const initFields = [
       "classes", "fraisInscription", "fraisMensuels",

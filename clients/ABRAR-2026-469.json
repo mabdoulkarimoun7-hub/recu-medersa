@@ -32,17 +32,20 @@
     "paiements": true,
     "parametres": true,
     "guide": true,
-    "presences": false,
-    "bulletins": false,
-    "attestations": false,
-    "dashboard": false,
+    "presences": true,
+    "bulletins": true,
+    "attestations": true,
+    "dashboard": true,
     "enseignants": false,
     "historique": false
   },
-  "forfait": "essentiel",
+  "forfait": "complet",
   "guideConfig": {
     "sections": [],
-    "forfaits": { "afficher": true, "modesPaiementAbonnement": [] },
+    "forfaits": {
+      "afficher": true,
+      "modesPaiementAbonnement": []
+    },
     "messagePersonnalise": {}
   }
 }

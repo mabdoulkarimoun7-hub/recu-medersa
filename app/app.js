@@ -54,12 +54,12 @@ function setupManualRefresh() {
 function playMidentyIntro() {
   return new Promise(resolve => {
     const overlay = document.getElementById("splashMidenty");
-    const message = document.getElementById("midentyMessage");
+    const copyright = document.getElementById("midentyMessage");
     if (!overlay) { resolve(); return; }
 
     setTimeout(() => {
-      message.classList.add("visible");
-    }, 1200);
+      copyright.classList.add("visible");
+    }, 1800);
 
     setTimeout(() => {
       overlay.classList.add("fade-out");
@@ -67,7 +67,7 @@ function playMidentyIntro() {
         overlay.classList.add("hidden");
         resolve();
       }, 600);
-    }, 4500);
+    }, 3000);
   });
 }
 

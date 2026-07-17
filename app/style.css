@@ -119,36 +119,29 @@ body {
   width: 160px;
   max-width: 55vw;
   opacity: 0;
-  transform: scale(0.8);
-  animation: midentyLogoIn 0.8s ease forwards;
+  transform: scale(0.55) rotate(-6deg);
+  animation: midentyLogoIntro 2.2s cubic-bezier(.34,1.2,.4,1) forwards;
 }
 
-@keyframes midentyLogoIn {
-  to { opacity: 1; transform: scale(1); }
+@keyframes midentyLogoIntro {
+  0%   { opacity: 0; transform: scale(0.55) rotate(-6deg); }
+  30%  { opacity: 1; transform: scale(1.05) rotate(2deg); }
+  48%  { transform: scale(0.94) rotate(-1deg); }
+  65%  { transform: scale(1.14) rotate(1deg); }
+  82%  { transform: scale(0.97) rotate(0deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
-.midenty-splash-message {
-  margin-top: 24px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.midenty-splash-message.visible { opacity: 1; }
-
-.midenty-msg-ar {
-  font-family: "Noto Naskh Arabic", serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text);
-  direction: rtl;
-  margin-bottom: 10px;
-}
-
-.midenty-msg-fr, .midenty-msg-en {
-  font-size: 14px;
+.midenty-splash-copyright {
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
   color: var(--muted);
-  margin-bottom: 4px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
+
+.midenty-splash-copyright.visible { opacity: 1; }
 
 /* ===== Login Screen ===== */
 .login-screen {

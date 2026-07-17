@@ -1,7 +1,7 @@
 {
-  "name": "Gestion Médersa — مدرسة التربية الإسلامية",
-  "short_name": "Médersa",
-  "description": "Gestion des inscriptions et frais mensuels — Médersa d'Éducation Islamique",
+  "name": "Midenty Éducation",
+  "short_name": "Midenty",
+  "description": "Gestion des inscriptions et frais mensuels — Midenty Éducation",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

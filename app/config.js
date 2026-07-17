@@ -53,6 +53,14 @@ const CONFIG = {
       if (!resp.ok) throw new Error("not_found");
       const cfg = await resp.json();
       if (!cfg.actif) throw new Error("inactive");
+
+      const previousCode = localStorage.getItem(cacheCodeKey);
+      if (previousCode && previousCode !== code) {
+        localStorage.removeItem("medersa_settings");
+        localStorage.removeItem("medersa_lang");
+        localStorage.removeItem("medersa_i18n_overrides");
+      }
+
       localStorage.setItem(cacheKey, JSON.stringify(cfg));
       localStorage.setItem(cacheCodeKey, code);
       return cfg;

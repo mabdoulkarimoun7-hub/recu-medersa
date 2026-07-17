@@ -59,7 +59,7 @@ function playMidentyIntro() {
 
     setTimeout(() => {
       message.classList.add("visible");
-    }, 1600);
+    }, 1200);
 
     setTimeout(() => {
       overlay.classList.add("fade-out");
@@ -67,7 +67,7 @@ function playMidentyIntro() {
         overlay.classList.add("hidden");
         resolve();
       }, 600);
-    }, 3400);
+    }, 4500);
   });
 }
 
@@ -104,7 +104,7 @@ async function showSplash() {
         setupLogin();
       }
     }, 500);
-  }, 1500);
+  }, 2800);
 }
 
 function setupLogin() {

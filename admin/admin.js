@@ -634,15 +634,10 @@ function loadI18nOverrides(i18nOverrides) {
   });
 }
 
-async function pushToGitHub(clientObj) {
+async function pushFileToGitHub(path, content, message) {
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);
-  if (!token) {
-    toast("Token GitHub non configuré. Allez dans les paramètres.");
-    return false;
-  }
+  if (!token) return false;
 
-  const path = "clients/" + clientObj.codeAcces + ".json";
-  const content = JSON.stringify(clientObj, null, 2);
   const contentBase64 = btoa(unescape(encodeURIComponent(content)));
   const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
   const headers = {
@@ -659,11 +654,7 @@ async function pushToGitHub(clientObj) {
       sha = existing.sha;
     }
 
-    const body = {
-      message: (sha ? "Mise à jour" : "Ajout") + " client " + clientObj.nomFr,
-      content: contentBase64,
-      branch: GITHUB_BRANCH
-    };
+    const body = { message, content: contentBase64, branch: GITHUB_BRANCH };
     if (sha) body.sha = sha;
 
     const putResp = await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify(body) });
@@ -674,10 +665,59 @@ async function pushToGitHub(clientObj) {
 
     return true;
   } catch (err) {
-    console.error("Erreur push GitHub:", err);
-    toast("Erreur déploiement : " + err.message);
+    console.error("Erreur push GitHub (" + path + "):", err);
     return false;
   }
+}
+
+// Manifeste d'installation (PWA) propre à chaque client, pour que le nom/icône
+// proposés à l'installation correspondent toujours à la bonne école — voir
+// index.html qui bascule dessus dès qu'un code client (?c=) est présent dans l'URL.
+function buildClientManifest(clientObj) {
+  const icon = clientObj.logo || "assets/icon-192.png";
+  const nomFr = clientObj.nomFr || "Médersa";
+  const nomAr = clientObj.nomAr || "";
+  return {
+    name: nomAr ? nomFr + " — " + nomAr : nomFr,
+    short_name: nomFr,
+    description: "Gestion — " + nomFr,
+    start_url: "./index.html?c=" + encodeURIComponent(clientObj.codeAcces),
+    scope: "./",
+    display: "standalone",
+    orientation: "portrait",
+    background_color: "#f4f6f5",
+    theme_color: clientObj.couleurPrincipale || "#0d7a3d",
+    icons: [
+      { src: icon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+      { src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+    ]
+  };
+}
+
+async function pushToGitHub(clientObj) {
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (!token) {
+    toast("Token GitHub non configuré. Allez dans les paramètres.");
+    return false;
+  }
+
+  const ok = await pushFileToGitHub(
+    "clients/" + clientObj.codeAcces + ".json",
+    JSON.stringify(clientObj, null, 2),
+    "Mise à jour client " + clientObj.nomFr
+  );
+  if (!ok) {
+    toast("Erreur déploiement du client.");
+    return false;
+  }
+
+  await pushFileToGitHub(
+    "clients/" + clientObj.codeAcces + ".webmanifest",
+    JSON.stringify(buildClientManifest(clientObj), null, 2),
+    "Mise à jour manifeste " + clientObj.nomFr
+  );
+
+  return true;
 }
 
 async function pushClientsIndex() {

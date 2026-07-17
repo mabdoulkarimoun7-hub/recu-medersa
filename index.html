@@ -123,6 +123,11 @@
 <!-- ========== APP PRINCIPALE ========== -->
 <div id="appMain" class="hidden">
 
+<div id="updateBanner" class="update-banner hidden">
+  <span data-i18n="msg_update_available"></span>
+  <button type="button" id="btnApplyUpdate" data-i18n="btn_update_refresh"></button>
+</div>
+
 <header class="app-header">
   <img alt="Logo" class="app-logo" id="appLogo" style="opacity:0;transition:opacity 0.3s">
   <div class="app-header-text">
@@ -134,6 +139,7 @@
     <span class="sync-dot"></span>
     <span class="sync-label"></span>
   </div>
+  <button type="button" id="btnManualRefresh" class="refresh-btn">↻</button>
 </header>
 
 <nav class="tabs">

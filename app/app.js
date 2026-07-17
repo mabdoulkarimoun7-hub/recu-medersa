@@ -3,17 +3,51 @@
 let currentReceipt = null;
 let currentReceiptEl = null;
 let deferredInstallPrompt = null;
+let _swRegistration = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   showSplash();
   setupInstallBanner();
-
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js").catch(err =>
-      console.error("SW registration failed", err)
-    );
-  }
+  setupAppUpdates();
+  setupManualRefresh();
 });
+
+/* ==================== Mises à jour de l'application ==================== */
+
+function setupAppUpdates() {
+  if (!("serviceWorker" in navigator)) return;
+
+  navigator.serviceWorker.register("service-worker.js").then(reg => {
+    _swRegistration = reg;
+
+    const checkForUpdate = () => reg.update().catch(() => {});
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkForUpdate();
+    });
+    window.addEventListener("online", checkForUpdate);
+    setInterval(checkForUpdate, 5 * 60 * 1000);
+  }).catch(err => console.error("SW registration failed", err));
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    const banner = document.getElementById("updateBanner");
+    if (banner) banner.classList.remove("hidden");
+  });
+}
+
+function setupManualRefresh() {
+  const btn = document.getElementById("btnManualRefresh");
+  const applyBtn = document.getElementById("btnApplyUpdate");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (_swRegistration) _swRegistration.update().catch(() => {});
+      window.location.reload();
+    });
+  }
+  if (applyBtn) {
+    applyBtn.addEventListener("click", () => window.location.reload());
+  }
+}
 
 /* ==================== Splash & Login ==================== */
 
@@ -295,6 +329,9 @@ function initSyncIndicator() {
   if (typeof isFirebaseReady === "function" && isFirebaseReady()) {
     Storage.initSync();
   }
+
+  const refreshBtn = document.getElementById("btnManualRefresh");
+  if (refreshBtn) refreshBtn.title = t("btn_refresh_app_tooltip");
 
   const indicator = document.getElementById("syncIndicator");
   if (!indicator) return;

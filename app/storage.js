@@ -56,11 +56,28 @@ const Storage = {
     this._listenToCollection(paymentsPath, KEYS.payments);
     if (attendancePath) this._listenToCollection(attendancePath, KEYS.attendance);
     this._listenToCounters();
+    this._setupNetworkListeners();
 
     this._firestoreListenersActive = true;
   },
 
-  _listenToCollection(path, localKey) {
+  // Écoute les retours online/offline du téléphone pour réagir immédiatement,
+  // au lieu d'attendre que Firestore détecte lui-même la coupure/reprise.
+  _setupNetworkListeners() {
+    if (this._networkListenersReady) return;
+    this._networkListenersReady = true;
+
+    window.addEventListener("online", () => {
+      const db = getDb();
+      if (db) db.enableNetwork().catch(() => {});
+    });
+    window.addEventListener("offline", () => {
+      SyncState.set(SyncState.OFFLINE);
+    });
+  },
+
+  _listenToCollection(path, localKey, attempt) {
+    attempt = attempt || 0;
     const db = getDb();
     db.collection(path)
       .orderBy("createdAt", "desc")
@@ -84,8 +101,13 @@ const Storage = {
           }
         },
         (err) => {
+          // Un listener Firestore s'arrête définitivement après une erreur : on le
+          // relance nous-mêmes après un délai croissant, pour ne pas rester bloqué
+          // sur "Hors-ligne" indéfiniment une fois la connexion revenue.
           console.error("Firestore listen error:", path, err);
           SyncState.set(SyncState.OFFLINE);
+          const delay = Math.min(30000, 5000 * (attempt + 1));
+          setTimeout(() => this._listenToCollection(path, localKey, attempt + 1), delay);
         }
       );
   },

@@ -997,6 +997,50 @@ input[type="search"] {
   50% { opacity: 0.3; }
 }
 
+/* ===== Bouton rafraîchir + bandeau de mise à jour ===== */
+.refresh-btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+
+.refresh-btn:active { transform: rotate(180deg); }
+
+.update-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--primary-dark);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  text-align: center;
+  position: relative;
+  z-index: 12;
+}
+
+.update-banner button {
+  background: #fff;
+  color: var(--primary-dark);
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* ===== Language switcher ===== */
 .lang-switcher {
   display: flex;

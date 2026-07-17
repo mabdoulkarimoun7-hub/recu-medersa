@@ -32,6 +32,12 @@ function initFirebase() {
     _firebaseDb = firebase.firestore();
     _firebaseAuth = firebase.auth();
 
+    // Certains réseaux mobiles/proxys bloquent le streaming temps réel de Firestore
+    // sans bloquer le reste d'internet — l'app reste alors bloquée en "Hors-ligne"
+    // malgré une connexion internet fonctionnelle. Ce réglage bascule automatiquement
+    // sur du long-polling compatible avec ces réseaux.
+    _firebaseDb.settings({ experimentalAutoDetectLongPolling: true });
+
     _firebaseDb.enablePersistence({ synchronizeTabs: true }).catch(err => {
       if (err.code === "failed-precondition") {
         console.warn("Firestore persistence : plusieurs onglets ouverts, un seul peut synchroniser.");

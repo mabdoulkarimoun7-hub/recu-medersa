@@ -87,6 +87,11 @@ const TRANSLATIONS = {
     sync_pending: "En attente...",
     sync_offline: "Hors-ligne",
 
+    // Mise à jour
+    msg_update_available: "Une nouvelle version est disponible.",
+    btn_update_refresh: "Actualiser",
+    btn_refresh_app_tooltip: "Rafraîchir l'application",
+
     // Inscription - labels
     label_matricule: "Matricule",
     label_nom_complet: "Nom complet",
@@ -349,6 +354,10 @@ const TRANSLATIONS = {
     sync_pending: "...في الانتظار",
     sync_offline: "غير متصل",
 
+    msg_update_available: "يتوفر إصدار جديد.",
+    btn_update_refresh: "تحديث",
+    btn_refresh_app_tooltip: "تحديث التطبيق",
+
     label_matricule: "الرقم التسلسلي",
     label_nom_complet: "الاسم الكامل",
     label_tel_eleve: "هاتف التلميذ",
@@ -591,6 +600,10 @@ const TRANSLATIONS = {
     sync_synced: "Synced",
     sync_pending: "Pending...",
     sync_offline: "Offline",
+
+    msg_update_available: "A new version is available.",
+    btn_update_refresh: "Refresh",
+    btn_refresh_app_tooltip: "Refresh the app",
 
     label_matricule: "Student ID",
     label_nom_complet: "Full name",

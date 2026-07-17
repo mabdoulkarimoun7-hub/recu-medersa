@@ -40,19 +40,21 @@
     "parametres": true,
     "guide": true,
     "presences": true,
-    "bulletins": false,
-    "attestations": false,
-    "dashboard": false,
-    "enseignants": false,
-    "historique": false
+    "bulletins": true,
+    "attestations": true,
+    "dashboard": true,
+    "enseignants": true,
+    "historique": true
   },
-  "forfait": "essentiel",
+  "forfait": "premium",
   "guideConfig": {
     "sections": [],
     "forfaits": {
       "afficher": true,
       "modesPaiementAbonnement": []
     },
-    "messagePersonnalise": {}
+    "messagePersonnalise": {
+      "ar": "مرحبا"
+    }
   }
 }

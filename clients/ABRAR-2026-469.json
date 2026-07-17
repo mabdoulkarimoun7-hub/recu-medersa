@@ -32,14 +32,14 @@
     "paiements": true,
     "parametres": true,
     "guide": true,
-    "presences": true,
-    "bulletins": true,
-    "attestations": true,
-    "dashboard": true,
+    "presences": false,
+    "bulletins": false,
+    "attestations": false,
+    "dashboard": false,
     "enseignants": false,
     "historique": false
   },
-  "forfait": "complet",
+  "forfait": "essentiel",
   "guideConfig": {
     "sections": [],
     "forfaits": {

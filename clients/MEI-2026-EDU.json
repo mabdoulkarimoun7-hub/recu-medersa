@@ -39,17 +39,22 @@
     "paiements": true,
     "parametres": true,
     "guide": true,
-    "presences": false,
-    "bulletins": false,
-    "attestations": false,
-    "dashboard": false,
-    "enseignants": false,
-    "historique": false
+    "presences": true,
+    "bulletins": true,
+    "attestations": true,
+    "dashboard": true,
+    "enseignants": true,
+    "historique": true
   },
-  "forfait": "essentiel",
+  "forfait": "premium",
   "guideConfig": {
     "sections": [],
-    "forfaits": { "afficher": true, "modesPaiementAbonnement": [] },
-    "messagePersonnalise": {}
+    "forfaits": {
+      "afficher": true,
+      "modesPaiementAbonnement": []
+    },
+    "messagePersonnalise": {
+      "ar": "مرحبا"
+    }
   }
 }

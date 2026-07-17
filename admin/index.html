@@ -12,12 +12,12 @@
   <div id="adminLogin" class="admin-login">
     <div class="admin-login-card">
       <img src="../assets/midenty-logo.png" alt="Midenty" class="admin-login-logo">
-      <h2>Midenty Admin</h2>
-      <p>Panneau de gestion des clients</p>
-      <input type="email" id="adminEmail" placeholder="Email" autocomplete="email">
-      <input type="password" id="adminPassword" placeholder="Mot de passe" autocomplete="current-password">
+      <h2 data-i18n-admin="admin_title">Midenty Admin</h2>
+      <p data-i18n-admin="admin_subtitle">Panneau de gestion des clients</p>
+      <input type="email" id="adminEmail" data-i18n-admin-placeholder="admin_email_placeholder" placeholder="Email" autocomplete="email">
+      <input type="password" id="adminPassword" data-i18n-admin-placeholder="admin_password_placeholder" placeholder="Mot de passe" autocomplete="current-password">
       <div class="error" id="adminError"></div>
-      <button class="btn btn-primary" id="adminLoginBtn" style="width:100%">Connexion</button>
+      <button class="btn btn-primary" id="adminLoginBtn" style="width:100%" data-i18n-admin="admin_login_btn">Connexion</button>
     </div>
   </div>
 
@@ -27,45 +27,58 @@
       <div style="display:flex;align-items:center;gap:12px">
         <img src="../assets/midenty-logo.png" alt="Midenty" class="admin-header-logo">
         <div>
-          <h1>Midenty — Panneau Admin</h1>
-          <span class="brand">Gestion des clients</span>
+          <h1 data-i18n-admin="admin_header_title">Midenty — Panneau Admin</h1>
+          <span class="brand" data-i18n-admin="admin_header_brand">Gestion des clients</span>
         </div>
       </div>
-      <button class="btn btn-outline" id="btnLogout" style="color:#fff;border-color:rgba(255,255,255,0.3)">Déconnexion</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="admin-lang-switcher">
+          <button class="admin-lang-btn" data-lang="ar">AR</button>
+          <button class="admin-lang-btn active" data-lang="fr">FR</button>
+          <button class="admin-lang-btn" data-lang="en">EN</button>
+        </div>
+        <button class="btn btn-outline" id="btnLogout" style="color:#fff;border-color:rgba(255,255,255,0.3)" data-i18n-admin="admin_logout">Déconnexion</button>
+      </div>
     </header>
+
+    <!-- Navigation -->
+    <nav class="admin-nav">
+      <button class="admin-nav-btn active" id="navClients" data-i18n-admin="admin_nav_clients">Clients</button>
+      <button class="admin-nav-btn" id="navStats" data-i18n-admin="admin_nav_stats">Statistiques</button>
+    </nav>
 
     <div class="admin-container">
       <!-- LIST VIEW -->
       <div id="listView">
         <div class="admin-toolbar">
-          <h2>Clients</h2>
+          <h2 data-i18n-admin="admin_clients_title">Clients</h2>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-outline" id="btnExportAll">Exporter tout (ZIP)</button>
-            <button class="btn btn-primary" id="btnNewClient">+ Nouveau client</button>
+            <button class="btn btn-outline" id="btnExportAll" data-i18n-admin="admin_export_all">Exporter tout (ZIP)</button>
+            <button class="btn btn-primary" id="btnNewClient" data-i18n-admin="admin_new_client">+ Nouveau client</button>
           </div>
         </div>
 
         <div id="clientsListContainer">
           <div class="empty-state">
-            <p>Aucun client configuré. Importez un fichier JSON ou créez un nouveau client.</p>
-            <button class="btn btn-primary" id="btnNewClientEmpty">+ Créer le premier client</button>
+            <p data-i18n-admin="admin_empty_state">Aucun client configuré. Importez un fichier JSON ou créez un nouveau client.</p>
+            <button class="btn btn-primary" id="btnNewClientEmpty" data-i18n-admin="admin_empty_create">+ Créer le premier client</button>
           </div>
         </div>
 
         <div style="margin-top:20px;text-align:center">
           <label class="btn btn-outline" style="cursor:pointer">
-            Importer des clients (JSON)
+            <span data-i18n-admin="admin_import_clients">Importer des clients (JSON)</span>
             <input type="file" id="importClients" accept=".json" multiple style="display:none">
           </label>
         </div>
 
         <!-- CONFIG GITHUB -->
         <div style="margin-top:30px;padding:20px;background:#f8f9fa;border-radius:12px;border:1px solid #e0e0e0">
-          <h3 style="margin:0 0 10px">Déploiement automatique</h3>
-          <p style="font-size:13px;color:#666;margin:0 0 10px">Entrez votre token GitHub pour déployer les clients automatiquement quand vous cliquez "Enregistrer".</p>
+          <h3 style="margin:0 0 10px" data-i18n-admin="admin_github_title">Déploiement automatique</h3>
+          <p style="font-size:13px;color:#666;margin:0 0 10px" data-i18n-admin="admin_github_desc">Entrez votre token GitHub pour déployer les clients automatiquement quand vous cliquez "Enregistrer".</p>
           <div style="display:flex;gap:8px;align-items:center">
             <input type="password" id="githubTokenInput" placeholder="ghp_xxxxx..." style="flex:1;padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px">
-            <button class="btn btn-primary btn-sm" id="btnSaveToken">Enregistrer</button>
+            <button class="btn btn-primary btn-sm" id="btnSaveToken" data-i18n-admin="admin_github_save">Enregistrer</button>
           </div>
           <div id="githubTokenStatus" style="font-size:12px;margin-top:8px;color:#666"></div>
         </div>
@@ -74,37 +87,50 @@
       <!-- FORM VIEW -->
       <div id="formView" class="hidden">
         <div class="admin-toolbar">
-          <h2 id="formTitle">Nouveau client</h2>
-          <button class="btn btn-outline" id="btnBackToList">← Retour à la liste</button>
+          <h2 id="formTitle" data-i18n-admin="admin_new_client_title">Nouveau client</h2>
+          <button class="btn btn-outline" id="btnBackToList" data-i18n-admin="admin_back_to_list">← Retour à la liste</button>
         </div>
 
         <form class="admin-form" id="clientForm" autocomplete="off">
           <!-- Identité -->
           <div class="form-section">
-            <h3>Identité de l'école</h3>
+            <h3 data-i18n-admin="admin_section_identity">Identité de l'école</h3>
+            <div class="form-row single">
+              <div class="form-group">
+                <label data-i18n-admin="admin_type_etablissement">Type d'établissement</label>
+                <select id="cfgTypeEtablissement">
+                  <option value="" data-i18n-admin="admin_type_select">-- Choisir un type --</option>
+                  <option value="medersa" data-i18n-admin="admin_type_medersa">École coranique / Médersa</option>
+                  <option value="ecole_privee" data-i18n-admin="admin_type_ecole_privee">École privée</option>
+                  <option value="universite_arabe" data-i18n-admin="admin_type_universite_arabe">Université arabe</option>
+                  <option value="universite" data-i18n-admin="admin_type_universite">Université (francophone)</option>
+                  <option value="centre_formation" data-i18n-admin="admin_type_centre_formation">École professionnelle / Centre de formation</option>
+                </select>
+              </div>
+            </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Nom (Français) *</label>
+                <label data-i18n-admin="admin_nom_fr">Nom (Français) *</label>
                 <input type="text" id="cfgNomFr" required placeholder="Médersa Al-Nour">
               </div>
               <div class="form-group">
-                <label>Nom (Arabe) *</label>
+                <label data-i18n-admin="admin_nom_ar">Nom (Arabe) *</label>
                 <input type="text" id="cfgNomAr" dir="rtl" required placeholder="مدرسة النور">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Adresse</label>
+                <label data-i18n-admin="admin_adresse">Adresse</label>
                 <input type="text" id="cfgAdresse" placeholder="Niamey - Quartier...">
               </div>
               <div class="form-group">
-                <label>Téléphones (séparés par des virgules)</label>
+                <label data-i18n-admin="admin_telephones">Téléphones (séparés par des virgules)</label>
                 <input type="text" id="cfgTelephones" placeholder="+227 90 00 00 00, +227 91 00 00 00">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Logo (image)</label>
+                <label data-i18n-admin="admin_logo">Logo (image)</label>
                 <input type="file" id="cfgLogoFile" accept="image/*">
                 <img id="cfgLogoPreview" class="logo-preview hidden" alt="Aperçu logo">
               </div>
@@ -113,18 +139,18 @@
 
           <!-- Couleurs -->
           <div class="form-section">
-            <h3>Couleurs du thème</h3>
+            <h3 data-i18n-admin="admin_section_colors">Couleurs du thème</h3>
             <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
               <div class="form-group">
-                <label>Couleur principale</label>
+                <label data-i18n-admin="admin_color_primary">Couleur principale</label>
                 <input type="color" id="cfgCouleurPrincipale" value="#0d7a3d">
               </div>
               <div class="form-group">
-                <label>Couleur secondaire</label>
+                <label data-i18n-admin="admin_color_secondary">Couleur secondaire</label>
                 <input type="color" id="cfgCouleurSecondaire" value="#0b3d91">
               </div>
               <div class="form-group">
-                <label>Couleur accent</label>
+                <label data-i18n-admin="admin_color_accent">Couleur accent</label>
                 <input type="color" id="cfgCouleurAccent" value="#c5972c">
               </div>
             </div>
@@ -132,75 +158,75 @@
 
           <!-- Code d'accès -->
           <div class="form-section">
-            <h3>Accès</h3>
+            <h3 data-i18n-admin="admin_section_access">Accès</h3>
             <div class="form-row">
               <div class="form-group">
-                <label>Code d'accès *</label>
+                <label data-i18n-admin="admin_code_acces">Code d'accès *</label>
                 <input type="text" id="cfgCodeAcces" required placeholder="Ex: ALQ-2026-NIA">
               </div>
               <div class="form-group">
-                <label>Statut</label>
+                <label data-i18n-admin="admin_statut">Statut</label>
                 <select id="cfgActif">
-                  <option value="true">Actif</option>
-                  <option value="false">Désactivé</option>
+                  <option value="true" data-i18n-admin="admin_statut_actif">Actif</option>
+                  <option value="false" data-i18n-admin="admin_statut_desactive">Désactivé</option>
                 </select>
               </div>
             </div>
             <div class="form-row single">
-              <button type="button" class="btn btn-outline btn-sm" id="btnGenerateCode">Générer un code automatique</button>
+              <button type="button" class="btn btn-outline btn-sm" id="btnGenerateCode" data-i18n-admin="admin_generate_code">Générer un code automatique</button>
             </div>
           </div>
 
           <!-- État temps réel Firestore -->
           <div class="form-section hidden" id="firestoreLiveSection">
-            <h3>État actuel du client (temps réel)</h3>
-            <div id="firestoreLiveStatus" class="hint">En attente de connexion...</div>
+            <h3 data-i18n-admin="admin_section_firestore">État actuel du client (temps réel)</h3>
+            <div id="firestoreLiveStatus" class="hint" data-i18n-admin="admin_firestore_waiting">En attente de connexion...</div>
             <div class="hidden" id="firestoreLiveDiff" style="margin-top:10px;padding:10px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;font-size:13px;color:#856404">
-              <div id="firestoreLiveDiffText">Le client a modifié ses classes, frais ou modes de paiement depuis son application. Les valeurs ci-dessous (formulaire) ne correspondent plus à ce qu'il voit actuellement.</div>
-              <button type="button" class="btn btn-sm btn-outline" id="btnLoadFirestoreValues" style="margin-top:8px">Charger ces valeurs dans le formulaire</button>
+              <div id="firestoreLiveDiffText" data-i18n-admin="admin_firestore_diff">Le client a modifié ses classes, frais ou modes de paiement depuis son application. Les valeurs ci-dessous (formulaire) ne correspondent plus à ce qu'il voit actuellement.</div>
+              <button type="button" class="btn btn-sm btn-outline" id="btnLoadFirestoreValues" style="margin-top:8px" data-i18n-admin="admin_firestore_load">Charger ces valeurs dans le formulaire</button>
             </div>
           </div>
 
           <!-- Scolarité -->
           <div class="form-section">
-            <h3>Scolarité</h3>
+            <h3 data-i18n-admin="admin_section_schooling">Scolarité</h3>
             <div class="form-row">
               <div class="form-group">
-                <label>Frais d'inscription (FCFA)</label>
+                <label data-i18n-admin="admin_frais_inscription">Frais d'inscription (FCFA)</label>
                 <input type="number" id="cfgFraisInscription" value="5000" min="0">
               </div>
               <div class="form-group">
-                <label>Frais mensuels (FCFA)</label>
+                <label data-i18n-admin="admin_frais_mensuels">Frais mensuels (FCFA)</label>
                 <input type="number" id="cfgFraisMensuels" value="5000" min="0">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Début année scolaire</label>
-                <select id="cfgDebutAnnee">
-                  <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
-                  <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
-                  <option value="7">Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
-                  <option value="10" selected>Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
-                </select>
+                <label data-i18n-admin="admin_debut_mois">Mois de début</label>
+                <select id="cfgDebutMois"></select>
               </div>
               <div class="form-group">
-                <label>Fin année scolaire</label>
-                <select id="cfgFinAnnee">
-                  <option value="1">Janvier</option><option value="2">Février</option><option value="3">Mars</option>
-                  <option value="4">Avril</option><option value="5">Mai</option><option value="6">Juin</option>
-                  <option value="7" selected>Juillet</option><option value="8">Août</option><option value="9">Septembre</option>
-                  <option value="10">Octobre</option><option value="11">Novembre</option><option value="12">Décembre</option>
-                </select>
+                <label data-i18n-admin="admin_debut_annee">Année de début</label>
+                <select id="cfgDebutAnnee"></select>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Préfixe matricule</label>
+                <label data-i18n-admin="admin_fin_mois">Mois de fin</label>
+                <select id="cfgFinMois"></select>
+              </div>
+              <div class="form-group">
+                <label data-i18n-admin="admin_fin_annee">Année de fin</label>
+                <select id="cfgFinAnnee"></select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n-admin="admin_prefixe_matricule">Préfixe matricule</label>
                 <input type="text" id="cfgPrefixeMatricule" value="MEI" maxlength="5">
               </div>
               <div class="form-group">
-                <label>Devise</label>
+                <label data-i18n-admin="admin_devise">Devise</label>
                 <input type="text" id="cfgDevise" value="FCFA">
               </div>
             </div>
@@ -208,89 +234,89 @@
 
           <!-- Classes -->
           <div class="form-section">
-            <h3>Classes</h3>
+            <h3 data-i18n-admin="admin_section_classes">Classes</h3>
             <div class="classes-tags" id="cfgClassesTags"></div>
             <div class="add-class-row">
-              <input type="text" id="cfgNewClasse" placeholder="Nom de la classe">
-              <button type="button" class="btn btn-sm btn-secondary" id="btnAddClasse">Ajouter</button>
+              <input type="text" id="cfgNewClasse" data-i18n-admin-placeholder="admin_new_classe_placeholder" placeholder="Nom de la classe">
+              <button type="button" class="btn btn-sm btn-secondary" id="btnAddClasse" data-i18n-admin="admin_add_classe">Ajouter</button>
             </div>
           </div>
 
           <!-- Modes de paiement -->
           <div class="form-section">
-            <h3>Modes de paiement</h3>
+            <h3 data-i18n-admin="admin_section_modes">Modes de paiement</h3>
             <div class="classes-tags" id="cfgModesTags"></div>
             <div class="add-class-row">
-              <input type="text" id="cfgNewMode" placeholder="Mode de paiement">
-              <button type="button" class="btn btn-sm btn-secondary" id="btnAddMode">Ajouter</button>
+              <input type="text" id="cfgNewMode" data-i18n-admin-placeholder="admin_new_mode_placeholder" placeholder="Mode de paiement">
+              <button type="button" class="btn btn-sm btn-secondary" id="btnAddMode" data-i18n-admin="admin_add_mode">Ajouter</button>
             </div>
           </div>
 
           <!-- Notifications SMS -->
           <div class="form-section">
-            <h3>Notifications SMS</h3>
-            <p style="font-size:13px;color:#666;margin:0 0 12px">Envoi automatique de SMS aux parents après inscription et paiement mensuel.</p>
+            <h3 data-i18n-admin="admin_section_sms">Notifications SMS</h3>
+            <p style="font-size:13px;color:#666;margin:0 0 12px" data-i18n-admin="admin_sms_desc">Envoi automatique de SMS aux parents après inscription et paiement mensuel.</p>
             <div class="form-row">
               <div class="form-group">
-                <label>SMS activés</label>
+                <label data-i18n-admin="admin_sms_enabled">SMS activés</label>
                 <select id="cfgSmsEnabled">
-                  <option value="false">Désactivé</option>
-                  <option value="true">Activé</option>
+                  <option value="false" data-i18n-admin="admin_sms_disabled_opt">Désactivé</option>
+                  <option value="true" data-i18n-admin="admin_sms_enabled_opt">Activé</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Fournisseur SMS</label>
+                <label data-i18n-admin="admin_sms_provider">Fournisseur SMS</label>
                 <select id="cfgSmsProvider">
                   <option value="africastalking">Africa's Talking</option>
                   <option value="twilio">Twilio</option>
-                  <option value="generic">Générique (URL personnalisée)</option>
+                  <option value="generic" data-i18n-admin="admin_sms_generic">Générique (URL personnalisée)</option>
                 </select>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Clé API</label>
+                <label data-i18n-admin="admin_sms_api_key">Clé API</label>
                 <input type="password" id="cfgSmsApiKey" placeholder="Clé API du fournisseur">
               </div>
               <div class="form-group">
-                <label>Secret API (Twilio uniquement)</label>
+                <label data-i18n-admin="admin_sms_api_secret">Secret API (Twilio uniquement)</label>
                 <input type="password" id="cfgSmsApiSecret" placeholder="Secret ou Auth Token">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Sender ID / Username</label>
+                <label data-i18n-admin="admin_sms_sender">Sender ID / Username</label>
                 <input type="text" id="cfgSmsSenderId" placeholder="MEDERSA" value="MEDERSA">
               </div>
               <div class="form-group">
-                <label>URL API (fournisseur générique)</label>
+                <label data-i18n-admin="admin_sms_api_url">URL API (fournisseur générique)</label>
                 <input type="url" id="cfgSmsApiUrl" placeholder="https://api.exemple.com/sms">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Langue des SMS</label>
+                <label data-i18n-admin="admin_sms_language">Langue des SMS</label>
                 <select id="cfgSmsLanguage">
-                  <option value="fr">Français</option>
-                  <option value="ar">Arabe</option>
+                  <option value="fr" data-i18n-admin="admin_sms_lang_fr">Français</option>
+                  <option value="ar" data-i18n-admin="admin_sms_lang_ar">Arabe</option>
                 </select>
               </div>
               <div class="form-group" style="justify-content:flex-end">
-                <button type="button" class="btn btn-sm btn-outline" id="btnSmsTest">Envoyer SMS test</button>
+                <button type="button" class="btn btn-sm btn-outline" id="btnSmsTest" data-i18n-admin="admin_sms_test">Envoyer SMS test</button>
               </div>
             </div>
           </div>
 
           <!-- Messages -->
           <div class="form-section">
-            <h3>Messages sur les reçus</h3>
+            <h3 data-i18n-admin="admin_section_messages">Messages sur les reçus</h3>
             <div class="form-row">
               <div class="form-group">
-                <label>Message final (Français)</label>
+                <label data-i18n-admin="admin_msg_fr">Message final (Français)</label>
                 <input type="text" id="cfgMessageFinalFr" value="Que le Coran soit une lumière pour vous">
               </div>
               <div class="form-group">
-                <label>Message final (Arabe)</label>
+                <label data-i18n-admin="admin_msg_ar">Message final (Arabe)</label>
                 <input type="text" id="cfgMessageFinalAr" dir="rtl" value="ليكن القرآن نوراً لكم">
               </div>
             </div>
@@ -298,71 +324,71 @@
 
           <!-- Personnalisation des textes -->
           <div class="form-section">
-            <h3>Personnalisation des textes</h3>
-            <p style="font-size:13px;color:#666;margin:0 0 12px">Les champs vides utilisent le texte par défaut. Remplissez uniquement les textes que vous souhaitez personnaliser pour ce client.</p>
+            <h3 data-i18n-admin="admin_section_i18n">Personnalisation des textes</h3>
+            <p style="font-size:13px;color:#666;margin:0 0 12px" data-i18n-admin="admin_i18n_desc">Les champs vides utilisent le texte par défaut. Remplissez uniquement les textes que vous souhaitez personnaliser pour ce client.</p>
             <div class="i18n-overrides-table">
               <div class="i18n-row i18n-header">
-                <span>Élément</span>
-                <span>Français</span>
-                <span>العربية</span>
-                <span>English</span>
+                <span data-i18n-admin="admin_i18n_element">Élément</span>
+                <span data-i18n-admin="admin_i18n_french">Français</span>
+                <span data-i18n-admin="admin_i18n_arabic">العربية</span>
+                <span data-i18n-admin="admin_i18n_english">English</span>
               </div>
               <div class="i18n-row" data-key="tab_inscription">
-                <span>Onglet Inscription</span>
+                <span data-i18n-admin="admin_i18n_tab_inscription">Onglet Inscription</span>
                 <input type="text" data-lang="fr" placeholder="Inscription">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="التسجيل">
                 <input type="text" data-lang="en" placeholder="Enrollment">
               </div>
               <div class="i18n-row" data-key="tab_classes">
-                <span>Onglet Classes</span>
+                <span data-i18n-admin="admin_i18n_tab_classes">Onglet Classes</span>
                 <input type="text" data-lang="fr" placeholder="Classes">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="الأقسام">
                 <input type="text" data-lang="en" placeholder="Classes">
               </div>
               <div class="i18n-row" data-key="tab_mensuel">
-                <span>Onglet Mensuel</span>
+                <span data-i18n-admin="admin_i18n_tab_mensuel">Onglet Mensuel</span>
                 <input type="text" data-lang="fr" placeholder="Mensuel">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="الشهري">
                 <input type="text" data-lang="en" placeholder="Monthly">
               </div>
               <div class="i18n-row" data-key="tab_parametres">
-                <span>Onglet Paramètres</span>
+                <span data-i18n-admin="admin_i18n_tab_parametres">Onglet Paramètres</span>
                 <input type="text" data-lang="fr" placeholder="Paramètres">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="الإعدادات">
                 <input type="text" data-lang="en" placeholder="Settings">
               </div>
               <div class="i18n-row" data-key="label_nom_complet">
-                <span>Champ Nom</span>
+                <span data-i18n-admin="admin_i18n_label_nom">Champ Nom</span>
                 <input type="text" data-lang="fr" placeholder="Nom complet">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="الاسم الكامل">
                 <input type="text" data-lang="en" placeholder="Full name">
               </div>
               <div class="i18n-row" data-key="label_classe">
-                <span>Champ Classe</span>
+                <span data-i18n-admin="admin_i18n_label_classe">Champ Classe</span>
                 <input type="text" data-lang="fr" placeholder="Classe">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="القسم">
                 <input type="text" data-lang="en" placeholder="Class">
               </div>
               <div class="i18n-row" data-key="btn_inscrire">
-                <span>Bouton Inscrire</span>
+                <span data-i18n-admin="admin_i18n_btn_inscrire">Bouton Inscrire</span>
                 <input type="text" data-lang="fr" placeholder="Inscrire">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="تسجيل">
                 <input type="text" data-lang="en" placeholder="Enroll">
               </div>
               <div class="i18n-row" data-key="receipt_inscription">
-                <span>Reçu : Inscription</span>
+                <span data-i18n-admin="admin_i18n_receipt_inscription">Reçu : Inscription</span>
                 <input type="text" data-lang="fr" placeholder="Inscription :">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="التسجيل :">
                 <input type="text" data-lang="en" placeholder="Enrollment:">
               </div>
               <div class="i18n-row" data-key="receipt_monthly_fees">
-                <span>Reçu : Frais mensuels</span>
+                <span data-i18n-admin="admin_i18n_receipt_monthly">Reçu : Frais mensuels</span>
                 <input type="text" data-lang="fr" placeholder="Frais mensuels">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="الرسوم الشهرية">
                 <input type="text" data-lang="en" placeholder="Monthly fees">
               </div>
               <div class="i18n-row" data-key="receipt_total">
-                <span>Reçu : Total</span>
+                <span data-i18n-admin="admin_i18n_receipt_total">Reçu : Total</span>
                 <input type="text" data-lang="fr" placeholder="TOTAL :">
                 <input type="text" data-lang="ar" dir="rtl" placeholder="المجموع :">
                 <input type="text" data-lang="en" placeholder="TOTAL:">
@@ -372,61 +398,61 @@
 
           <!-- Modules activés -->
           <div class="form-section">
-            <h3>Modules activés</h3>
-            <p style="font-size:13px;color:#666;margin:0 0 12px">Un module désactivé est totalement invisible dans l'application du client — pas d'onglet grisé, comme s'il n'existait pas.</p>
+            <h3 data-i18n-admin="admin_section_modules">Modules activés</h3>
+            <p style="font-size:13px;color:#666;margin:0 0 12px" data-i18n-admin="admin_modules_desc">Un module désactivé est totalement invisible dans l'application du client — pas d'onglet grisé, comme s'il n'existait pas.</p>
             <div class="form-row single">
               <div class="form-group">
-                <label>Forfait</label>
+                <label data-i18n-admin="admin_forfait">Forfait</label>
                 <select id="cfgForfait">
-                  <option value="essentiel">Essentiel</option>
-                  <option value="complet">Complet</option>
-                  <option value="premium">Premium</option>
-                  <option value="sur-mesure">Sur-mesure</option>
+                  <option value="essentiel" data-i18n-admin="admin_forfait_essentiel">Essentiel</option>
+                  <option value="complet" data-i18n-admin="admin_forfait_complet">Complet</option>
+                  <option value="premium" data-i18n-admin="admin_forfait_premium">Premium</option>
+                  <option value="sur-mesure" data-i18n-admin="admin_forfait_sur_mesure">Sur-mesure</option>
                 </select>
               </div>
             </div>
             <div class="preset-buttons">
-              <button type="button" class="btn btn-sm btn-outline" id="btnPresetEssentiel">Appliquer Essentiel</button>
-              <button type="button" class="btn btn-sm btn-outline" id="btnPresetComplet">Appliquer Complet</button>
-              <button type="button" class="btn btn-sm btn-outline" id="btnPresetPremium">Appliquer Premium</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btnPresetEssentiel" data-i18n-admin="admin_apply_essentiel">Appliquer Essentiel</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btnPresetComplet" data-i18n-admin="admin_apply_complet">Appliquer Complet</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btnPresetPremium" data-i18n-admin="admin_apply_premium">Appliquer Premium</button>
             </div>
             <div class="modules-grid" id="cfgModulesGrid"></div>
           </div>
 
           <!-- Guide d'utilisation intégré -->
           <div class="form-section">
-            <h3>Guide d'utilisation intégré</h3>
-            <p style="font-size:13px;color:#666;margin:0 0 12px">Contenu du guide affiché dans l'application du client (module "guide"). Les vidéos sont facultatives — utilisez un lien YouTube au format "embed".</p>
+            <h3 data-i18n-admin="admin_section_guide">Guide d'utilisation intégré</h3>
+            <p style="font-size:13px;color:#666;margin:0 0 12px" data-i18n-admin="admin_guide_desc">Contenu du guide affiché dans l'application du client (module "guide"). Les vidéos sont facultatives — utilisez un lien YouTube au format "embed".</p>
             <div class="form-row single">
               <div class="form-group">
-                <label>Afficher la section "Forfaits disponibles" dans le guide</label>
+                <label data-i18n-admin="admin_guide_show_forfaits">Afficher la section "Forfaits disponibles" dans le guide</label>
                 <select id="cfgGuideAfficherForfaits">
-                  <option value="true">Oui</option>
-                  <option value="false">Non</option>
+                  <option value="true" data-i18n-admin="admin_guide_yes">Oui</option>
+                  <option value="false" data-i18n-admin="admin_guide_no">Non</option>
                 </select>
               </div>
             </div>
             <div id="cfgGuideVideosGrid" class="form-row" style="flex-wrap:wrap"></div>
-            <h4 style="margin:16px 0 8px;font-size:14px;color:#555">Modes de paiement pour l'abonnement</h4>
+            <h4 style="margin:16px 0 8px;font-size:14px;color:#555" data-i18n-admin="admin_guide_modes_title">Modes de paiement pour l'abonnement</h4>
             <div class="classes-tags" id="cfgGuideModesTags"></div>
             <div class="add-class-row">
-              <input type="text" id="cfgGuideNewMode" placeholder="Ex: Wave, Orange Money...">
-              <button type="button" class="btn btn-sm btn-secondary" id="btnGuideAddMode">Ajouter</button>
+              <input type="text" id="cfgGuideNewMode" data-i18n-admin-placeholder="admin_guide_new_mode" placeholder="Ex: Wave, Orange Money...">
+              <button type="button" class="btn btn-sm btn-secondary" id="btnGuideAddMode" data-i18n-admin="admin_guide_add_mode">Ajouter</button>
             </div>
-            <h4 style="margin:16px 0 8px;font-size:14px;color:#555">Message personnalisé (optionnel)</h4>
+            <h4 style="margin:16px 0 8px;font-size:14px;color:#555" data-i18n-admin="admin_guide_msg_title">Message personnalisé (optionnel)</h4>
             <div class="form-row">
               <div class="form-group">
-                <label>Message (Français)</label>
+                <label data-i18n-admin="admin_guide_msg_fr">Message (Français)</label>
                 <input type="text" id="cfgGuideMsgFr" placeholder="Bienvenue dans votre espace...">
               </div>
               <div class="form-group">
-                <label>Message (Arabe)</label>
+                <label data-i18n-admin="admin_guide_msg_ar">Message (Arabe)</label>
                 <input type="text" id="cfgGuideMsgAr" dir="rtl" placeholder="مرحبا بكم...">
               </div>
             </div>
             <div class="form-row single">
               <div class="form-group">
-                <label>Message (Anglais)</label>
+                <label data-i18n-admin="admin_guide_msg_en">Message (Anglais)</label>
                 <input type="text" id="cfgGuideMsgEn" placeholder="Welcome to your space...">
               </div>
             </div>
@@ -434,11 +460,57 @@
 
           <!-- Actions -->
           <div class="form-actions">
-            <button type="button" class="btn btn-outline" id="btnCancelForm">Annuler</button>
-            <button type="button" class="btn btn-success" id="btnDownloadJson">Télécharger JSON</button>
-            <button type="submit" class="btn btn-primary" id="btnSaveClient">Enregistrer</button>
+            <button type="button" class="btn btn-outline" id="btnCancelForm" data-i18n-admin="admin_cancel">Annuler</button>
+            <button type="button" class="btn btn-success" id="btnDownloadJson" data-i18n-admin="admin_download_json">Télécharger JSON</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveClient" data-i18n-admin="admin_save">Enregistrer</button>
           </div>
         </form>
+      </div>
+
+      <!-- STATS VIEW -->
+      <div id="statsView" class="hidden">
+        <div class="admin-toolbar">
+          <h2 data-i18n-admin="admin_stats_title">Statistiques & Analyses</h2>
+        </div>
+
+        <div class="form-section">
+          <h3 data-i18n-admin="admin_stats_select_school">Choisir un établissement</h3>
+          <select id="statsSchoolSelect" class="stats-school-select">
+            <option value="" data-i18n-admin="admin_stats_select_placeholder">-- Sélectionner une école --</option>
+          </select>
+        </div>
+
+        <div id="statsContent" class="hidden">
+          <!-- Cards -->
+          <div class="stats-cards" id="statsCards"></div>
+
+          <!-- Charts -->
+          <div class="stats-charts">
+            <div class="chart-container">
+              <h4 data-i18n-admin="admin_stats_students_by_class">Élèves par classe</h4>
+              <canvas id="chartStudentsByClass"></canvas>
+            </div>
+            <div class="chart-container">
+              <h4 data-i18n-admin="admin_stats_monthly_revenue">Revenus mensuels</h4>
+              <canvas id="chartMonthlyRevenue"></canvas>
+            </div>
+            <div class="chart-container">
+              <h4 data-i18n-admin="admin_stats_payment_status">Statut des paiements</h4>
+              <canvas id="chartPaymentStatus"></canvas>
+            </div>
+            <div class="chart-container">
+              <h4 data-i18n-admin="admin_stats_attendance_by_class">Présence par classe</h4>
+              <canvas id="chartAttendanceRate"></canvas>
+            </div>
+          </div>
+
+          <!-- Detail tables -->
+          <div id="statsDetails"></div>
+        </div>
+
+        <div id="statsNoData" class="empty-state">
+          <p data-i18n-admin="admin_stats_no_data">Aucune donnée disponible. Sélectionnez un établissement.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -449,8 +521,12 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
+  <script src="admin-i18n.js"></script>
   <script src="realtime-sync.js"></script>
+  <script src="stats.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

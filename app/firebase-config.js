@@ -19,7 +19,7 @@ let _firebaseDb = null;
 let _firebaseAuth = null;
 let _firebaseReady = false;
 
-function initFirebase() {
+async function initFirebase() {
   if (_firebaseReady) return true;
 
   if (FIREBASE_CONFIG.apiKey === "VOTRE_API_KEY") {
@@ -45,6 +45,14 @@ function initFirebase() {
         console.warn("Firestore persistence non supportée par ce navigateur.");
       }
     });
+
+    // Les règles de sécurité Firestore exigent un utilisateur authentifié.
+    // L'app ne demande pas de compte à l'établissement (l'accès reste protégé
+    // par le code d'accès de l'école) : elle se connecte donc de façon anonyme,
+    // ce qui suffit à satisfaire les règles.
+    if (!_firebaseAuth.currentUser) {
+      await _firebaseAuth.signInAnonymously();
+    }
 
     _firebaseReady = true;
     console.log("Firebase initialisé avec succès.");

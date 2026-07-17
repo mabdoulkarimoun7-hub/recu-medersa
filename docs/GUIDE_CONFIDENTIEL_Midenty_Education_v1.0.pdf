@@ -1,0 +1,5652 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 3584
+>>
+stream
+0.5670000000000001 w
+0 G
+0.75 0.22 0.17 rg
+0. 841.8899999999999864 595.2799999999999727 -198.4251968503937178 re
+f
+BT
+/F2 26 Tf
+29.8999999999999986 TL
+1. g
+157.1100000000000136 756.8506299212598378 Td
+(GUIDE CONFIDENTIEL) Tj
+ET
+BT
+/F1 14 Tf
+16.0999999999999979 TL
+1. g
+204.8899999999999295 722.8348818897637784 Td
+(Plateforme Midenty Éducation) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+1. g
+233.8399999999999466 694.4884251968503577 Td
+(Version 1.0 — Juillet 2026) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+1. g
+209.2399999999999238 671.8112598425196893 Td
+(Document destiné au comité de révision) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0. g
+246.9399999999999977 600.9451181102361943 Td
+(AVERTISSEMENT) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+56.6929133858267775 578.2679527559055259 Td
+(Ce document est strictement confidentiel. Il contient les codes d'accès, les codes de réinitialisation, les) Tj
+T* (tokens et toutes les informations nécessaires à l'administration de la plateforme. Ne le partagez qu'avec les) Tj
+T* (personnes de confiance.) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+56.6929133858267775 513.0711023622046696 481.8941732283464034 -113.3858267716535551 re
+B
+BT
+/F2 10 Tf
+11.5 TL
+0. g
+68.031496062992133 496.0632283464566399 Td
+(Coordonnées de la plateforme) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+68.031496062992133 479.0553543307086102 Td
+(Application : midenty-edu.vercel.app) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+68.031496062992133 464.8821259842518998 Td
+(Panneau admin : midenty-edu.vercel.app/admin/) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+68.031496062992133 450.7088976377952463 Td
+(Éditeur : Midenty — +227 88 81 10 81) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+68.031496062992133 436.5356692913385359 Td
+(Email : mabdoulkarimoun7@gmail.com) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 391.1813385826770855 Td
+(TABLE DES MATIÈRES) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 368.5041732283464171 Td
+(1. Présentation de Midenty) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 351.4962992125983874 Td
+(2. Codes secrets et accès) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 334.4884251968503008 Td
+(3. Utilisation de l'application \(côté client\)) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 317.480551181102328 Td
+(4. Panneau Admin Midenty) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 300.4726771653542983 Td
+(5. Comment l'application fonctionne \(grand public\)) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 283.4648031496062686 Td
+(6. Architecture technique — fichier par fichier) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 266.4569291338582389 Td
+(7. Sécurité et confidentialité) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 249.4490551181102092 Td
+(8. Vision future — Plateforme panafricaine) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 232.4411811023621794 Td
+(9. Version actuelle de la plateforme) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 215.4333070866141497 Td
+(10. Glossaire) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 198.4254330708660063 Td
+(11. Support et contact) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 181.4175590551179766 Td
+(12. Validation du comité) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.588 g
+513.4670866141731267 22.6771653543306684 Td
+(Page 1) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 5028
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F2 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(1. PRÉSENTATION DE MIDENTY) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 748.346692913385823 Td
+(Qu'est-ce que Midenty ?) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 731.3388188976377933 Td
+(Midenty est une plateforme de gestion pour les établissements éducatifs en Afrique. Elle permet de) Tj
+T* (gérer les inscriptions d'élèves/étudiants, le suivi des paiements, et la génération de reçus \(PDF, image,) Tj
+T* (WhatsApp, impression thermique Bluetooth\).) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 680.3151968503937042 Td
+(Une seule application pour tous) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 663.3073228346456744 Td
+(Midenty est conçue comme une plateforme unique qui couvre TOUT l'écosystème éducatif : écoles) Tj
+T* (coraniques \(médersas\), écoles privées, universités arabes, universités, instituts supérieurs, centres de) Tj
+T* (formation professionnelle. Chaque établissement a sa propre configuration \(nom, logo, couleurs, frais,) Tj
+T* (classes\) chargée via un code d'accès unique.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 598.1104724409448181 Td
+(Vision panafricaine) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 581.1025984251967884 Td
+(Midenty a pour ambition de devenir la référence de la gestion éducative en Afrique. La plateforme est) Tj
+T* (conçue pour être déployée dans plusieurs pays :) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 552.7561417322833677 Td
+(• Niger \(siège et premier marché\)) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 538.5829133858267141 Td
+(• Burkina Faso) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 524.4096850393700606 Td
+(• Mali) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 510.2364566929133503 Td
+(• Nigeria) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 496.0632283464566399 Td
+(• Et progressivement dans toute l'Afrique de l'Ouest et au-delà) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 473.3860629921259147 Td
+(Un seul panneau d'administration central permet de gérer tous les clients, quel que soit leur pays ou) Tj
+T* (leur type d'établissement.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 430.8663779527558404 Td
+(Caractéristiques principales) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 413.8585039370078107 Td
+(• Application web progressive \(PWA\) : fonctionne comme une app native) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 399.6852755905511003 Td
+(• Fonctionne hors-ligne : lecture immédiate, écritures mises en file et synchronisées automatiquement) Tj
+T* (au retour du réseau) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 371.3388188976377364 Td
+(• Interface trilingue : français, arabe et anglais) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 357.1655905511810261 Td
+(• Hébergement cloud gratuit \(Vercel + Firebase\) — aucune infrastructure à maintenir) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 342.9923622047243725 Td
+(• Données synchronisées en temps réel sur Firebase Firestore, avec cache local pour l'usage hors-ligne) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 328.8191338582676053 Td
+(• Impression thermique Bluetooth via RawBT \(imprimantes 58mm\)) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 300.4726771653542983 Td
+(Liens d'accès) Tj
+ET
+BT
+/F1 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 283.4648031496062686 Td
+(Application client :) Tj
+ET
+0.94 g
+59.5275590551181182 280.6301574803148924 484.7288188976377228 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+65.1968503937007995 269.2915748031495013 Td
+(midenty-edu.vercel.app/?c=CODE_CLIENT) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 246.614409448818833 Td
+(Panneau d'administration :) Tj
+ET
+0.94 g
+59.5275590551181182 243.7797637795274852 484.7288188976377228 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+65.1968503937007995 232.4411811023621794 Td
+(midenty-edu.vercel.app/admin/) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 209.7640157480313974 Td
+(Ancienne URL \(redirige automatiquement\) :) Tj
+ET
+0.94 g
+59.5275590551181182 206.929370078740078 484.7288188976377228 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+65.1968503937007995 195.5907874015747439 Td
+(recu-medersa.vercel.app) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 2) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 6211
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(2. CODES SECRETS ET ACCÈS) Tj
+ET
+1. 0.95 0.8 rg
+56.6929133858267775 748.346692913385823 481.8941732283464034 -28.3464566929133888 re
+f
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.522 0.392 0.016 rg
+65.1968503937007995 731.3388188976377933 Td
+(NE COMMUNIQUEZ CES CODES QU'AUX PERSONNES AUTORISÉES) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 708.6616535433070112 Td
+(Codes d'accès clients) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 691.6537795275589815 Td
+(Ces codes sont utilisés pour ouvrir l'application sur le téléphone du) Tj
+T* (client.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 657.6380314960629221 Td
+(• Médersa d'Éducation Islamique) Tj
+ET
+0.94 g
+65.1968503937007995 654.8033858267716596 479.0595275590550273 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+70.8661417322834666 643.4648031496062686 Td
+(MEI-2026-EDU) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 626.4569291338582389 Td
+(• Médersa Al-Abrar) Tj
+ET
+0.94 g
+65.1968503937007995 623.6222834645668627 479.0595275590550273 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+70.8661417322834666 612.2837007874015853 Td
+(ABRAR-2026-469) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 595.2758267716535556 Td
+(• Centre Formation Tillabéri) Tj
+ET
+0.94 g
+65.1968503937007995 592.4411811023621794 479.0595275590550273 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+70.8661417322834666 581.1025984251967884 Td
+(CFT-2026-TIL) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 555.5907874015747439 Td
+(Chaque code peut aussi être utilisé en lien direct :) Tj
+ET
+0.94 g
+65.1968503937007995 552.7561417322833677 479.0595275590550273 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+70.8661417322834666 541.4175590551180903 Td
+(midenty-edu.vercel.app/?c=CODE_CLIENT) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 515.9057480314959321 Td
+(Rotation annuelle des codes) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 498.8978740157479592 Td
+(Les codes contiennent l'année scolaire \(ex : -2026\). À chaque nouvelle année) Tj
+T* (scolaire, générer de nouveaux codes \(ex : MEI-2027-EDU\) via le panneau) Tj
+T* (admin, puis communiquer les nouveaux codes aux clients.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 447.8742519685038701 Td
+(En cas de fuite d'un code) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 430.8663779527558404 Td
+(1. Se connecter au panneau admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 416.69314960629913 Td
+(2. Ouvrir la fiche du client concerné) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 402.5199212598424765 Td
+( 3 .   D é s a c t i v e r   l e   c l i e n t   \( s t a t u t  !’   D é s a c t i v é \)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 388.3466929133857661 Td
+(4. Générer un nouveau code d'accès) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 374.1734645669290558 Td
+(5. Sauvegarder — le déploiement automatique se fait en ~1 min) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 360.0002362204724022 Td
+(6. Communiquer le nouveau code au client) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 337.323070866141677 Td
+(Code de réinitialisation admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 320.3151968503935905 Td
+(Ce code permet d'effacer TOUTES les données de l'application sur un) Tj
+T* (appareil.) Tj
+ET
+0.94 g
+65.1968503937007995 303.3073228346455608 479.0595275590550273 -17.0078740157480333 re
+f
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+70.8661417322834666 291.9687401574802834 Td
+(MIDENTY-RESET-2026) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 269.2915748031495013 Td
+(ATTENTION : La réinitialisation est IRRÉVERSIBLE !) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 249.4490551181102092 Td
+(Procédure de réinitialisation :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 235.2758267716534419 Td
+(1. Aller dans l'onglet Paramètres) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 221.1025984251967884 Td
+(2. Descendre jusqu'à la section « À propos ») Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 206.9293700787401349 Td
+(3. Taper 5 fois rapidement sur le texte « À propos ») Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 192.7561417322833677 Td
+(4. Un champ de mot de passe apparaît) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 178.5829133858267141 Td
+(5. Saisir le code : MIDENTY-RESET-2026) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 164.4096850393699469 Td
+(6. Choisir DEV \(panneau dev\) ou RESET \(tout effacer\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 144.5671653543306547 Td
+(Ne donnez JAMAIS ce code aux enseignants ou au personnel de l'école.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 121.8899999999998727 Td
+(Connexion au panneau admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 104.882125984251843 Td
+(Le panneau admin utilise Firebase Authentication \(email/mot de passe\).) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 90.7088976377951894 Td
+(Adresse : midenty-edu.vercel.app/admin/) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 76.5356692913385359 Td
+(Les comptes admin sont créés dans la console Firebase par Midenty uniquement) Tj
+T* ( \( C o n s o l e   F i r e b a s e  !’   A u t h e n t i c a t i o n  !’   U s e r s  !’   A d d   u s e r \) .) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 1885
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 785.1970866141732586 Td
+(Token GitHub \(déploiement automatique\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 768.1892125984252289 Td
+(Un token GitHub \(Personal Access Token\) est configuré dans le panneau admin.) Tj
+T* (Il permet de pousser automatiquement les fichiers clients sur GitHub, ce qui) Tj
+T* (déclenche un redéploiement automatique sur Vercel.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 720.0002362204724022 Td
+(Important : le token n'est visible qu'une seule fois lors de sa création. Le) Tj
+T* (stocker en lieu sûr.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 685.9844881889763428 Td
+(Pour configurer/changer le token :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 671.8112598425196893 Td
+( 1 .   A l l e r   s u r   g i t h u b . c o m  !’   S e t t i n g s  !’   D e v e l o p e r   s e t t i n g s) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 657.6380314960629221 Td
+( 2 .   P e r s o n a l   a c c e s s   t o k e n s  !’   T o k e n s   \( c l a s s i c \)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 643.4648031496062686 Td
+(3. Generate new token — droits 'repo' \(lecture/écriture\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 629.291574803149615 Td
+(4. Copier le token AVANT de fermer la page) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 615.1183464566928478 Td
+(5. Coller le token dans le panneau admin \(section Paramètres\)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 4) Tj
+ET
+endstream
+endobj
+11 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 12 0 R
+>>
+endobj
+12 0 obj
+<<
+/Length 6526
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(3. UTILISATION DE L'APPLICATION \(CÔTÉ CLIENT\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 748.346692913385823 Td
+(Installation sur Android) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 731.3388188976377933 Td
+(1. Ouvrir Google Chrome sur le téléphone) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 717.1655905511811397 Td
+(2. Aller à : midenty-edu.vercel.app/?c=CODE_CLIENT) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 702.9923622047243725 Td
+(3. Appuyer sur les 3 points en haut à droite de Chrome) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 688.819133858267719 Td
+(4. Choisir « Ajouter à l'écran d'accueil ») Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 674.6459055118109518 Td
+(5. L'application apparaît sur l'écran d'accueil comme une app native) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 654.8033858267716596 Td
+(Alternative : envoyer le lien direct par WhatsApp au client.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 632.1262204724408775 Td
+(Installation sur iPhone) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 615.1183464566928478 Td
+(1. Ouvrir Safari \(obligatoire — ne fonctionne pas avec Chrome iOS\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 600.9451181102361943 Td
+(2. Aller à : midenty-edu.vercel.app/?c=CODE_CLIENT) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 586.7718897637794271 Td
+(3. Appuyer sur le bouton « Partager » en bas de l'écran) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 572.5986614173227736 Td
+(4. Choisir « Sur l'écran d'accueil ») Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 558.42543307086612 Td
+(5. Confirmer — l'icône apparaît sur l'écran d'accueil) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 535.748267716535338 Td
+(Première connexion) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 518.7403937007873083 Td
+(1. Ouvrir l'application \(ou le lien direct\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 504.5671653543306547 Td
+(2. L'écran de démarrage \(splash\) s'affiche avec le logo de l'école) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 490.3939370078739444 Td
+(3. Si besoin, saisir le code d'accès) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 476.2207086614172908 Td
+(4. L'application s'ouvre sur l'onglet « Inscription ») Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 453.5435433070865656 Td
+(Onglet 1 : Inscription) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 436.5356692913385359 Td
+(Permet d'inscrire de nouveaux élèves.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 422.3624409448818255 Td
+(• Le matricule \(ex : MEI-001, MEI-002...\) est généré automatiquement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 408.1892125984251152 Td
+(• Le préfixe \(MEI, ABRAR, CFT...\) correspond au code client) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 394.0159842519684616 Td
+(• Remplir : nom complet, téléphone élève, téléphone parent, classe) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 379.8427559055117513 Td
+(• Cliquer sur « Inscrire » pour enregistrer) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 365.6695275590550409 Td
+(• Un reçu d'inscription est généré avec le matricule) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 345.8270078740156919 Td
+(Règle : un élève inscrit NE PEUT PAS être supprimé \(protection anti-fraude\).) Tj
+T* (On peut seulement modifier son nom ou sa classe.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 308.9766141732283131 Td
+(Onglet 2 : Classes) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 291.9687401574802834 Td
+(Affiche la liste des classes et leurs élèves.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 277.7955118110235162 Td
+(• Sélectionner une classe dans le menu déroulant) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 263.6222834645668627 Td
+(• La liste des élèves de cette classe s'affiche) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 249.4490551181102092 Td
+(• Possibilité d'exporter la liste en PDF) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 226.7718897637794271 Td
+(Onglet 3 : Frais mensuels) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 209.7640157480313974 Td
+(Permet de collecter et suivre les paiements mensuels.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 195.5907874015747439 Td
+(1. Saisir le matricule de l'élève \(ex : MEI-001\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 181.4175590551179766 Td
+(2. Cliquer sur « Rechercher ») Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 167.2443307086613231 Td
+(3. Les informations de l'élève s'affichent) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 153.0711023622046696 Td
+(4. La grille des mois apparaît :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 138.8978740157479024 Td
+(   Vert = payé | Gris = impayé | Bleu = sélectionné) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 124.7246456692912489 Td
+(5. Cliquer sur le\(s\) mois à payer) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 110.5514173228345953 Td
+(6. Choisir le mode de paiement \(Espèces, Mynita, Amanata...\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 96.3781889763778281 Td
+(7. Cliquer sur « Payer » pour générer le reçu) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 76.5356692913385359 Td
+(Section Consultation : voir les listes de payés/impayés par mois.) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 5) Tj
+ET
+endstream
+endobj
+13 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 14 0 R
+>>
+endobj
+14 0 obj
+<<
+/Length 4652
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 785.1970866141732586 Td
+(Onglet 4 : Paramètres) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 768.1892125984252289 Td
+(Configuration de l'application :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 754.0159842519684616 Td
+(• Informations de l'école : nom, adresse, téléphones, logo) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 739.8427559055118081 Td
+(• Classes : ajouter ou supprimer des classes) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 725.6695275590550409 Td
+(• Frais : montant inscription et frais mensuels) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 711.4962992125983874 Td
+(• Année scolaire : mois de début et de fin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 697.3230708661417339 Td
+(• Préfixe matricule : changer le préfixe \(ex : MEI\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 683.1498425196850803 Td
+(• Sauvegarde : exporter/importer les données en JSON) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 663.3073228346456744 Td
+(Note : les informations verrouillées \(nom, logo, couleurs\) ne peuvent être) Tj
+T* (modifiées que par Midenty via le panneau admin.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 626.4569291338582389 Td
+(Les reçus — 4 modes de partage) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 609.4490551181102092 Td
+(Chaque reçu peut être partagé de 4 façons :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 595.2758267716535556 Td
+(• PDF : télécharge un fichier PDF du reçu) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 581.1025984251967884 Td
+(• Image : télécharge une image PNG) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 566.9293700787401349 Td
+(• WhatsApp : partage directement via WhatsApp) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 552.7561417322833677 Td
+(• Imprimer : envoie vers une imprimante Bluetooth \(via RawBT\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 530.0789763779526993 Td
+(Impression Bluetooth \(thermique 58mm\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 513.0711023622046696 Td
+(1. Installer l'app « RawBT » depuis Google Play Store) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 498.8978740157479592 Td
+(2. Connecter l'imprimante Bluetooth dans les paramètres Android) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 484.7246456692913057 Td
+(3. Ouvrir RawBT et sélectionner l'imprimante) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 470.5514173228345953 Td
+(4. Dans l'app Midenty, cliquer sur « Imprimer ») Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 447.8742519685038701 Td
+(Sauvegarde des données) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 430.8663779527558404 Td
+(Les données \(élèves, paiements\) sont automatiquement enregistrées en ligne) Tj
+T* (sur Firebase. Si le téléphone est perdu ou réinitialisé, les données sont) Tj
+T* (récupérables depuis un autre appareil.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 382.6774015748030706 Td
+(En plus de la synchronisation automatique, une sauvegarde manuelle est) Tj
+T* (disponible en fichier JSON. Utile pour :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 354.3309448818897067 Td
+(• Archivage annuel) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 340.1577165354329964 Td
+(• Migration entre projets Firebase) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 325.9844881889763428 Td
+(• Audit comptable) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 306.1419685039369369 Td
+( E x p o r t e r   :   P a r a m è t r e s  !’   S a u v e g a r d e  !’   E x p o r t e r   \( f i c h i e r   J S O N \)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 291.9687401574802834 Td
+( I m p o r t e r   :   P a r a m è t r e s  !’   S a u v e g a r d e  !’   I m p o r t e r   \( s é l e c t i o n n e r   l e   f i c h i e r \)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 6) Tj
+ET
+endstream
+endobj
+15 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 16 0 R
+>>
+endobj
+16 0 obj
+<<
+/Length 5780
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(4. PANNEAU ADMIN MIDENTY) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 748.346692913385823 Td
+(Accès) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 731.3388188976377933 Td
+(Adresse : midenty-edu.vercel.app/admin/) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 717.1655905511811397 Td
+(Connexion : email + mot de passe \(Firebase Authentication\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 702.9923622047243725 Td
+(Les comptes admin sont créés dans la console Firebase par Midenty) Tj
+T* (uniquement.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 666.1419685039369369 Td
+(Créer un nouvel établissement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 649.1340944881889072 Td
+(Le formulaire de création comporte 9 sections :) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 629.291574803149615 Td
+(Section 1 : Identité de l'établissement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 615.1183464566928478 Td
+(Nom français, nom arabe, adresse, téléphones, logo \(image\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 600.9451181102361943 Td
+(Section 2 : Couleurs du thème) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 586.7718897637794271 Td
+(Couleur principale, secondaire, accent \(personnalise l'interface\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 572.5986614173227736 Td
+(Section 3 : Accès) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 558.42543307086612 Td
+(Code d'accès \(auto-généré ou manuel\), statut actif/désactivé) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 544.2522047244094665 Td
+(Section 4 : Scolarité) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 530.0789763779526993 Td
+(Frais inscription, frais mensuels, début/fin année, préfixe matricule,) Tj
+T* (devise) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 501.7325196850393354 Td
+(Section 5 : Classes) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 487.559291338582625 Td
+(Liste des classes \(ajout libre : CP1, 6ème, Niveau 1, etc.\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 473.3860629921259147 Td
+(Section 6 : Modes de paiement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 459.2128346456692611 Td
+(Espèces, Mynita, Amanata... \(modifiable selon l'établissement\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 445.0396062992125508 Td
+(Section 7 : SMS \(fonctionnalité optionnelle\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 430.8663779527558404 Td
+(Notifications SMS via Africa's Talking, Twilio ou opérateur générique.) Tj
+T* (Fonctionnalité implémentée via Firebase Cloud Functions.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 402.5199212598424765 Td
+(Section 8 : Messages sur les reçus) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 388.3466929133857661 Td
+(Message final en français et en arabe \(affiché sur chaque reçu\)) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 374.1734645669290558 Td
+(Section 9 : Personnalisation des textes \(i18n\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 360.0002362204724022 Td
+(Labels des onglets, boutons, champs — par langue \(FR/AR/EN\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 337.323070866141677 Td
+(Déploiement automatique) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 320.3151968503935905 Td
+(Quand vous sauvegardez un client avec le token GitHub configuré :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 306.1419685039369369 Td
+(1. Le fichier JSON du client est poussé sur GitHub) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 291.9687401574802834 Td
+(2. L'index des clients \(clients/index.json\) est mis à jour) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 277.7955118110235162 Td
+(3. Vercel détecte le changement et redéploie automatiquement \(~1 min\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 263.6222834645668627 Td
+(4. Le client peut se connecter avec son code d'accès) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 240.9451181102361943 Td
+(Autres fonctions de l'admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 223.9372440944881646 Td
+(• Modifier un client existant \(cliquer sur le crayon\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 209.7640157480313974 Td
+(• Désactiver un client \(changer le statut à « Désactivé »\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 195.5907874015747439 Td
+(• Supprimer un client) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 181.4175590551179766 Td
+(• Copier le lien direct du client) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 167.2443307086613231 Td
+(• Télécharger le JSON d'un client) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 153.0711023622046696 Td
+(• Import/Export de tous les clients en JSON) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 7) Tj
+ET
+endstream
+endobj
+17 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 18 0 R
+>>
+endobj
+18 0 obj
+<<
+/Length 5152
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(5. COMMENT L'APPLICATION FONCTIONNE) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Cette section explique le fonctionnement de) Tj
+T* (Midenty en termes simples, sans jargon technique.) Tj
+T* (Pour les détails techniques fichier par fichier,) Tj
+T* (voir Section 6.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 683.1498425196850803 Td
+(L'application coûte très peu à faire tourner) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 666.1419685039369369 Td
+(Midenty fonctionne comme un site web, pas comme une application classique.) Tj
+T* (Il n'y a pas besoin de payer un serveur ou un abonnement mensuel dans les) Tj
+T* (quotas gratuits Vercel + Firebase \(largement suffisants pour des dizaines) Tj
+T* (d'établissements\). Au-delà, les coûts sont variables selon l'usage réel.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 603.7797637795274568 Td
+(Résultat :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 589.6065354330708033 Td
+(• Zéro frais d'hébergement dans les quotas gratuits) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 575.4333070866141497 Td
+(• Zéro frais de maintenance technique) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 561.2600787401574962 Td
+(• L'application tourne toute seule, 24h/24) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 538.5829133858267141 Td
+(L'application fonctionne même sans internet) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 521.5750393700786844 Td
+(Quand un client ouvre l'application pour la première fois, elle se) Tj
+T* (télécharge automatiquement dans son téléphone. Après ça, elle fonctionne) Tj
+T* (même sans connexion internet \(hors-ligne\). C'est pour ça qu'elle marche bien) Tj
+T* (au Niger, même dans les zones avec un réseau instable.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 456.378188976377885 Td
+(Chaque établissement a sa propre fiche de configuration) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 439.3703149606298552 Td
+(Quand tu crées un client dans le panneau admin, une fiche est créée pour cet) Tj
+T* (établissement. Cette fiche contient : le nom, le logo, les couleurs, les) Tj
+T* (frais, les classes, etc. C'est cette fiche qui personnalise l'application) Tj
+T* (pour chaque établissement. Quand le client entre son code d'accès, sa fiche) Tj
+T* (est chargée.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 360.0002362204724022 Td
+(Les données sont enregistrées en ligne \(Firebase\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 342.9923622047243725 Td
+(Toutes les données \(élèves, paiements, reçus\) sont enregistrées en ligne sur) Tj
+T* (Firebase \(base de données Google\). Cela signifie :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 314.6459055118109518 Td
+(• Les données sont en sécurité dans le cloud) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 300.4726771653542983 Td
+(• Si le téléphone est perdu ou réinitialisé, rien n'est perdu) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 286.2994488188975311 Td
+(• Les données peuvent être consultées depuis un autre appareil) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 272.1262204724408775 Td
+(• Les données sont hébergées dans les serveurs Google Cloud \(région) Tj
+T* (configurable lors du setup Firebase\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 235.2758267716534419 Td
+(Synchronisation automatique \(online/offline\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 218.2679527559054122 Td
+(L'application utilise une technologie intelligente :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 198.4254330708660063 Td
+(• Quand il y a internet : les données sont enregistrées directement sur) Tj
+T* (Firebase en temps réel) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 167.2443307086613231 Td
+(• Quand il n'y a PAS internet : les données sont stockées temporairement) Tj
+T* (dans le téléphone \(en local\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 136.0632283464566399 Td
+(• Quand la connexion revient : les données locales sont automatiquement) Tj
+T* (synchronisées avec Firebase) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 102.0474803149605805 Td
+(Le client n'a rien à faire — tout se passe automatiquement en arrière-plan.) Tj
+T* (Un petit indicateur dans l'application montre si les données sont) Tj
+T* (synchronisées.) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 8) Tj
+ET
+endstream
+endobj
+19 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 20 0 R
+>>
+endobj
+20 0 obj
+<<
+/Length 2104
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 785.1970866141732586 Td
+(Le déploiement est automatique) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 768.1892125984252289 Td
+(Quand tu crées ou modifies un client dans le panneau admin :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 754.0159842519684616 Td
+(1. La fiche du client est envoyée sur GitHub \(stockage du code\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 739.8427559055118081 Td
+(2. Vercel détecte le changement et met à jour l'application \(~1 min\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 725.6695275590550409 Td
+(3. Le client peut utiliser l'application avec son code) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 705.8270078740157487 Td
+(Tu n'as rien à faire de technique — tout est automatique.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 683.1498425196850803 Td
+(Les outils utilisés) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 666.1419685039369369 Td
+(• Vercel : héberge l'application gratuitement \(midenty-edu.vercel.app\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 651.9687401574802834 Td
+(• GitHub : stocke le code et les fiches clients en sécurité) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 637.7955118110235162 Td
+(• Firebase : base de données en ligne \(Firestore\) + connexion admin \(Auth\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 623.6222834645668627 Td
+(• Firebase Cloud Functions : envoie les SMS automatiques) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 609.4490551181102092 Td
+(• WhatsApp/SMS : pour le support client et les notifications) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+509.7870866141731767 22.6771653543306684 Td
+(Page 9) Tj
+ET
+endstream
+endobj
+21 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 22 0 R
+>>
+endobj
+22 0 obj
+<<
+/Length 5378
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(6. ARCHITECTURE TECHNIQUE — FICHIER PAR FICHIER) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Cette section explique tous les fichiers du) Tj
+T* (projet, en français simple. Objectif : même) Tj
+T* (quelqu'un qui ne comprend pas la programmation) Tj
+T* (doit pouvoir comprendre à quoi sert chaque) Tj
+T* (fichier.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 666.1419685039369369 Td
+(Vue d'ensemble — 4 grands blocs) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 649.1340944881889072 Td
+(Le projet est organisé en 4 grands blocs :) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 629.291574803149615 Td
+(1. L'application cliente) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 615.1183464566928478 Td
+(Ce que le directeur d'école voit et utilise sur son téléphone.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 600.9451181102361943 Td
+(2. Le panneau admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 586.7718897637794271 Td
+(Ce que Midenty utilise pour créer/gérer les clients.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 572.5986614173227736 Td
+(3. Les fiches clients) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 558.42543307086612 Td
+(Un fichier JSON par établissement, contenant sa configuration.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 544.2522047244094665 Td
+(4. L'infrastructure) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 530.0789763779526993 Td
+(Firebase, Vercel, GitHub, service worker, règles de sécurité.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 507.4018110236219741 Td
+(6.1 — Fichiers racine du projet) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 484.7246456692913057 Td
+(index.html) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 470.5514173228345953 Td
+(Page principale de l'application cliente \(477 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 453.5435433070865656 Td
+(C'est la porte d'entrée. Quand quelqu'un ouvre l'app, ce fichier se charge en) Tj
+T* (premier. Il contient : l'écran de démarrage \(splash\), l'écran de connexion,) Tj
+T* (les 4 onglets, les fenêtres popup. Il charge aussi la fiche du client \(JSON\) à) Tj
+T* (partir du code dans l'URL \(?c=MEI-2026-EDU\), applique les couleurs, le logo et) Tj
+T* (le nom, puis lance l'application.) Tj
+ET
+56.6929133858267775 496.0632283464566399 481.8941732283464034 -103.4645669291338663 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 384.0947244094487587 Td
+(manifest.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 369.9214960629920483 Td
+(Fiche d'identité de la PWA \(25 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 352.9136220472440186 Td
+(C'est comme la carte d'identité de l'application. Il dit à Android/iPhone : «) Tj
+T* (Je suis une application, mon nom est X, mon icône est Y, mes couleurs sont Z.) Tj
+T* (» C'est ce qui permet à l'application d'être installée sur l'écran d'accueil) Tj
+T* (comme une vraie app native. Il est écrasé dynamiquement en JavaScript avec la) Tj
+T* (fiche du client \(nom, logo, couleurs personnalisés\).) Tj
+ET
+56.6929133858267775 395.4333070866140929 481.8941732283464034 -103.4645669291338663 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 283.4648031496062686 Td
+(service-worker.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 269.2915748031495013 Td
+(Cerveau du mode hors-ligne \(62 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 252.2837007874014716 Td
+(C'est un petit programme qui tourne en arrière-plan dans le téléphone. Son) Tj
+T* (rôle : mémoriser les fichiers de l'app pour qu'elle fonctionne sans internet.) Tj
+T* (Version actuelle : v10. Stratégie : « network-first » \(vérifie d'abord) Tj
+T* (internet, sinon utilise la mémoire\). Il n'enregistre PAS les fiches clients) Tj
+T* (\(clients/*.json\) ni les données Firebase — celles-ci passent toujours par le) Tj
+T* (réseau pour rester à jour.) Tj
+ET
+56.6929133858267775 294.8033858267715459 481.8941732283464034 -116.2204724409448886 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 170.0789763779526993 Td
+(firebase.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 155.9057480314959321 Td
+(Configuration Firebase \(8 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 138.8978740157479024 Td
+(Dit à Firebase quels fichiers utiliser pour les Functions et les règles) Tj
+T* (Firestore. Utilisé lors du déploiement des Cloud Functions et des règles de) Tj
+T* (sécurité.) Tj
+ET
+56.6929133858267775 181.4175590551180051 481.8941732283464034 -77.9527559055118218 re
+S
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 10) Tj
+ET
+endstream
+endobj
+23 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 24 0 R
+>>
+endobj
+24 0 obj
+<<
+/Length 6525
+>>
+stream
+0.5670000000000001 w
+0.86 G
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 785.1970866141732586 Td
+(firestore.rules) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 771.0238582677164914 Td
+(Règles de sécurité de la base de données \(38 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 754.0159842519684616 Td
+(C'est le gardien de la base de données. Il définit qui peut lire ou écrire) Tj
+T* (quoi. Règle actuelle : seuls les utilisateurs authentifiés peuvent accéder aux) Tj
+T* (données de « schools/{code}/... ». Par défaut, tout le reste est interdit.) Tj
+ET
+56.6929133858267775 796.5356692913385359 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 710.0789763779526993 Td
+(.firebaserc) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 695.9057480314960458 Td
+(Lien vers le projet Firebase \(5 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 678.8978740157480161 Td
+(Indique quel projet Firebase utiliser. Ici : midenty-medersa.) Tj
+ET
+56.6929133858267775 721.4175590551180903 481.8941732283464034 -52.4409448818897701 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 660.4726771653542983 Td
+(README.md) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 646.2994488188976447 Td
+(Documentation pour développeur) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 629.291574803149615 Td
+(Instructions pour installer, configurer et déployer le projet. Utile pour un) Tj
+T* (nouveau développeur qui rejoint le projet.) Tj
+ET
+56.6929133858267775 671.8112598425196893 481.8941732283464034 -65.1968503937007995 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 598.1104724409448181 Td
+(CLAUDE.md) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 583.9372440944881646 Td
+(Instructions pour Claude \(l'assistant IA\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 566.9293700787401349 Td
+(Fichier lu automatiquement par Claude à chaque session. Contient : description) Tj
+T* (du projet, décisions techniques, préférences de travail de l'utilisateur,) Tj
+T* (historique des sessions récentes.) Tj
+ET
+56.6929133858267775 609.4490551181102092 481.8941732283464034 -77.9527559055118218 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 522.9923622047243725 Td
+(6.2 — L'application cliente \(dossier app/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 500.3151968503936473 Td
+(app/app.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 486.1419685039369369 Td
+(Cerveau de l'application \(1088 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 469.1340944881889072 Td
+(C'est le fichier principal. Il gère tout ce que fait l'app : afficher l'écran) Tj
+T* (de démarrage, vérifier le code d'accès, afficher/changer les onglets, inscrire) Tj
+T* (un élève, enregistrer un paiement, générer un reçu, sauvegarder/restaurer,) Tj
+T* (gérer les paramètres. C'est le chef d'orchestre.) Tj
+ET
+56.6929133858267775 511.6537795275589815 481.8941732283464034 -90.708661417322844 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 412.4411811023621226 Td
+(app/config.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 398.2679527559054691 Td
+(Configuration par défaut + chargement client \(102 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 381.2600787401574394 Td
+(Contient les valeurs par défaut \(frais 5000 FCFA, préfixe MEI...\) et surtout) Tj
+T* (la fonction qui charge la fiche d'un client à partir de son code. Distingue) Tj
+T* (les champs « verrouillés » \(nom, logo, couleurs — écrasés à chaque login\) et «) Tj
+T* (éditables » \(classes, frais — appliqués uniquement au premier login\).) Tj
+ET
+56.6929133858267775 423.7797637795275136 481.8941732283464034 -90.708661417322844 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 324.5671653543306547 Td
+(app/firebase-config.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 310.3939370078740012 Td
+(Initialisation Firebase \(68 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 293.3860629921258578 Td
+(Se connecte à Firebase avec les clés du projet. Active le mode hors-ligne) Tj
+T* (\(persistence Firestore\) : les données sont copiées dans le téléphone pour) Tj
+T* (lecture instantanée, même sans internet. Fournit les fonctions getDb\(\) et) Tj
+T* (getAuth\(\) utilisées partout ailleurs.) Tj
+ET
+56.6929133858267775 335.9057480314959889 481.8941732283464034 -90.708661417322844 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 236.69314960629913 Td
+(app/storage.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 222.5199212598424765 Td
+(Gestion des données \(450 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 205.5120472440944468 Td
+(Le pont entre le téléphone \(localStorage\) et le cloud \(Firestore\). Deux rôles) Tj
+T* (: \(1\) lire/écrire les élèves et paiements ; \(2\) synchroniser automatiquement) Tj
+T* (en arrière-plan. Suit l'état de sync \(synced / pending / offline\) et l'affiche) Tj
+T* (dans l'UI.) Tj
+ET
+56.6929133858267775 248.0317322834644926 481.8941732283464034 -90.708661417322844 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 148.8191338582676053 Td
+(app/i18n.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 134.6459055118109518 Td
+(Système multilingue \(670 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 117.6380314960629221 Td
+(Contient toutes les traductions en 3 langues : français, arabe, anglais. 200+) Tj
+T* (clés par langue. Permet au client de basculer entre les langues à la volée.) Tj
+T* (Peut être personnalisé par client via i18nOverrides dans sa fiche JSON \(ex :) Tj
+T* ( a p p e l e r   «   é l è v e   »  !’   «   é t u d i a n t   »   p o u r   u n e   u n i v e r s i t é \) .) Tj
+ET
+56.6929133858267775 160.1577165354329679 481.8941732283464034 -90.708661417322844 re
+S
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 11) Tj
+ET
+endstream
+endobj
+25 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 26 0 R
+>>
+endobj
+26 0 obj
+<<
+/Length 6565
+>>
+stream
+0.5670000000000001 w
+0.86 G
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 785.1970866141732586 Td
+(app/style.css) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 771.0238582677164914 Td
+(Design et mise en page \(922 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 754.0159842519684616 Td
+(Toutes les règles visuelles : couleurs, tailles, boutons, formulaires, layout) Tj
+T* (mobile, mode RTL pour l'arabe \(texte de droite à gauche\). Utilise des) Tj
+T* (variables CSS pour permettre la personnalisation des couleurs par client.) Tj
+ET
+56.6929133858267775 796.5356692913385359 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 710.0789763779526993 Td
+(app/pdf-export.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 695.9057480314960458 Td
+(Génération PDF et image \(223 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 678.8978740157480161 Td
+(Transforme un reçu affiché en PDF ou en image PNG téléchargeable. Utilise) Tj
+T* (html2canvas + jsPDF. Gère aussi le partage WhatsApp : convertit le reçu en) Tj
+T* (image et ouvre WhatsApp Web/mobile avec l'image en pièce jointe.) Tj
+ET
+56.6929133858267775 721.4175590551180903 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 634.9608661417322537 Td
+(app/print-escpos.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 620.7876377952754865 Td
+(Impression thermique Bluetooth \(163 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 603.7797637795274568 Td
+(Envoie le reçu vers une imprimante thermique 58mm via l'app RawBT. Comme) Tj
+T* (l'arabe n'est pas supporté directement par les imprimantes ESC/POS, le texte) Tj
+T* (arabe est d'abord rendu en image, puis imprimé comme une image.) Tj
+ET
+56.6929133858267775 646.2994488188976447 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 559.8427559055116944 Td
+(app/qr-manager.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 545.6695275590550409 Td
+(Génération de QR codes \(14 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 528.6616535433070112 Td
+(Petit utilitaire pour générer un QR code sur un reçu \(facultatif\). Simplifié —) Tj
+T* (pas de scanner intégré.) Tj
+ET
+56.6929133858267775 571.1813385826770855 481.8941732283464034 -65.1968503937007995 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 497.480551181102328 Td
+(6.3 — Le panneau admin \(dossier admin/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 474.8033858267716028 Td
+(admin/index.html) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 460.6301574803148924 Td
+(Interface du panneau admin \(379 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 443.6222834645668627 Td
+(L'interface web que Midenty utilise pour gérer les clients. Comprend : écran) Tj
+T* (de connexion \(email/mot de passe\), liste des clients avec statuts, formulaire) Tj
+T* (de création/édition en 9 sections, boutons import/export.) Tj
+ET
+56.6929133858267775 486.1419685039369369 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 399.6852755905511003 Td
+(admin/admin.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 385.5120472440944468 Td
+(Logique du panneau admin \(753 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 368.5041732283464171 Td
+(Gère toutes les actions de l'admin : connexion Firebase, chargement de la) Tj
+T* (liste des clients, création/édition/suppression, sauvegarde vers GitHub \(via) Tj
+T* (l'API GitHub et un token\), mise à jour de clients/index.json, import/export.) Tj
+T* (C'est le point de contrôle de toute la plateforme.) Tj
+ET
+56.6929133858267775 411.0238582677164914 481.8941732283464034 -90.708661417322844 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 311.8112598425195756 Td
+(admin/admin.css) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 297.6380314960629221 Td
+(Design du panneau admin \(424 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 280.6301574803148924 Td
+(Styles visuels du panneau admin : header, cartes clients, formulaire, modals.) Tj
+T* (Design séparé de l'app cliente pour un look plus « backoffice ».) Tj
+ET
+56.6929133858267775 323.1498425196849666 481.8941732283464034 -65.1968503937007995 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 249.4490551181102092 Td
+(6.4 — Les fiches clients \(dossier clients/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 226.7718897637794271 Td
+(clients/index.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 212.5986614173227736 Td
+(Manifeste — liste des codes clients \(4 lignes\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 195.5907874015747439 Td
+(Un simple tableau contenant tous les codes clients existants. Mis à jour) Tj
+T* (automatiquement par l'admin. Sert à l'auto-chargement des clients dans le) Tj
+T* (panneau admin sur un nouveau navigateur.) Tj
+ET
+56.6929133858267775 238.1104724409447897 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 151.6537795275589815 Td
+(clients/MEI-2026-EDU.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 137.480551181102328 Td
+(Fiche du client Médersa d'Éducation Islamique) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 120.4726771653542983 Td
+(Un fichier JSON qui contient TOUTE la configuration de ce client : nom) Tj
+T* (\(FR/AR\), logo, adresse, téléphones, couleurs, frais, classes, modes de) Tj
+T* (paiement, messages sur les reçus, personnalisation des textes \(i18nOverrides\).) Tj
+T* (C'est ce fichier qui « habille » l'application quand un utilisateur entre le) Tj
+T* (code MEI-2026-EDU.) Tj
+ET
+56.6929133858267775 162.9923622047243157 481.8941732283464034 -103.4645669291338663 re
+S
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 12) Tj
+ET
+endstream
+endobj
+27 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 28 0 R
+>>
+endobj
+28 0 obj
+<<
+/Length 6807
+>>
+stream
+0.5670000000000001 w
+0.86 G
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 785.1970866141732586 Td
+(clients/ABRAR-2026-469.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 771.0238582677164914 Td
+(Fiche du client Médersa Al-Abrar) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 754.0159842519684616 Td
+(Même structure que MEI-2026-EDU.json, mais avec les données propres à la) Tj
+T* (Médersa Al-Abrar.) Tj
+ET
+56.6929133858267775 796.5356692913385359 481.8941732283464034 -65.1968503937007995 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 722.8348818897637784 Td
+(clients/CFT-2026-TIL.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 708.6616535433070112 Td
+(Fiche du client Centre Formation Tillabéri) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 691.6537795275589815 Td
+(Même structure, données du centre de formation de Tillabéri.) Tj
+ET
+56.6929133858267775 734.1734645669290558 481.8941732283464034 -52.4409448818897701 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 673.2285826771653774 Td
+(6.5 — Les images \(dossier assets/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 650.5514173228345953 Td
+(assets/logo.png) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 636.3781889763779418 Td
+(Logo Midenty par défaut) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 619.3703149606299121 Td
+(Utilisé quand aucun client n'est chargé \(page d'accueil sans code\).) Tj
+ET
+56.6929133858267775 661.8899999999999864 481.8941732283464034 -52.4409448818897701 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 600.9451181102361943 Td
+(assets/icon-192.png / icon-512.png) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 586.7718897637794271 Td
+(Icônes PWA \(192px et 512px\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 569.7640157480313974 Td
+(Utilisées quand l'app est installée sur l'écran d'accueil du téléphone.) Tj
+T* (Écrasées dynamiquement par le logo du client si configuré.) Tj
+ET
+56.6929133858267775 612.2837007874014716 481.8941732283464034 -65.1968503937007995 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 538.5829133858267141 Td
+(6.6 — Firebase Cloud Functions \(dossier functions/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 515.9057480314959321 Td
+(functions/index.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 501.7325196850393354 Td
+(Fonctions serverless Firebase) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 484.7246456692913057 Td
+(Code qui tourne sur les serveurs Google. Rôle actuel : quand un paiement est) Tj
+T* (créé dans Firestore, envoie automatiquement un SMS au parent avec le détail du) Tj
+T* (paiement.) Tj
+ET
+56.6929133858267775 527.2443307086613231 481.8941732283464034 -77.9527559055118218 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 440.7876377952755433 Td
+(functions/sms-service.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 426.614409448818833 Td
+(Service d'envoi SMS) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 409.6065354330708033 Td
+(Gère l'envoi effectif du SMS via le fournisseur configuré \(Africa's Talking,) Tj
+T* (Twilio ou générique\).) Tj
+ET
+56.6929133858267775 452.1262204724408775 481.8941732283464034 -65.1968503937007995 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 378.4254330708660632 Td
+(functions/sms-templates.js) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 364.2522047244094097 Td
+(Modèles de messages SMS) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 347.24433070866138 Td
+(Templates des SMS \(inscription, paiement\) en français et arabe, avec variables) Tj
+T* ({nom}, {matricule}, {montant}...) Tj
+ET
+56.6929133858267775 389.7640157480313974 481.8941732283464034 -65.1968503937007995 re
+S
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 316.0632283464566399 Td
+(functions/package.json) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 301.8899999999999864 Td
+(Dépendances Node.js pour les Functions) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 284.882125984251843 Td
+(Liste des bibliothèques utilisées par les Cloud Functions.) Tj
+ET
+56.6929133858267775 327.4018110236219741 481.8941732283464034 -52.4409448818897701 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 266.4569291338582389 Td
+(6.7 — Documentation \(dossier docs/\)) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+BT
+/F6 10 Tf
+11.5 TL
+0.043 0.239 0.569 rg
+62.3622047244094517 243.7797637795274568 Td
+(docs/guide-confidentiel.html) Tj
+ET
+BT
+/F7 9 Tf
+10.3499999999999996 TL
+0.471 g
+62.3622047244094517 229.6065354330708033 Td
+(Ce document \(générateur PDF\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+62.3622047244094517 212.5986614173227736 Td
+(Fichier HTML qui, ouvert dans un navigateur, génère ce guide PDF confidentiel) Tj
+T* (via jsPDF. Doit être mis à jour à chaque évolution de la plateforme.) Tj
+ET
+56.6929133858267775 255.1183464566928194 481.8941732283464034 -65.1968503937007995 re
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 181.4175590551179766 Td
+(6.8 — Comment les fichiers travaillent ensemble) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 158.7403937007873083 Td
+(Voici le flux complet quand un client ouvre l'app :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 138.8978740157479024 Td
+(1. Le client clique sur le lien : midenty-edu.vercel.app/?c=MEI-2026-EDU) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 124.7246456692912489 Td
+(2. Vercel envoie index.html au téléphone) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 110.5514173228345953 Td
+(3. index.html lit le code MEI-2026-EDU dans l'URL) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 96.3781889763778281 Td
+(4. index.html télécharge clients/MEI-2026-EDU.json) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 82.2049606299211746 Td
+(5. Les couleurs, logo, nom sont appliqués à l'interface) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 68.0317322834645211 Td
+(6. app.js démarre et affiche l'écran de connexion) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 13) Tj
+ET
+endstream
+endobj
+29 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 30 0 R
+>>
+endobj
+30 0 obj
+<<
+/Length 1112
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 785.1970866141732586 Td
+(7. Le client entre son code — validation) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 771.0238582677164914 Td
+(8. firebase-config.js se connecte à Firestore) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 756.8506299212598378 Td
+(9. storage.js charge les élèves/paiements depuis Firestore) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 742.6774015748030706 Td
+(10. i18n.js applique la langue choisie) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 728.5041732283464171 Td
+(11. service-worker.js met tout en cache pour la prochaine ouverture) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 714.3309448818897636 Td
+(12. L'application est prête à être utilisée) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 14) Tj
+ET
+endstream
+endobj
+31 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 32 0 R
+>>
+endobj
+32 0 obj
+<<
+/Length 5673
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(7. SÉCURITÉ ET CONFIDENTIALITÉ) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Section destinée particulièrement au comité de) Tj
+T* (révision. Elle décrit comment les données des) Tj
+T* (élèves et de l'établissement sont protégées.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 697.3230708661417339 Td
+(Qui contrôle les données ?) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 680.3151968503937042 Td
+(• L'établissement client est propriétaire de ses données) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 666.1419685039369369 Td
+(• Midenty administre techniquement la plateforme) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 651.9687401574802834 Td
+(• Google \(via Firebase\) héberge les données sur ses serveurs cloud) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 637.7955118110235162 Td
+(• Vercel héberge le code de l'application \(pas les données\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 623.6222834645668627 Td
+(• GitHub stocke le code source et les fiches de configuration clients) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 600.9451181102361943 Td
+(Localisation des données) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 583.9372440944881646 Td
+(Les données Firestore sont hébergées dans les datacenters Google Cloud. La) Tj
+T* (région est configurable lors du setup Firebase. Pour l'Afrique, les régions) Tj
+T* (les plus proches sont europe-west1 \(Belgique\) et europe-west9 \(Paris\). Cette) Tj
+T* (information est visible dans la console Firebase du projet midenty-medersa.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 518.7403937007873083 Td
+(Chiffrement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 501.7325196850393354 Td
+(• Toutes les communications entre le téléphone et Firebase sont chiffrées) Tj
+T* (via HTTPS \(TLS 1.3\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 473.3860629921259147 Td
+(• Les données au repos dans Firestore sont chiffrées côté Google \(AES-256\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 459.2128346456692611 Td
+(• Les mots de passe admin sont chiffrés par Firebase Authentication) Tj
+T* (\(jamais stockés en clair\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 430.8663779527558404 Td
+(• Le token GitHub est stocké dans le navigateur admin uniquement) Tj
+T* (\(localStorage\), jamais transmis à Midenty) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 394.0159842519684616 Td
+(Contrôle d'accès) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 377.0081102362204319 Td
+(• Panneau admin : email + mot de passe Firebase \(comptes créés par Midenty) Tj
+T* (uniquement\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 348.6616535433070112 Td
+(• Application cliente : code d'accès unique par établissement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 334.4884251968503008 Td
+(• Base de données : règles Firestore — seuls les utilisateurs authentifiés) Tj
+T* (peuvent lire/écrire) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 306.1419685039369369 Td
+(• Réinitialisation : nécessite un tap 5x + code secret + confirmation) Tj
+T* (\(double sécurité\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 269.2915748031495013 Td
+(Protection contre la perte de données) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 252.2837007874014716 Td
+(• Sauvegarde automatique en temps réel sur Firestore) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 238.1104724409448181 Td
+(• Cache local sur le téléphone \(secours en cas de perte connexion\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 223.9372440944881646 Td
+(• Sauvegarde manuelle possible en fichier JSON \(à conserver hors-ligne par) Tj
+T* (le client\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 195.5907874015747439 Td
+(• Un élève inscrit ne peut jamais être supprimé \(protection anti-fraude\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 181.4175590551179766 Td
+(• Historique complet de tous les paiements conservé indéfiniment) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 158.7403937007873083 Td
+(Confidentialité \(RGPD / Protection des données\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 141.7325196850392786 Td
+(Données collectées par la plateforme :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 127.559291338582625 Td
+(• Nom complet de l'élève) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 113.3860629921258578 Td
+(• Téléphone de l'élève et du parent) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 99.2128346456692043 Td
+(• Classe et matricule) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 85.0396062992125508 Td
+(• Historique des paiements \(mois payés, montants, modes\)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 15) Tj
+ET
+endstream
+endobj
+33 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 34 0 R
+>>
+endobj
+34 0 obj
+<<
+/Length 2222
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 785.1970866141732586 Td
+(Aucune autre donnée personnelle n'est collectée \(pas d'adresse, pas de) Tj
+T* (photo, pas de date de naissance\). Les données ne sont jamais partagées avec) Tj
+T* (des tiers.) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 737.0081102362204319 Td
+(Droit à l'oubli : sur demande écrite du parent, Midenty peut anonymiser les) Tj
+T* (données d'un élève \(nom remplacé par « Ancien élève », téléphones) Tj
+T* (supprimés\). L'historique des paiements est conservé pour l'audit comptable.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 685.9844881889763428 Td
+(Disponibilité de la plateforme) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 668.9766141732283131 Td
+(• Vercel : SLA 99.99% de disponibilité \(plan Hobby\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 654.8033858267716596 Td
+(• Firebase : SLA 99.95% de disponibilité) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 640.6301574803148924 Td
+(• L'application fonctionne hors-ligne — une panne serveur n'empêche pas le) Tj
+T* (travail quotidien) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 603.7797637795274568 Td
+(Audit et traçabilité) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 586.7718897637794271 Td
+(• Chaque paiement enregistré dans Firestore contient : date, heure, mois) Tj
+T* (payé, montant, mode, matricule de l'élève) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 558.42543307086612 Td
+(• Le panneau admin garde une trace des créations/modifications de clients) Tj
+T* (via l'historique Git de GitHub) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 530.0789763779526993 Td
+(• Firebase conserve des logs d'authentification \(qui s'est connecté au) Tj
+T* (panneau admin et quand\)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 16) Tj
+ET
+endstream
+endobj
+35 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 36 0 R
+>>
+endobj
+36 0 obj
+<<
+/Length 15452
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(8. VISION FUTURE — PLATEFORME PANAFRICAINE) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 748.346692913385823 Td
+(La vision) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 731.3388188976377933 Td
+(Midenty a pour objectif de devenir LA plateforme de référence pour la) Tj
+T* (gestion des établissements éducatifs en Afrique. Une seule application, un) Tj
+T* (seul panneau d'administration, pour gérer TOUS les types d'écoles et) Tj
+T* (d'universités, dans TOUS les pays du continent.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 666.1419685039369369 Td
+(Expansion géographique) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 649.1340944881889072 Td
+(Phase 1 — Niger \(en cours, 2026\) : premiers clients, validation du modèle) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 634.9608661417322537 Td
+(Phase 2 — Afrique de l'Ouest \(2027\) : Burkina Faso, Mali, Nigeria) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 620.7876377952754865 Td
+(Phase 3 — Afrique francophone et anglophone \(2028+\) : Sénégal, Côte) Tj
+T* (d'Ivoire, Cameroun, Tchad, Ghana, et au-delà) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 586.7718897637794271 Td
+(Chaque pays aura des représentants locaux \(bureaux Midenty\) qui géreront les) Tj
+T* (clients de leur zone via le même panneau d'administration central.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 547.086850393700729 Td
+(Schéma : comment Midenty s'organise) Tj
+ET
+0.75 0.22 0.17 rg
+232.4431496062991869 524.4096850393700606 m
+362.8368503937007858 524.4096850393700606 l
+365.9679135423477874 524.4096850393700606 368.5061417322834245 521.8714568494343666 368.5061417322834245 518.7403937007873083 c
+368.5061417322834245 490.3939370078739444 l
+368.5061417322834245 487.2628738592269428 365.375078583636423 484.7246456692912489 362.8368503937007858 484.7246456692912489 c
+232.4431496062991869 484.7246456692912489 l
+229.3120864576521285 484.7246456692912489 226.7738582677164914 487.8557088179382504 226.7738582677164914 490.3939370078739444 c
+226.7738582677164914 518.7403937007873083 l
+226.7738582677164914 521.8714568494343666 229.9049214163635213 524.4096850393700606 232.4431496062991869 524.4096850393700606 c
+h
+f
+BT
+/F6 11 Tf
+12.6499999999999986 TL
+1. g
+274.5399999999999636 507.4018110236219741 Td
+(MIDENTY) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+1. g
+247.2399999999999523 493.2285826771653205 Td
+(Panneau Admin Central) Tj
+ET
+0.71 G
+297.6399999999999864 484.7246456692912489 m
+297.6399999999999864 473.3860629921259147 l
+S
+99.2125984251968589 450.7088976377951894 m
+496.067401574803057 450.7088976377951894 l
+S
+297.6399999999999864 473.3860629921259147 m
+297.6399999999999864 450.7088976377951894 l
+S
+0.15 0.68 0.38 rg
+62.3622047244094517 450.7088976377951894 m
+136.0629921259842661 450.7088976377951894 l
+139.194055274631296 450.7088976377951894 141.7322834645669332 448.1706694478595523 141.7322834645669332 445.0396062992125508 c
+141.7322834645669332 405.3545669291337958 l
+141.7322834645669332 402.2235037804867943 138.6012203159199316 399.6852755905511003 136.0629921259842661 399.6852755905511003 c
+62.3622047244094517 399.6852755905511003 l
+59.231141575762436 399.6852755905511003 56.6929133858267775 402.8163387391981018 56.6929133858267775 405.3545669291337958 c
+56.6929133858267775 445.0396062992125508 l
+56.6929133858267775 448.1706694478595523 59.8239765344737933 450.7088976377951894 62.3622047244094517 450.7088976377951894 c
+h
+f
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+80.3125984251968532 433.7010236220471597 Td
+(Médersa) Tj
+ET
+BT
+/F5 7 Tf
+8.0499999999999989 TL
+1. g
+88.7125984251968589 405.3545669291337958 Td
+(ACTIF) Tj
+ET
+0.58 0.65 0.65 rg
+161.5759055118110155 450.7088976377951894 m
+235.2766929133858298 450.7088976377951894 l
+238.4077560620328597 450.7088976377951894 240.9459842519684969 448.1706694478595523 240.9459842519684969 445.0396062992125508 c
+240.9459842519684969 405.3545669291337958 l
+240.9459842519684969 402.2235037804867943 237.8149211033214669 399.6852755905511003 235.2766929133858298 399.6852755905511003 c
+161.5759055118110155 399.6852755905511003 l
+158.4448423631639855 399.6852755905511003 155.9066141732283199 402.8163387391981018 155.9066141732283199 405.3545669291337958 c
+155.9066141732283199 445.0396062992125508 l
+155.9066141732283199 448.1706694478595523 159.0376773218753499 450.7088976377951894 161.5759055118110155 450.7088976377951894 c
+h
+f
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+184.9262992125983942 433.7010236220471597 Td
+(École) Tj
+ET
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+182.2262992125984056 422.3624409448818255 Td
+(privée) Tj
+ET
+BT
+/F5 7 Tf
+8.0499999999999989 TL
+1. g
+183.7262992125984056 405.3545669291337958 Td
+(À VENIR) Tj
+ET
+0.58 0.65 0.65 rg
+260.7896062992125508 450.7088976377951894 m
+334.4903937007873651 450.7088976377951894 l
+337.6214568494344235 450.7088976377951894 340.1596850393700606 448.1706694478595523 340.1596850393700606 445.0396062992125508 c
+340.1596850393700606 405.3545669291337958 l
+340.1596850393700606 402.2235037804867943 337.0286218907230023 399.6852755905511003 334.4903937007873651 399.6852755905511003 c
+260.7896062992125508 399.6852755905511003 l
+257.6585431505655492 399.6852755905511003 255.1203149606298837 402.8163387391981018 255.1203149606298837 405.3545669291337958 c
+255.1203149606298837 445.0396062992125508 l
+255.1203149606298837 448.1706694478595523 258.2513781092769136 450.7088976377951894 260.7896062992125508 450.7088976377951894 c
+h
+f
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+270.6399999999999295 433.7010236220471597 Td
+(Université) Tj
+ET
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+284.1399999999999864 422.3624409448818255 Td
+(arabe) Tj
+ET
+BT
+/F5 7 Tf
+8.0499999999999989 TL
+1. g
+282.9399999999999409 405.3545669291337958 Td
+(À VENIR) Tj
+ET
+0.58 0.65 0.65 rg
+360.0033070866141429 450.7088976377951894 m
+433.7040944881889004 450.7088976377951894 l
+436.8351576368359019 450.7088976377951894 439.3733858267715391 448.1706694478595523 439.3733858267715391 445.0396062992125508 c
+439.3733858267715391 405.3545669291337958 l
+439.3733858267715391 402.2235037804867943 436.2423226781245944 399.6852755905511003 433.7040944881889004 399.6852755905511003 c
+360.0033070866140861 399.6852755905511003 l
+356.8722439379670277 399.6852755905511003 354.3340157480313906 402.8163387391981018 354.3340157480313906 405.3545669291337958 c
+354.3340157480313906 445.0396062992125508 l
+354.3340157480313906 448.1706694478595523 357.4650788966784489 450.7088976377951894 360.0033070866140861 450.7088976377951894 c
+h
+f
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+369.8537007874014648 433.7010236220471597 Td
+(Université) Tj
+ET
+BT
+/F5 7 Tf
+8.0499999999999989 TL
+1. g
+382.1537007874014762 405.3545669291337958 Td
+(À VENIR) Tj
+ET
+0.58 0.65 0.65 rg
+459.2170078740156782 450.7088976377951894 m
+532.9177952755904926 450.7088976377951894 l
+536.0488584242374372 450.7088976377951894 538.5870866141731312 448.1706694478595523 538.5870866141731312 445.0396062992125508 c
+538.5870866141731312 405.3545669291337958 l
+538.5870866141731312 402.2235037804867943 535.4560234655261866 399.6852755905511003 532.9177952755904926 399.6852755905511003 c
+459.2170078740156782 399.6852755905511003 l
+456.0859447253686767 399.6852755905511003 453.5477165354329827 402.8163387391981018 453.5477165354329827 405.3545669291337958 c
+453.5477165354329827 445.0396062992125508 l
+453.5477165354329827 448.1706694478595523 456.6787796840799842 450.7088976377951894 459.2170078740156782 450.7088976377951894 c
+h
+f
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+479.8674015748030683 433.7010236220471597 Td
+(Centre) Tj
+ET
+BT
+/F6 9 Tf
+10.3499999999999996 TL
+1. g
+471.7674015748031024 422.3624409448818255 Td
+(formation) Tj
+ET
+BT
+/F5 7 Tf
+8.0499999999999989 TL
+1. g
+481.3674015748030683 405.3545669291337958 Td
+(À VENIR) Tj
+ET
+BT
+/F6 10 Tf
+11.5 TL
+0. g
+56.6929133858267775 382.6774015748030706 Td
+(Pays desservis \(progression\) :) Tj
+ET
+0.15 0.68 0.38 rg
+59.5275590551181182 365.6695275590550409 m
+129.4495538057742863 365.6695275590550409 l
+131.0150853800978155 365.6695275590550409 132.284199475065634 364.4004134640871939 132.284199475065634 362.8348818897637216 c
+132.284199475065634 345.8270078740156919 l
+132.284199475065634 344.2614762996921627 130.7186679007421048 342.9923622047243157 129.4495538057742863 342.9923622047243157 c
+59.5275590551181253 342.9923622047243157 l
+57.9620274807946174 342.9923622047243157 56.6929133858267846 344.5578937790478449 56.6929133858267846 345.8270078740156919 c
+56.6929133858267846 362.8348818897637216 l
+56.6929133858267846 364.4004134640871939 58.2584449601502996 365.6695275590550409 59.5275590551181253 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+1. g
+82.4885564304461951 350.0789763779526993 Td
+(Niger) Tj
+ET
+0.93 0.94 0.95 rg
+140.7881364829396489 365.6695275590550409 m
+210.7101312335958028 365.6695275590550409 l
+212.2756628079193035 365.6695275590550409 213.5447769028871505 364.4004134640871939 213.5447769028871505 362.8348818897637216 c
+213.5447769028871505 345.8270078740156919 l
+213.5447769028871505 344.2614762996921627 211.9792453285636498 342.9923622047243157 210.7101312335958028 342.9923622047243157 c
+140.7881364829396489 342.9923622047243157 l
+139.2226049086161197 342.9923622047243157 137.9534908136483011 344.5578937790478449 137.9534908136483011 345.8270078740156919 c
+137.9534908136483011 362.8348818897637216 l
+137.9534908136483011 364.4004134640871939 139.5190223879718303 365.6695275590550409 140.7881364829396489 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.314 g
+146.9491338582677429 350.0789763779526993 Td
+(Burkina Faso) Tj
+ET
+0.93 0.94 0.95 rg
+222.0487139107611654 365.6695275590550409 m
+291.9707086614173477 365.6695275590550409 l
+293.53624023574082 365.6695275590550409 294.805354330708667 364.4004134640871939 294.805354330708667 362.8348818897637216 c
+294.805354330708667 345.8270078740156919 l
+294.805354330708667 344.2614762996921627 293.2398227563851947 342.9923622047243157 291.9707086614173477 342.9923622047243157 c
+222.0487139107611654 342.9923622047243157 l
+220.4831823364376646 342.9923622047243157 219.2140682414698176 344.5578937790478449 219.2140682414698176 345.8270078740156919 c
+219.2140682414698176 362.8348818897637216 l
+219.2140682414698176 364.4004134640871939 220.7795998157933184 365.6695275590550409 222.0487139107611654 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.314 g
+247.4097112860892196 350.0789763779526993 Td
+(Mali) Tj
+ET
+0.93 0.94 0.95 rg
+303.309291338582625 365.6695275590550409 m
+373.2312860892387789 365.6695275590550409 l
+374.7968176635622513 365.6695275590550409 376.0659317585300983 364.4004134640871939 376.0659317585300983 362.8348818897637216 c
+376.0659317585300983 345.8270078740156919 l
+376.0659317585300983 344.2614762996921627 374.5004001842066259 342.9923622047243157 373.2312860892387789 342.9923622047243157 c
+303.309291338582625 342.9923622047243157 l
+301.7437597642590958 342.9923622047243157 300.4746456692912489 344.5578937790478449 300.4746456692912489 345.8270078740156919 c
+300.4746456692912489 362.8348818897637216 l
+300.4746456692912489 364.4004134640871939 302.040177243614778 365.6695275590550409 303.309291338582625 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.314 g
+321.4702887139107474 350.0789763779526993 Td
+(Nigeria) Tj
+ET
+0.93 0.94 0.95 rg
+384.5698687664042268 365.6695275590550409 m
+454.4918635170603238 365.6695275590550409 l
+456.057395091383853 365.6695275590550409 457.3265091863517 364.4004134640871939 457.3265091863517 362.8348818897637216 c
+457.3265091863517 345.8270078740156919 l
+457.3265091863517 344.2614762996921627 455.7609776120281708 342.9923622047243157 454.4918635170603238 342.9923622047243157 c
+384.5698687664042268 342.9923622047243157 l
+383.0043371920806976 342.9923622047243157 381.7352230971128506 344.5578937790478449 381.7352230971128506 345.8270078740156919 c
+381.7352230971128506 362.8348818897637216 l
+381.7352230971128506 364.4004134640871939 383.3007546714363798 365.6695275590550409 384.5698687664042268 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.314 g
+402.7308661417322355 350.0789763779526993 Td
+(Sénégal) Tj
+ET
+0.93 0.94 0.95 rg
+465.8304461942257149 365.6695275590550409 m
+535.7524409448818687 365.6695275590550409 l
+537.3179725192053411 365.6695275590550409 538.5870866141731312 364.4004134640871939 538.5870866141731312 362.8348818897637216 c
+538.5870866141731312 345.8270078740156919 l
+538.5870866141731312 344.2614762996921627 537.0215550398496589 342.9923622047243157 535.7524409448818687 342.9923622047243157 c
+465.8304461942257149 342.9923622047243157 l
+464.2649146199021857 342.9923622047243157 462.9958005249343387 344.5578937790478449 462.9958005249343387 345.8270078740156919 c
+462.9958005249343387 362.8348818897637216 l
+462.9958005249343387 364.4004134640871939 464.5613320992578679 365.6695275590550409 465.8304461942257149 365.6695275590550409 c
+h
+f
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.314 g
+481.5914435695537463 350.0789763779526993 Td
+(Cameroun) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 325.9844881889763428 Td
+(Types d'établissements) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 308.9766141732283131 Td
+(1. Médersa / École coranique \(fonctionnel\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 294.8033858267715459 Td
+(L'application gère déjà ce type : niveaux coraniques, frais d'inscription) Tj
+T* (et mensuels, reçus en français, arabe ou anglais.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 260.7876377952754865 Td
+(2. École privée \(primaire et secondaire\) — à venir) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 246.614409448818833 Td
+(Classes : CP1 à CM2 \(primaire\), 6ème à 3ème \(collège\), 2nde à Terminale) Tj
+T* (\(lycée\). Frais de scolarité mensuels. Futur : bulletins de notes, relevés) Tj
+T* (scolaires.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 198.4254330708660063 Td
+(3. Université arabe / Institut islamique — à venir) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 184.2522047244093528 Td
+(Structure par années et semestres. Frais semestriels. Interface en arabe) Tj
+T* (avec support français.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 150.2364566929132934 Td
+(4. Université / Institut supérieur — à venir) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 136.0632283464566399 Td
+(Filières, niveaux Licence \(L1-L3\), Master \(M1-M2\). Droits universitaires) Tj
+T* (et frais annexes.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 102.0474803149605805 Td
+(5. Centre de formation professionnelle — à venir) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 87.8742519685038133 Td
+(Sessions de formation, modules, durées variables. Futur : certificats et) Tj
+T* (attestations de fin de formation.) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 17) Tj
+ET
+endstream
+endobj
+37 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 38 0 R
+>>
+endobj
+38 0 obj
+<<
+/Length 3967
+>>
+stream
+0.5670000000000001 w
+0.71 G
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 785.1970866141732586 Td
+(Comment ça fonctionnera dans le panneau admin \(futur\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 768.1892125984252289 Td
+(Quand Midenty crée un nouveau client, il choisit le type d'établissement.) Tj
+T* (L'application remplit automatiquement les bons réglages :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 739.8427559055118081 Td
+(• Les classes sont pré-remplies selon le type \(ex : CP1-CM2 pour école) Tj
+T* (privée, L1-M2 pour université\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 711.4962992125983874 Td
+(• Les mots dans l'application changent \(ex : « Élève » devient « Étudiant) Tj
+T* (» pour l'université\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 683.1498425196850803 Td
+(• Les frais par défaut sont adaptés \(ex : 5000 FCFA pour médersa, 25000) Tj
+T* (FCFA pour université\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 654.8033858267716596 Td
+(• Les couleurs changent selon le type \(ex : vert pour médersa, bleu pour) Tj
+T* (université\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 626.4569291338582389 Td
+(• Les messages sur les reçus sont adaptés) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 606.614409448818833 Td
+(Le client peut toujours personnaliser ces valeurs après la création.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 583.9372440944881646 Td
+(Fonctionnalités futures) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 566.9293700787401349 Td
+(• Tableaux de bord avec statistiques \(nombre d'élèves, revenus\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 552.7561417322833677 Td
+(• Bulletins de notes et relevés scolaires) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 538.5829133858267141 Td
+(• Certificats et attestations de formation) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 524.4096850393700606 Td
+(• Gestion des enseignants et emplois du temps) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 510.2364566929133503 Td
+(• Notifications SMS automatiques aux parents \(déjà en place, à étendre\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 496.0632283464566399 Td
+(• Application mobile dédiée \(Android/iOS natives\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 481.8899999999999295 Td
+(• Tableau de bord central pour voir tous les clients Midenty) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 467.716771653543276 Td
+(• Support multi-devises \(FCFA, Naira, etc.\)) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 445.0396062992125508 Td
+(Modèle commercial) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 428.0317322834645211 Td
+(• Vente unique par client \(pas d'abonnement mensuel\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 413.8585039370078107 Td
+(• Support illimité via WhatsApp + vidéos tutoriels) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 399.6852755905511003 Td
+(• Midenty crée et configure chaque client via le panneau admin) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 385.5120472440944468 Td
+(• Le client utilise l'application de manière autonome) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 371.3388188976377364 Td
+(• Représentants locaux dans chaque pays \(commissions sur les ventes locales\)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 18) Tj
+ET
+endstream
+endobj
+39 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 40 0 R
+>>
+endobj
+40 0 obj
+<<
+/Length 5198
+>>
+stream
+0.5670000000000001 w
+0.71 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(9. VERSION ACTUELLE DE LA PLATEFORME) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Version 1.0 — Juillet 2026) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 725.6695275590550409 Td
+(Fonctionnalités de la version actuelle) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 708.6616535433070112 Td
+(• Système multi-clients : une seule URL pour tous les établissements) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 694.4884251968503577 Td
+(• Connexion par code d'accès ou lien direct) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 680.3151968503937042 Td
+(• 4 onglets : Inscription, Classes, Frais mensuels, Paramètres) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 666.1419685039369369 Td
+(• Interface trilingue : français, arabe et anglais) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 651.9687401574802834 Td
+(• Matricules automatiques \(MEI-001, MEI-002...\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 637.7955118110235162 Td
+(• Grille de paiement mensuel avec suivi par mois) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 623.6222834645668627 Td
+(• Reçus partageables : PDF, Image, WhatsApp, Imprimante Bluetooth) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 609.4490551181102092 Td
+(• Impression thermique 58mm via RawBT) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 586.7718897637794271 Td
+(Panneau d'administration) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 569.7640157480313974 Td
+(• Connexion sécurisée par Firebase \(email/mot de passe\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 555.5907874015747439 Td
+(• Création et gestion des clients \(établissements\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 541.4175590551180903 Td
+(• 9 sections de configuration par client) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 527.2443307086614368 Td
+(• Déploiement automatique via GitHub + Vercel) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 513.0711023622046696 Td
+(• Import/export des clients) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 498.8978740157479592 Td
+(• Notifications SMS via Firebase Cloud Functions) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 484.7246456692913057 Td
+(• Personnalisation des textes par langue) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 462.0474803149605805 Td
+(Données et synchronisation) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 445.0396062992125508 Td
+(• Données enregistrées en ligne sur Firebase \(Firestore\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 430.8663779527558404 Td
+(• Fonctionne hors-ligne grâce au stockage local temporaire) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 416.69314960629913 Td
+(• Synchronisation automatique quand internet revient) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 402.5199212598424765 Td
+(• Sauvegarde supplémentaire possible en fichier JSON) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 379.8427559055117513 Td
+(Hébergement) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 362.8348818897637216 Td
+(• Hébergé gratuitement sur Vercel \(plan Hobby\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 348.6616535433070112 Td
+(• Domaine : midenty-edu.vercel.app) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 334.4884251968503008 Td
+(• Déploiement automatique à chaque modification) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 320.3151968503935905 Td
+(• Code source sur GitHub \(mabdoulkarimoun7-hub/recu-medersa\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 306.1419685039369369 Td
+(• Note : le repo GitHub garde son nom historique « recu-medersa » alors que) Tj
+T* (la plateforme s'appelle midenty-edu) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 269.2915748031495013 Td
+(Clients actifs au 16/07/2026) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 252.2837007874014716 Td
+(• Médersa d'Éducation Islamique \(MEI-2026-EDU\) — actif) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 238.1104724409448181 Td
+(• Médersa Al-Abrar \(ABRAR-2026-469\) — actif) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 223.9372440944881646 Td
+(• Centre Formation Tillabéri \(CFT-2026-TIL\) — configuré) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 19) Tj
+ET
+endstream
+endobj
+41 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 42 0 R
+>>
+endobj
+42 0 obj
+<<
+/Length 4769
+>>
+stream
+0.5670000000000001 w
+0.71 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(10. GLOSSAIRE) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Définitions des termes techniques utilisés dans ce) Tj
+T* (guide.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 711.4962992125983874 Td
+(PWA \(Progressive Web App\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 697.3230708661417339 Td
+(Application web qui se comporte comme une app native : installable sur) Tj
+T* (l'écran d'accueil, fonctionne hors-ligne, notifications. Pas besoin de) Tj
+T* (passer par le Play Store.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 646.2994488188976447 Td
+(Firebase) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 632.1262204724408775 Td
+(Ensemble d'outils cloud de Google pour les applications. Midenty utilise :) Tj
+T* (Firestore \(base de données\), Authentication \(connexion admin\), Cloud) Tj
+T* (Functions \(SMS automatiques\).) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 581.1025984251967884 Td
+(Firestore) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 566.9293700787401349 Td
+(Base de données Firebase, en temps réel. Stocke les élèves et paiements.) Tj
+T* (Fonctionne avec un cache local pour le hors-ligne.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 530.0789763779526993 Td
+(Vercel) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 515.9057480314959321 Td
+(Plateforme d'hébergement gratuite pour sites web. Héberge) Tj
+T* (midenty-edu.vercel.app. Se met à jour automatiquement quand le code change) Tj
+T* (sur GitHub.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 464.8821259842518998 Td
+(GitHub) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 450.7088976377952463 Td
+(Plateforme de stockage de code source. Le code de l'app y est stocké.) Tj
+T* (Chaque modification déclenche un redéploiement Vercel.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 413.8585039370078107 Td
+(Service Worker) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 399.6852755905511003 Td
+(Petit programme dans le navigateur qui permet à l'app de fonctionner) Tj
+T* (hors-ligne. Il mémorise les fichiers de l'app.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 362.8348818897637216 Td
+(localStorage) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 348.6616535433070112 Td
+(Petite mémoire dans le navigateur du téléphone. Sert de cache rapide et de) Tj
+T* (secours hors-ligne.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 311.8112598425195756 Td
+(JSON) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 297.6380314960629221 Td
+(Format de fichier texte structuré. Utilisé pour les fiches clients \(nom,) Tj
+T* (logo, frais, etc.\).) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 260.7876377952754865 Td
+(Token GitHub) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 246.614409448818833 Td
+(Mot de passe long utilisé par le panneau admin pour envoyer les fichiers) Tj
+T* (clients sur GitHub sans demander le mot de passe.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 209.7640157480313974 Td
+(RawBT) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 195.5907874015747439 Td
+(Application Android qui permet d'imprimer sur des imprimantes Bluetooth.) Tj
+T* (Utilisée pour les reçus thermiques 58mm.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 158.7403937007873083 Td
+(ESC/POS) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 144.5671653543306547 Td
+(Langage standard des imprimantes thermiques. Utilisé pour envoyer texte et) Tj
+T* (images à l'imprimante.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 107.7167716535432191 Td
+(RTL) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 93.5435433070865656 Td
+(Right-To-Left \(droite vers gauche\). Sens de lecture de l'arabe. L'app) Tj
+T* (change automatiquement le sens quand la langue arabe est sélectionnée.) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 20) Tj
+ET
+endstream
+endobj
+43 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 44 0 R
+>>
+endobj
+44 0 obj
+<<
+/Length 2912
+>>
+stream
+0.5670000000000001 w
+0.71 G
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 785.1970866141732586 Td
+(i18n) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 771.0238582677164914 Td
+(Abréviation de « internationalization ». Système qui gère les langues) Tj
+T* (multiples dans l'application.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 734.1734645669291695 Td
+(Firestore Rules) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 720.0002362204724022 Td
+(Règles de sécurité qui décident qui peut lire ou écrire quoi dans la base) Tj
+T* (de données Firebase.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 683.1498425196850803 Td
+(Cloud Functions) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 668.9766141732283131 Td
+(Code qui tourne sur les serveurs Google \(pas dans le téléphone\). Utilisé) Tj
+T* (pour envoyer les SMS automatiquement.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 632.1262204724408775 Td
+(SLA) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 617.952992125984224 Td
+(Service Level Agreement — engagement de disponibilité du fournisseur.) Tj
+T* (Vercel : 99.99%, Firebase : 99.95%.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 581.1025984251967884 Td
+(RGPD) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 566.9293700787401349 Td
+(Règlement Général sur la Protection des Données. Réglementation européenne) Tj
+T* (sur la protection des données personnelles, référence internationale.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 530.0789763779526993 Td
+(HTTPS / TLS) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 515.9057480314959321 Td
+(Protocole sécurisé qui chiffre les communications entre le téléphone et les) Tj
+T* (serveurs. Empêche les interceptions.) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 479.0553543307086102 Td
+(Matricule) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 464.8821259842518998 Td
+(Numéro unique attribué à chaque élève à l'inscription. Format :) Tj
+T* (PREFIXE-NUMERO \(ex : MEI-001\).) Tj
+ET
+BT
+/F6 10.5 Tf
+12.0749999999999993 TL
+0.043 0.239 0.569 rg
+56.6929133858267775 428.0317322834645211 Td
+(Splash screen) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+65.1968503937007995 413.8585039370078107 Td
+(Écran de démarrage qui s'affiche pendant que l'application se charge.) Tj
+T* (Montre le logo de l'établissement.) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 21) Tj
+ET
+endstream
+endobj
+45 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 46 0 R
+>>
+endobj
+46 0 obj
+<<
+/Length 3082
+>>
+stream
+0.5670000000000001 w
+0.71 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(11. SUPPORT ET CONTACT) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Pour toute question, problème technique ou demande) Tj
+T* (de modification :) Tj
+ET
+0.97 0.98 0.98 rg
+0.86 G
+56.6929133858267775 705.8270078740157487 481.8941732283464034 -170.0787401574803255 re
+B
+BT
+/F6 14 Tf
+16.0999999999999979 TL
+0.753 0.224 0.169 rg
+268.2399999999999523 683.1498425196850803 Td
+(Midenty) Tj
+ET
+BT
+/F5 11 Tf
+12.6499999999999986 TL
+0. g
+168.939999999999884 660.4726771653542983 Td
+(Téléphone / WhatsApp : +227 88 81 10 81) Tj
+ET
+BT
+/F5 11 Tf
+12.6499999999999986 TL
+0. g
+185.4399999999999409 643.4648031496062686 Td
+(Email : mabdoulkarimoun7@gmail.com) Tj
+ET
+BT
+/F5 11 Tf
+12.6499999999999986 TL
+0. g
+165.6399999999998727 626.4569291338582389 Td
+(GitHub : github.com/mabdoulkarimoun7-hub) Tj
+ET
+BT
+/F5 11 Tf
+12.6499999999999986 TL
+0. g
+178.8399999999999181 609.4490551181102092 Td
+(Application : midenty-edu.vercel.app) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 575.4333070866141497 Td
+(Engagement de support) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 558.42543307086612 Td
+(• Support WhatsApp : réponse sous 24h ouvrées) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 544.2522047244094665 Td
+(• Support urgent \(application inaccessible\) : sous 4h ouvrées) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 530.0789763779526993 Td
+(• Formation initiale par vidéo ou en personne) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 515.9057480314959321 Td
+(• Support illimité inclus dans la vente initiale) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 493.2285826771653205 Td
+(Services proposés par Midenty) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 476.2207086614172908 Td
+(• Création et configuration de votre espace sur la plateforme) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 462.0474803149605805 Td
+(• Formation à l'utilisation de l'application \(vidéo ou en personne\)) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 447.8742519685038701 Td
+(• Support technique illimité via WhatsApp) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 433.7010236220471597 Td
+(• Modifications et mises à jour de l'application) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 419.5277952755905062 Td
+(• Sauvegarde et récupération des données en cas de problème) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 405.3545669291337958 Td
+(• Migration depuis un autre système de gestion \(Excel, papier...\)) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 22) Tj
+ET
+endstream
+endobj
+47 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 48 0 R
+>>
+endobj
+48 0 obj
+<<
+/Length 4425
+>>
+stream
+0.5670000000000001 w
+0.86 G
+BT
+/F6 16 Tf
+18.3999999999999986 TL
+0.753 0.224 0.169 rg
+56.6929133858267775 785.1970866141732586 Td
+(12. VALIDATION DU COMITÉ) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 748.346692913385823 Td
+(Ce document a été soumis au comité de révision) Tj
+T* (pour évaluation et validation.) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 705.8270078740157487 Td
+(Objet de la validation) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+56.6929133858267775 688.819133858267719 Td
+(Le comité est invité à évaluer :) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 674.6459055118109518 Td
+(• L'exactitude technique des informations) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 660.4726771653542983 Td
+(• La cohérence de la vision panafricaine) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 646.2994488188976447 Td
+(• La sécurité et la protection des données) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 632.1262204724408775 Td
+(• La viabilité du modèle commercial) Tj
+ET
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+70.8661417322834666 617.952992125984224 Td
+(• La qualité de la documentation destinée aux clients) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 589.6065354330708033 Td
+(Observations du comité) Tj
+ET
+0.71 G
+56.6929133858267775 572.5986614173227736 m
+538.5870866141731312 572.5986614173227736 l
+S
+56.6929133858267775 549.9214960629921052 m
+538.5870866141731312 549.9214960629921052 l
+S
+56.6929133858267775 527.2443307086613231 m
+538.5870866141731312 527.2443307086613231 l
+S
+56.6929133858267775 504.5671653543306547 m
+538.5870866141731312 504.5671653543306547 l
+S
+56.6929133858267775 481.8899999999999295 m
+538.5870866141731312 481.8899999999999295 l
+S
+56.6929133858267775 459.2128346456692043 m
+538.5870866141731312 459.2128346456692043 l
+S
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 422.3624409448818255 Td
+(Signatures) Tj
+ET
+56.6929133858267775 396.850629921259781 226.7738582677164914 -85.0393700787401627 re
+S
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+65.1968503937007995 382.6774015748030706 Td
+(Représentant Midenty) Tj
+ET
+BT
+/F7 10 Tf
+11.5 TL
+0.471 g
+65.1968503937007995 368.5041732283464171 Td
+(Nom, fonction, date, signature) Tj
+ET
+311.8132283464566399 396.850629921259781 226.7738582677164914 -85.0393700787401627 re
+S
+BT
+/F5 10 Tf
+11.5 TL
+0. g
+320.3171653543306547 382.6774015748030706 Td
+(Président du comité) Tj
+ET
+BT
+/F7 10 Tf
+11.5 TL
+0.471 g
+320.3171653543306547 368.5041732283464171 Td
+(Nom, fonction, date, signature) Tj
+ET
+BT
+/F6 12 Tf
+13.7999999999999989 TL
+0.173 0.243 0.314 rg
+56.6929133858267775 283.4648031496062686 Td
+(Décision du comité) Tj
+ET
+56.6929133858267775 260.7876377952754865 14.1732283464566944 -14.1732283464566944 re
+S
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+73.7007874015748143 249.4490551181102092 Td
+(  Validé sans réserve) Tj
+ET
+56.6929133858267775 238.1104724409447897 14.1732283464566944 -14.1732283464566944 re
+S
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+73.7007874015748143 226.7718897637794271 Td
+(  Validé avec observations \(voir ci-dessus\)) Tj
+ET
+56.6929133858267775 215.4333070866140929 14.1732283464566944 -14.1732283464566944 re
+S
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+73.7007874015748143 204.0947244094487587 Td
+(  Nécessite des modifications avant validation) Tj
+ET
+56.6929133858267775 192.7561417322833677 14.1732283464566944 -14.1732283464566944 re
+S
+BT
+/F5 10.5 Tf
+12.0749999999999993 TL
+0. g
+73.7007874015748143 181.4175590551179766 Td
+(  Non validé \(voir observations\)) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0.471 g
+174.6399999999998727 150.2364566929132934 Td
+(Midenty — Plateforme de gestion éducative) Tj
+ET
+BT
+/F5 10 Tf
+11.5 TL
+0.471 g
+156.6399999999998442 136.0632283464566399 Td
+(Une seule application. Tous les établissements.) Tj
+ET
+BT
+/F6 10 Tf
+11.5 TL
+0.753 0.224 0.169 rg
+231.6400000000000148 113.3860629921258578 Td
+(midenty-edu.vercel.app) Tj
+ET
+BT
+/F5 9 Tf
+10.3499999999999996 TL
+0.471 g
+157.2399999999998386 99.2128346456692043 Td
+(Document généré le 16/07/2026 — Tous droits réservés) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+56.6929133858267775 22.6771653543306684 Td
+(Midenty — Confidentiel) Tj
+ET
+BT
+/F5 8 Tf
+9.1999999999999993 TL
+0.588 g
+504.9870866141731653 22.6771653543306684 Td
+(Page 23) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R 37 0 R 39 0 R 41 0 R 43 0 R 45 0 R 47 0 R ]
+/Count 23
+>>
+endobj
+49 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+50 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+51 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+52 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+53 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+54 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+55 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+56 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+57 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+58 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+59 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+60 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+61 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+62 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 49 0 R
+/F2 50 0 R
+/F3 51 0 R
+/F4 52 0 R
+/F5 53 0 R
+/F6 54 0 R
+/F7 55 0 R
+/F8 56 0 R
+/F9 57 0 R
+/F10 58 0 R
+/F11 59 0 R
+/F12 60 0 R
+/F13 61 0 R
+/F14 62 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+63 0 obj
+<<
+/Producer (jsPDF 2.5.1)
+/CreationDate (D:20260716120032+01'00')
+>>
+endobj
+64 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 65
+0000000000 65535 f 
+0000119431 00000 n 
+0000121405 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000003788 00000 n 
+0000003925 00000 n 
+0000009005 00000 n 
+0000009142 00000 n 
+0000015405 00000 n 
+0000015543 00000 n 
+0000017481 00000 n 
+0000017620 00000 n 
+0000024199 00000 n 
+0000024338 00000 n 
+0000029043 00000 n 
+0000029182 00000 n 
+0000035015 00000 n 
+0000035154 00000 n 
+0000040359 00000 n 
+0000040498 00000 n 
+0000042655 00000 n 
+0000042794 00000 n 
+0000048225 00000 n 
+0000048364 00000 n 
+0000054942 00000 n 
+0000055081 00000 n 
+0000061699 00000 n 
+0000061838 00000 n 
+0000068698 00000 n 
+0000068837 00000 n 
+0000070002 00000 n 
+0000070141 00000 n 
+0000075867 00000 n 
+0000076006 00000 n 
+0000078281 00000 n 
+0000078420 00000 n 
+0000093926 00000 n 
+0000094065 00000 n 
+0000098085 00000 n 
+0000098224 00000 n 
+0000103475 00000 n 
+0000103614 00000 n 
+0000108436 00000 n 
+0000108575 00000 n 
+0000111540 00000 n 
+0000111679 00000 n 
+0000114814 00000 n 
+0000114953 00000 n 
+0000119640 00000 n 
+0000119766 00000 n 
+0000119897 00000 n 
+0000120031 00000 n 
+0000120169 00000 n 
+0000120293 00000 n 
+0000120422 00000 n 
+0000120554 00000 n 
+0000120690 00000 n 
+0000120818 00000 n 
+0000120945 00000 n 
+0000121074 00000 n 
+0000121207 00000 n 
+0000121309 00000 n 
+0000121658 00000 n 
+0000121744 00000 n 
+trailer
+<<
+/Size 65
+/Root 64 0 R
+/Info 63 0 R
+/ID [ <8FE1AF842DDD6B7BE475E635990D14FC> <8FE1AF842DDD6B7BE475E635990D14FC> ]
+>>
+startxref
+121848
+%%EOF

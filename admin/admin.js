@@ -51,6 +51,153 @@ let firebaseEnabled = false;
 
 /* ==================== Modules & Forfaits ==================== */
 
+/* ==================== Types d'établissements ==================== */
+
+const ESTABLISHMENT_PRESETS = {
+  medersa: {
+    classes: ["1ère année", "2ème année", "3ème année", "4ème année", "5ème année", "6ème année"],
+    fraisInscription: 5000, fraisMensuels: 5000,
+    couleurPrincipale: "#0d7a3d", couleurSecondaire: "#0b3d91", couleurAccent: "#c5972c",
+    messageFinalFr: "Que le Coran soit une lumière pour vous",
+    messageFinalAr: "ليكن القرآن نوراً لكم"
+  },
+  ecole_privee: {
+    classes: ["CI", "CP", "CE1", "CE2", "CM1", "CM2"],
+    fraisInscription: 15000, fraisMensuels: 10000,
+    couleurPrincipale: "#1a5276", couleurSecondaire: "#2e86c1", couleurAccent: "#f39c12",
+    messageFinalFr: "L'éducation est la clé du succès",
+    messageFinalAr: "التعليم هو مفتاح النجاح"
+  },
+  universite_arabe: {
+    classes: ["Licence 1", "Licence 2", "Licence 3", "Master 1", "Master 2"],
+    fraisInscription: 50000, fraisMensuels: 25000,
+    couleurPrincipale: "#6c3483", couleurSecondaire: "#2e4053", couleurAccent: "#d4ac0d",
+    messageFinalFr: "Le savoir est une lumière",
+    messageFinalAr: "العلم نور"
+  },
+  universite: {
+    classes: ["L1", "L2", "L3", "M1", "M2"],
+    fraisInscription: 75000, fraisMensuels: 35000,
+    couleurPrincipale: "#1b4f72", couleurSecondaire: "#2c3e50", couleurAccent: "#e67e22",
+    messageFinalFr: "L'excellence par le savoir",
+    messageFinalAr: "التميز من خلال المعرفة"
+  },
+  centre_formation: {
+    classes: ["Niveau 1", "Niveau 2", "Niveau 3", "Certification"],
+    fraisInscription: 25000, fraisMensuels: 15000,
+    couleurPrincipale: "#117864", couleurSecondaire: "#1a5276", couleurAccent: "#d68910",
+    messageFinalFr: "La formation, votre avenir",
+    messageFinalAr: "التكوين مستقبلكم"
+  }
+};
+
+function applyEstablishmentPreset(type) {
+  const preset = ESTABLISHMENT_PRESETS[type];
+  if (!preset) return;
+  document.getElementById("cfgCouleurPrincipale").value = preset.couleurPrincipale;
+  document.getElementById("cfgCouleurSecondaire").value = preset.couleurSecondaire;
+  document.getElementById("cfgCouleurAccent").value = preset.couleurAccent;
+  document.getElementById("cfgFraisInscription").value = preset.fraisInscription;
+  document.getElementById("cfgFraisMensuels").value = preset.fraisMensuels;
+  document.getElementById("cfgMessageFinalFr").value = preset.messageFinalFr;
+  document.getElementById("cfgMessageFinalAr").value = preset.messageFinalAr;
+  formClasses = [...preset.classes];
+  renderClassesTags();
+}
+
+/* ==================== Navigation admin ==================== */
+
+function setupAdminNavigation() {
+  const navClients = document.getElementById("navClients");
+  const navStats = document.getElementById("navStats");
+
+  navClients.addEventListener("click", () => {
+    navClients.classList.add("active");
+    navStats.classList.remove("active");
+    document.getElementById("listView").classList.remove("hidden");
+    document.getElementById("formView").classList.add("hidden");
+    document.getElementById("statsView").classList.add("hidden");
+    if (typeof AdminStats !== "undefined") AdminStats.stopListening();
+  });
+
+  navStats.addEventListener("click", () => {
+    navStats.classList.add("active");
+    navClients.classList.remove("active");
+    document.getElementById("listView").classList.add("hidden");
+    document.getElementById("formView").classList.add("hidden");
+    document.getElementById("statsView").classList.remove("hidden");
+    populateStatsSchoolSelect();
+  });
+}
+
+function populateStatsSchoolSelect() {
+  const select = document.getElementById("statsSchoolSelect");
+  const current = select.value;
+  select.innerHTML = '<option value="">' + AdminI18n.t("admin_stats_select_placeholder") + '</option>';
+  clients.forEach(c => {
+    select.innerHTML += '<option value="' + esc(c.codeAcces) + '">' + esc(c.nomFr) + ' (' + esc(c.codeAcces) + ')</option>';
+  });
+  if (current) select.value = current;
+}
+
+/* ==================== Sélecteurs mois + année ==================== */
+
+function populateMonthYearSelectors() {
+  const currentYear = new Date().getFullYear();
+  const years = [currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+
+  ["cfgDebutMois", "cfgFinMois"].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = "";
+    for (let i = 1; i <= 12; i++) {
+      sel.innerHTML += '<option value="' + i + '">' + AdminI18n.t("admin_month_" + i) + '</option>';
+    }
+  });
+
+  ["cfgDebutAnnee", "cfgFinAnnee"].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = "";
+    years.forEach(y => {
+      sel.innerHTML += '<option value="' + y + '">' + y + '</option>';
+    });
+  });
+
+  document.getElementById("cfgDebutMois").value = "10";
+  document.getElementById("cfgDebutAnnee").value = String(currentYear);
+  document.getElementById("cfgFinMois").value = "7";
+  document.getElementById("cfgFinAnnee").value = String(currentYear + 1);
+}
+
+function getSchoolYearFromForm() {
+  return {
+    debutAnnee: {
+      mois: parseInt(document.getElementById("cfgDebutMois").value),
+      annee: parseInt(document.getElementById("cfgDebutAnnee").value)
+    },
+    finAnnee: {
+      mois: parseInt(document.getElementById("cfgFinMois").value),
+      annee: parseInt(document.getElementById("cfgFinAnnee").value)
+    }
+  };
+}
+
+function setSchoolYearInForm(debut, fin) {
+  if (typeof debut === "number") {
+    document.getElementById("cfgDebutMois").value = String(debut);
+    document.getElementById("cfgDebutAnnee").value = String(new Date().getFullYear());
+  } else if (debut && debut.mois) {
+    document.getElementById("cfgDebutMois").value = String(debut.mois);
+    document.getElementById("cfgDebutAnnee").value = String(debut.annee || new Date().getFullYear());
+  }
+  if (typeof fin === "number") {
+    document.getElementById("cfgFinMois").value = String(fin);
+    document.getElementById("cfgFinAnnee").value = String(new Date().getFullYear() + 1);
+  } else if (fin && fin.mois) {
+    document.getElementById("cfgFinMois").value = String(fin.mois);
+    document.getElementById("cfgFinAnnee").value = String(fin.annee || new Date().getFullYear() + 1);
+  }
+}
+
 const MODULES_LIST = [
   { key: "inscription", label: "Inscription", desc: "Inscrire de nouveaux élèves" },
   { key: "classes", label: "Classes", desc: "Voir la liste des classes et élèves" },
@@ -257,8 +404,7 @@ function loadFirestoreValuesIntoForm() {
   if (cfg.modesPaiement) { formModes = [...cfg.modesPaiement]; renderModesTags(); }
   if (cfg.fraisInscription !== undefined) document.getElementById("cfgFraisInscription").value = cfg.fraisInscription;
   if (cfg.fraisMensuels !== undefined) document.getElementById("cfgFraisMensuels").value = cfg.fraisMensuels;
-  if (cfg.debutAnnee !== undefined) document.getElementById("cfgDebutAnnee").value = cfg.debutAnnee;
-  if (cfg.finAnnee !== undefined) document.getElementById("cfgFinAnnee").value = cfg.finAnnee;
+  if (cfg.debutAnnee !== undefined) setSchoolYearInForm(cfg.debutAnnee, cfg.finAnnee);
   if (cfg.prefixeMatricule) document.getElementById("cfgPrefixeMatricule").value = cfg.prefixeMatricule;
   if (cfg.devise) document.getElementById("cfgDevise").value = cfg.devise;
   document.getElementById("firestoreLiveDiff").classList.add("hidden");
@@ -266,11 +412,44 @@ function loadFirestoreValuesIntoForm() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  AdminI18n.init();
   firebaseEnabled = initAdminFirebase();
   await loadClients();
   setupAdminLogin();
   setupListView();
   setupFormView();
+  setupAdminNavigation();
+  populateMonthYearSelectors();
+
+  // Language switcher
+  document.querySelectorAll(".admin-lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      AdminI18n.setLang(btn.dataset.lang);
+      populateMonthYearSelectors();
+      if (typeof AdminStats !== "undefined" && AdminStats._currentCode) AdminStats.render();
+    });
+  });
+
+  // Type d'établissement preset
+  document.getElementById("cfgTypeEtablissement").addEventListener("change", e => {
+    if (e.target.value && !editingCode) {
+      applyEstablishmentPreset(e.target.value);
+    }
+  });
+
+  // Stats school selector
+  document.getElementById("statsSchoolSelect").addEventListener("change", e => {
+    const code = e.target.value;
+    if (code && typeof AdminStats !== "undefined") {
+      document.getElementById("statsContent").classList.remove("hidden");
+      document.getElementById("statsNoData").classList.add("hidden");
+      AdminStats.startListening(code);
+    } else {
+      document.getElementById("statsContent").classList.add("hidden");
+      document.getElementById("statsNoData").classList.remove("hidden");
+      if (typeof AdminStats !== "undefined") AdminStats.stopListening();
+    }
+  });
 });
 
 async function loadClients() {
@@ -452,17 +631,19 @@ function renderClientsList() {
 
   let html = `<table class="clients-table">
     <thead><tr>
-      <th>Nom</th><th>Code d'accès</th><th>Statut</th><th>Créé le</th><th>Actions</th>
+      <th>${AdminI18n.t("admin_th_name")}</th><th>${AdminI18n.t("admin_th_code")}</th><th>${AdminI18n.t("admin_th_type")}</th><th>${AdminI18n.t("admin_th_status")}</th><th>${AdminI18n.t("admin_th_date")}</th><th>${AdminI18n.t("admin_th_actions")}</th>
     </tr></thead><tbody>`;
 
   clients.forEach(c => {
     const badge = c.actif !== false
-      ? '<span class="badge-active">Actif</span>'
-      : '<span class="badge-inactive">Désactivé</span>';
+      ? '<span class="badge-active">' + AdminI18n.t("admin_status_active") + '</span>'
+      : '<span class="badge-inactive">' + AdminI18n.t("admin_status_inactive") + '</span>';
+    const typeLabel = c.typeEtablissement ? AdminI18n.t("admin_type_" + c.typeEtablissement) : "-";
     const clientLink = APP_URL + "?c=" + encodeURIComponent(c.codeAcces);
     html += `<tr>
       <td><strong>${esc(c.nomFr)}</strong><br><span style="font-size:12px;color:#888">${esc(c.nomAr || "")}</span></td>
       <td><code>${esc(c.codeAcces)}</code></td>
+      <td style="font-size:12px">${esc(typeLabel)}</td>
       <td>${badge}</td>
       <td>${c.dateCreation || "-"}</td>
       <td>
@@ -514,10 +695,10 @@ function openForm(code) {
     document.getElementById("cfgCouleurAccent").value = c.couleurAccent || "#c5972c";
     document.getElementById("cfgCodeAcces").value = c.codeAcces;
     document.getElementById("cfgActif").value = String(c.actif !== false);
+    document.getElementById("cfgTypeEtablissement").value = c.typeEtablissement || "";
     document.getElementById("cfgFraisInscription").value = c.fraisInscription ?? 5000;
     document.getElementById("cfgFraisMensuels").value = c.fraisMensuels ?? 5000;
-    document.getElementById("cfgDebutAnnee").value = c.debutAnnee ?? 10;
-    document.getElementById("cfgFinAnnee").value = c.finAnnee ?? 7;
+    setSchoolYearInForm(c.debutAnnee, c.finAnnee);
     document.getElementById("cfgPrefixeMatricule").value = c.prefixeMatricule || "MEI";
     document.getElementById("cfgDevise").value = c.devise || "FCFA";
     document.getElementById("cfgMessageFinalFr").value = c.messageFinalFr || "";
@@ -542,7 +723,8 @@ function openForm(code) {
       startConfigListener(c.codeAcces, renderFirestoreLiveStatus);
     }
   } else {
-    document.getElementById("formTitle").textContent = "Nouveau client";
+    document.getElementById("formTitle").textContent = AdminI18n.t("admin_new_client_title");
+    document.getElementById("cfgTypeEtablissement").value = "";
     formClasses = [];
     formModes = ["Espèces", "Mynita", "Amanata"];
     loadI18nOverrides(null);
@@ -563,7 +745,10 @@ function openForm(code) {
 function showList() {
   stopConfigListener();
   document.getElementById("formView").classList.add("hidden");
+  document.getElementById("statsView").classList.add("hidden");
   document.getElementById("listView").classList.remove("hidden");
+  document.getElementById("navClients").classList.add("active");
+  document.getElementById("navStats").classList.remove("active");
   renderClientsList();
 }
 
@@ -571,8 +756,11 @@ function buildClientObj() {
   const tels = document.getElementById("cfgTelephones").value
     .split(",").map(t => t.trim()).filter(Boolean);
 
+  const schoolYear = getSchoolYearFromForm();
+
   return {
     codeAcces: document.getElementById("cfgCodeAcces").value.trim().toUpperCase(),
+    typeEtablissement: document.getElementById("cfgTypeEtablissement").value || "",
     nomFr: document.getElementById("cfgNomFr").value.trim(),
     nomAr: document.getElementById("cfgNomAr").value.trim(),
     adresse: document.getElementById("cfgAdresse").value.trim(),
@@ -584,8 +772,8 @@ function buildClientObj() {
     classes: [...formClasses],
     fraisInscription: parseInt(document.getElementById("cfgFraisInscription").value) || 0,
     fraisMensuels: parseInt(document.getElementById("cfgFraisMensuels").value) || 0,
-    debutAnnee: parseInt(document.getElementById("cfgDebutAnnee").value),
-    finAnnee: parseInt(document.getElementById("cfgFinAnnee").value),
+    debutAnnee: schoolYear.debutAnnee,
+    finAnnee: schoolYear.finAnnee,
     prefixeMatricule: document.getElementById("cfgPrefixeMatricule").value.trim() || "MEI",
     devise: document.getElementById("cfgDevise").value.trim() || "FCFA",
     modesPaiement: [...formModes],

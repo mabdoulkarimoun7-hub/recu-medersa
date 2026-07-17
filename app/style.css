@@ -78,6 +78,23 @@ body {
   color: rgba(255,255,255,0.9);
 }
 
+.splash-enter-btn {
+  margin-top: 28px;
+  padding: 14px 40px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--primary-dark);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition);
+}
+
+.splash-enter-btn:active { transform: scale(0.97); }
+
 /* ===== Splash Midenty (branding) ===== */
 .midenty-splash {
   position: fixed;
@@ -937,6 +954,7 @@ table.attendance-grid td {
 /* ===== Hint ===== */
 .hint { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 6px; }
 .hint a { color: var(--primary); }
+#aboutText { text-align: center !important; }
 
 /* ===== Guide d'utilisation ===== */
 .guide-video-wrap { margin-top: 10px; }
@@ -965,9 +983,7 @@ input[type="search"] {
   font-weight: 600;
   padding: 3px 8px;
   border-radius: 10px;
-  position: absolute;
-  top: 8px;
-  right: 12px;
+  flex-shrink: 0;
   opacity: 0.9;
 }
 
@@ -1082,11 +1098,6 @@ input[type="search"] {
   background-position: left 12px center;
   padding-right: 14px;
   padding-left: 32px;
-}
-
-[dir="rtl"] .sync-indicator {
-  right: auto;
-  left: 12px;
 }
 
 [dir="rtl"] .edit-btn {

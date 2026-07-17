@@ -74,37 +74,31 @@ function playMidentyIntro() {
 async function showSplash() {
   await playMidentyIntro();
 
-  if (!window._brandingApplied && !window._urlClientCode) {
-    const s = CONFIG.getSettings();
-    if (s.nomAr) document.getElementById("splashNameAr").textContent = s.nomAr;
-    if (s.nomFr) document.getElementById("splashNameFr").textContent = s.nomFr;
-    var logoSrc = (s.logo && s.logo !== "assets/logo.png") ? s.logo : "assets/logo.png";
-    var sLogo = document.getElementById("splashLogo");
-    var lLogo = document.getElementById("loginLogo");
-    sLogo.onload = function(){ sLogo.style.opacity = "1"; };
-    lLogo.onload = function(){ lLogo.style.opacity = "1"; };
-    sLogo.src = logoSrc;
-    lLogo.src = logoSrc;
-    if (s.couleurPrincipale) document.documentElement.style.setProperty("--primary", s.couleurPrincipale);
-    if (s.couleurSecondaire) document.documentElement.style.setProperty("--secondary", s.couleurSecondaire);
-    if (s.couleurAccent) document.documentElement.style.setProperty("--accent", s.couleurAccent);
-    document.getElementById("splashScreen").style.visibility = "visible";
+  applySplashBrandingFromSettings();
+
+  if (sessionStorage.getItem("medersa_logged_in")) {
+    showApp();
+    return;
   }
 
-  applyLanguage();
+  showLanguageSelect();
+}
 
-  setTimeout(() => {
-    document.getElementById("splashScreen").classList.add("fade-out");
-    setTimeout(() => {
-      document.getElementById("splashScreen").classList.add("hidden");
-      if (sessionStorage.getItem("medersa_logged_in")) {
-        showApp();
-      } else {
-        document.getElementById("loginScreen").classList.remove("hidden");
-        setupLogin();
-      }
-    }, 500);
-  }, 2800);
+function applySplashBrandingFromSettings() {
+  if (window._brandingApplied || window._urlClientCode) return;
+  const s = CONFIG.getSettings();
+  if (s.nomAr) document.getElementById("splashNameAr").textContent = s.nomAr;
+  if (s.nomFr) document.getElementById("splashNameFr").textContent = s.nomFr;
+  const logoSrc = (s.logo && s.logo !== "assets/logo.png") ? s.logo : "assets/logo.png";
+  const sLogo = document.getElementById("splashLogo");
+  const lLogo = document.getElementById("loginLogo");
+  sLogo.onload = function(){ sLogo.style.opacity = "1"; };
+  lLogo.onload = function(){ lLogo.style.opacity = "1"; };
+  sLogo.src = logoSrc;
+  lLogo.src = logoSrc;
+  if (s.couleurPrincipale) document.documentElement.style.setProperty("--primary", s.couleurPrincipale);
+  if (s.couleurSecondaire) document.documentElement.style.setProperty("--secondary", s.couleurSecondaire);
+  if (s.couleurAccent) document.documentElement.style.setProperty("--accent", s.couleurAccent);
 }
 
 function setupLogin() {
@@ -114,7 +108,6 @@ function setupLogin() {
 
   if (window._urlClientCode) {
     input.value = window._urlClientCode;
-    input.type = "text";
   }
 
   const tryLogin = async () => {
@@ -131,12 +124,7 @@ function setupLogin() {
       markVerified();
       sessionStorage.setItem("medersa_logged_in", "1");
       document.getElementById("loginScreen").classList.add("hidden");
-
-      if (!I18n.getLang()) {
-        showLanguageSelect();
-      } else {
-        showApp();
-      }
+      showApp();
     } catch (err) {
       if (err.message === "inactive") {
         error.innerHTML =
@@ -169,9 +157,29 @@ function showLanguageSelect() {
     btn.addEventListener("click", () => {
       I18n.setLang(btn.dataset.lang);
       screen.classList.add("hidden");
-      showApp();
-    });
+      showWelcomeScreen();
+    }, { once: true });
   });
+}
+
+function showWelcomeScreen() {
+  const screen = document.getElementById("welcomeScreen");
+  screen.classList.remove("hidden");
+  setTimeout(() => {
+    screen.classList.add("hidden");
+    showSchoolEntryScreen();
+  }, 2500);
+}
+
+function showSchoolEntryScreen() {
+  const screen = document.getElementById("splashScreen");
+  screen.classList.remove("hidden");
+
+  document.getElementById("btnEnterSchool").addEventListener("click", () => {
+    screen.classList.add("hidden");
+    document.getElementById("loginScreen").classList.remove("hidden");
+    setupLogin();
+  }, { once: true });
 }
 
 const VERIFICATION_KEY = "medersa_last_verified";
@@ -190,7 +198,7 @@ async function showApp() {
     return;
   }
 
-  if (typeof initFirebase === "function") initFirebase();
+  if (typeof initFirebase === "function") await initFirebase();
   if (typeof isFirebaseReady === "function" && isFirebaseReady()) {
     await Storage.pullConfigFromFirestore();
   }
@@ -292,7 +300,7 @@ function showVerificationScreen() {
       markVerified();
       overlay.classList.add("hidden");
 
-      if (typeof initFirebase === "function") initFirebase();
+      if (typeof initFirebase === "function") await initFirebase();
       if (typeof isFirebaseReady === "function" && isFirebaseReady()) {
         await Storage.pullConfigFromFirestore();
       }
@@ -451,7 +459,7 @@ function populateClasseDropdown(selectId) {
   if (currentVal) select.value = currentVal;
 }
 
-function handleInscription() {
+async function handleInscription() {
   const nom = document.getElementById("studentNom").value.trim();
   const tel = document.getElementById("studentTel").value.trim();
   const telParent = document.getElementById("studentTelParent").value.trim();
@@ -460,43 +468,51 @@ function handleInscription() {
   if (!nom) return toast(t("msg_enter_name"));
   if (!classe) return toast(t("msg_choose_class"));
 
-  const s = CONFIG.getSettings();
-  const student = Storage.saveStudent({
-    nom, telephone: tel, telephoneParent: telParent,
-    classe, dateInscription: new Date().toISOString().slice(0, 10),
-    createdAt: new Date().toISOString()
-  });
+  const btn = document.getElementById("btnInscrire");
+  if (btn.disabled) return;
+  btn.disabled = true;
 
-  const payment = Storage.savePayment({
-    studentId: student.id,
-    matricule: student.matricule,
-    type: "inscription",
-    mois: null,
-    montant: s.fraisInscription,
-    date: new Date().toISOString().slice(0, 10),
-    createdAt: new Date().toISOString()
-  });
+  try {
+    const s = CONFIG.getSettings();
+    const student = await Storage.saveStudent({
+      nom, telephone: tel, telephoneParent: telParent,
+      classe, dateInscription: new Date().toISOString().slice(0, 10),
+      createdAt: new Date().toISOString()
+    });
 
-  const receipt = {
-    numero: payment.numero,
-    date: payment.date,
-    type: "inscription",
-    student,
-    montant: s.fraisInscription,
-    devise: s.devise,
-    createdAt: payment.createdAt
-  };
+    const payment = await Storage.savePayment({
+      studentId: student.id,
+      matricule: student.matricule,
+      type: "inscription",
+      mois: null,
+      montant: s.fraisInscription,
+      date: new Date().toISOString().slice(0, 10),
+      createdAt: new Date().toISOString()
+    });
 
-  currentReceipt = receipt;
-  currentReceiptEl = document.getElementById("inscriptionReceiptPreview");
-  renderInscriptionReceipt(receipt);
-  document.getElementById("inscriptionReceiptSection").classList.remove("hidden");
-  document.getElementById("inscriptionReceiptSection").scrollIntoView({ behavior: "smooth" });
+    const receipt = {
+      numero: payment.numero,
+      date: payment.date,
+      type: "inscription",
+      student,
+      montant: s.fraisInscription,
+      devise: s.devise,
+      createdAt: payment.createdAt
+    };
 
-  document.getElementById("inscriptionForm").reset();
-  refreshMatriculePreview();
-  renderStudentsList();
-  toast(t("msg_student_enrolled", { name: student.nom, matricule: student.matricule }));
+    currentReceipt = receipt;
+    currentReceiptEl = document.getElementById("inscriptionReceiptPreview");
+    renderInscriptionReceipt(receipt);
+    document.getElementById("inscriptionReceiptSection").classList.remove("hidden");
+    document.getElementById("inscriptionReceiptSection").scrollIntoView({ behavior: "smooth" });
+
+    document.getElementById("inscriptionForm").reset();
+    refreshMatriculePreview();
+    renderStudentsList();
+    toast(t("msg_student_enrolled", { name: student.nom, matricule: student.matricule }));
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 function renderInscriptionReceipt(receipt) {
@@ -740,49 +756,57 @@ function updateMensuelTotal() {
   document.getElementById("mensuelTotal").textContent = total.toLocaleString("fr-FR") + " " + s.devise;
 }
 
-function handlePayerMensuel() {
+async function handlePayerMensuel() {
   if (!mensuelStudent) return toast(t("msg_find_student_first"));
   if (selectedMonths.length === 0) return toast(t("msg_select_month"));
 
-  const s = CONFIG.getSettings();
-  const montantTotal = selectedMonths.length * s.fraisMensuels;
-  const modePaiement = document.getElementById("mensuelPaiement").value;
-  const numero = Storage.commitNextNumber();
+  const btn = document.getElementById("btnPayerMensuel");
+  if (btn.disabled) return;
+  btn.disabled = true;
 
-  selectedMonths.forEach(moisKey => {
-    Storage.savePayment({
-      studentId: mensuelStudent.id,
-      matricule: mensuelStudent.matricule,
-      type: "mensuel",
-      mois: moisKey,
-      montant: s.fraisMensuels,
+  try {
+    const s = CONFIG.getSettings();
+    const montantTotal = selectedMonths.length * s.fraisMensuels;
+    const modePaiement = document.getElementById("mensuelPaiement").value;
+    const numero = await Storage.commitNextNumber();
+
+    for (const moisKey of selectedMonths) {
+      await Storage.savePayment({
+        studentId: mensuelStudent.id,
+        matricule: mensuelStudent.matricule,
+        type: "mensuel",
+        mois: moisKey,
+        montant: s.fraisMensuels,
+        numero,
+        date: new Date().toISOString().slice(0, 10),
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    const receipt = {
       numero,
       date: new Date().toISOString().slice(0, 10),
+      type: "mensuel",
+      student: mensuelStudent,
+      moisPayes: [...selectedMonths],
+      montantParMois: s.fraisMensuels,
+      montantTotal,
+      modePaiement,
+      devise: s.devise,
       createdAt: new Date().toISOString()
-    });
-  });
+    };
 
-  const receipt = {
-    numero,
-    date: new Date().toISOString().slice(0, 10),
-    type: "mensuel",
-    student: mensuelStudent,
-    moisPayes: [...selectedMonths],
-    montantParMois: s.fraisMensuels,
-    montantTotal,
-    modePaiement,
-    devise: s.devise,
-    createdAt: new Date().toISOString()
-  };
+    currentReceipt = receipt;
+    currentReceiptEl = document.getElementById("mensuelReceiptPreview");
+    renderMensuelReceipt(receipt);
+    document.getElementById("mensuelReceiptSection").classList.remove("hidden");
+    document.getElementById("mensuelReceiptSection").scrollIntoView({ behavior: "smooth" });
 
-  currentReceipt = receipt;
-  currentReceiptEl = document.getElementById("mensuelReceiptPreview");
-  renderMensuelReceipt(receipt);
-  document.getElementById("mensuelReceiptSection").classList.remove("hidden");
-  document.getElementById("mensuelReceiptSection").scrollIntoView({ behavior: "smooth" });
-
-  renderMonthsGrid();
-  toast(t("msg_payment_saved", { numero: receipt.numero }));
+    renderMonthsGrid();
+    toast(t("msg_payment_saved", { numero: receipt.numero }));
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 function renderMensuelReceipt(receipt) {
@@ -1039,16 +1063,26 @@ function loadSettingsForm() {
 
   document.getElementById("setFraisInscription").value = s.fraisInscription;
   document.getElementById("setFraisMensuels").value = s.fraisMensuels;
-  document.getElementById("setPrefixeMatricule").value = s.prefixeMatricule;
+  const debutMoisSelect = document.getElementById("setDebutMois");
+  const finMoisSelect = document.getElementById("setFinMois");
+  const debutAnneeSelect = document.getElementById("setDebutAnneeYear");
+  const finAnneeSelect = document.getElementById("setFinAnneeYear");
 
-  const debutSelect = document.getElementById("setDebutAnnee");
-  const finSelect = document.getElementById("setFinAnnee");
-  debutSelect.innerHTML = "";
-  finSelect.innerHTML = "";
+  debutMoisSelect.innerHTML = "";
+  finMoisSelect.innerHTML = "";
   for (let i = 1; i <= 12; i++) {
-    debutSelect.innerHTML += `<option value="${i}" ${i === s.debutAnnee ? "selected" : ""}>${monthName(i)}</option>`;
-    finSelect.innerHTML += `<option value="${i}" ${i === s.finAnnee ? "selected" : ""}>${monthName(i)}</option>`;
+    debutMoisSelect.innerHTML += `<option value="${i}" ${i === s.debutAnnee.mois ? "selected" : ""}>${monthName(i)}</option>`;
+    finMoisSelect.innerHTML += `<option value="${i}" ${i === s.finAnnee.mois ? "selected" : ""}>${monthName(i)}</option>`;
   }
+
+  const currentYear = new Date().getFullYear();
+  const years = [currentYear - 1, currentYear, currentYear + 1, currentYear + 2];
+  debutAnneeSelect.innerHTML = "";
+  finAnneeSelect.innerHTML = "";
+  years.forEach(y => {
+    debutAnneeSelect.innerHTML += `<option value="${y}" ${y === s.debutAnnee.annee ? "selected" : ""}>${y}</option>`;
+    finAnneeSelect.innerHTML += `<option value="${y}" ${y === s.finAnnee.annee ? "selected" : ""}>${y}</option>`;
+  });
 
   renderClassesList();
   updateLastExportInfo();
@@ -1145,9 +1179,14 @@ function saveFrais() {
 
 function saveAnnee() {
   Storage.saveSettings({
-    debutAnnee: parseInt(document.getElementById("setDebutAnnee").value),
-    finAnnee: parseInt(document.getElementById("setFinAnnee").value),
-    prefixeMatricule: document.getElementById("setPrefixeMatricule").value.trim() || "MEI"
+    debutAnnee: {
+      mois: parseInt(document.getElementById("setDebutMois").value),
+      annee: parseInt(document.getElementById("setDebutAnneeYear").value)
+    },
+    finAnnee: {
+      mois: parseInt(document.getElementById("setFinMois").value),
+      annee: parseInt(document.getElementById("setFinAnneeYear").value)
+    }
   });
   toast(t("msg_settings_saved"));
 }

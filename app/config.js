@@ -4,13 +4,14 @@ const CONFIG_DEFAULTS = {
   adresse: "Niamey - Lossogoungou",
   telephones: ["+227 91 27 33 07", "+227 96 06 28 28"],
   logo: "assets/logo.png",
+  typeEtablissement: "medersa",
 
   classes: [],
   fraisInscription: 5000,
   fraisMensuels: 5000,
 
-  debutAnnee: 10,
-  finAnnee: 7,
+  debutAnnee: { mois: 10, annee: 2025 },
+  finAnnee: { mois: 7, annee: 2026 },
 
   prefixeMatricule: "MEI",
   devise: "FCFA",
@@ -41,7 +42,24 @@ const CONFIG = {
   getSettings() {
     const saved = localStorage.getItem("medersa_settings");
     const overrides = saved ? JSON.parse(saved) : {};
-    return { ...CONFIG_DEFAULTS, ...overrides };
+    const merged = { ...CONFIG_DEFAULTS, ...overrides };
+    merged.debutAnnee = CONFIG.normalizeSchoolYearField(merged.debutAnnee);
+    merged.finAnnee = CONFIG.normalizeSchoolYearField(merged.finAnnee, merged.debutAnnee);
+    return merged;
+  },
+
+  // Convertit l'ancien format (mois seul, ex: 10) vers { mois, annee }
+  normalizeSchoolYearField(val, refDebut) {
+    if (val && typeof val === "object" && val.mois && val.annee) return val;
+    const mois = typeof val === "number" ? val : (refDebut ? refDebut.mois : 10);
+    let annee;
+    if (refDebut) {
+      annee = mois < refDebut.mois ? refDebut.annee + 1 : refDebut.annee;
+    } else {
+      const now = new Date();
+      annee = (now.getMonth() + 1 < mois) ? now.getFullYear() - 1 : now.getFullYear();
+    }
+    return { mois, annee };
   },
 
   async loadClientConfig(code) {
@@ -77,7 +95,7 @@ const CONFIG = {
     const lockedFields = [
       "nomFr", "nomAr", "adresse", "telephones", "logo",
       "couleurPrincipale", "couleurSecondaire", "couleurAccent",
-      "messageFinalFr", "messageFinalAr",
+      "messageFinalFr", "messageFinalAr", "typeEtablissement",
       "modules", "forfait", "abonnement", "guideConfig"
     ];
     const initFields = [

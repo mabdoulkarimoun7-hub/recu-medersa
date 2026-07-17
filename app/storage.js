@@ -213,12 +213,44 @@ const Storage = {
 
   // ==================== Matricules ====================
 
-  generateNextMatricule() {
-    const settings = this.getSettings();
-    const last = parseInt(localStorage.getItem(KEYS.lastMatricule) || "0", 10);
+  // Attribue le prochain numéro (matricule ou reçu) de façon atomique via une
+  // transaction Firestore quand c'est possible : si 2 téléphones du même
+  // établissement génèrent un numéro en même temps, Firestore sérialise les
+  // deux transactions et garantit qu'aucun numéro n'est attribué deux fois.
+  // Repli sur le compteur local uniquement si hors-ligne ou Firestore indisponible
+  // (un seul appareil hors-ligne à la fois reste sûr).
+  async _nextCounterValue(counterKey) {
+    const code = CONFIG.getClientCode();
+    const db = getDb();
+
+    if (isFirebaseReady() && db && code && navigator.onLine) {
+      try {
+        const ref = db.doc(`schools/${code}/meta/counters`);
+        const next = await db.runTransaction(async (tx) => {
+          const doc = await tx.get(ref);
+          const remote = doc.exists ? (doc.data()[counterKey] || 0) : 0;
+          const local = parseInt(localStorage.getItem(KEYS[counterKey]) || "0", 10);
+          const nextVal = Math.max(remote, local) + 1;
+          tx.set(ref, { [counterKey]: nextVal }, { merge: true });
+          return nextVal;
+        });
+        localStorage.setItem(KEYS[counterKey], String(next));
+        return next;
+      } catch (err) {
+        console.error("Erreur transaction compteur Firestore, repli local:", err);
+      }
+    }
+
+    const last = parseInt(localStorage.getItem(KEYS[counterKey]) || "0", 10);
     const next = last + 1;
-    localStorage.setItem(KEYS.lastMatricule, String(next));
+    localStorage.setItem(KEYS[counterKey], String(next));
     this._syncCounters();
+    return next;
+  },
+
+  async generateNextMatricule() {
+    const settings = this.getSettings();
+    const next = await this._nextCounterValue("lastMatricule");
     return settings.prefixeMatricule + "-" + String(next).padStart(3, "0");
   },
 
@@ -235,11 +267,8 @@ const Storage = {
     return this._formatNumber(last + 1);
   },
 
-  commitNextNumber() {
-    const last = parseInt(localStorage.getItem(KEYS.lastNumber) || "0", 10);
-    const next = last + 1;
-    localStorage.setItem(KEYS.lastNumber, String(next));
-    this._syncCounters();
+  async commitNextNumber() {
+    const next = await this._nextCounterValue("lastNumber");
     return this._formatNumber(next);
   },
 
@@ -262,10 +291,10 @@ const Storage = {
     }
   },
 
-  saveStudent(student) {
+  async saveStudent(student) {
     const all = this.getAllStudents();
     if (!student.id) student.id = "s" + Date.now() + Math.floor(Math.random() * 1000);
-    if (!student.matricule) student.matricule = this.generateNextMatricule();
+    if (!student.matricule) student.matricule = await this.generateNextMatricule();
     all.unshift(student);
     localStorage.setItem(KEYS.students, JSON.stringify(all));
 
@@ -324,10 +353,10 @@ const Storage = {
     }
   },
 
-  savePayment(payment) {
+  async savePayment(payment) {
     const all = this.getAllPayments();
     if (!payment.id) payment.id = "p" + Date.now() + Math.floor(Math.random() * 1000);
-    if (!payment.numero) payment.numero = this.commitNextNumber();
+    if (!payment.numero) payment.numero = await this.commitNextNumber();
     all.unshift(payment);
     localStorage.setItem(KEYS.payments, JSON.stringify(all));
 
@@ -366,16 +395,13 @@ const Storage = {
     const settings = this.getSettings();
     const start = settings.debutAnnee;
     const end = settings.finAnnee;
-    const now = new Date();
-    let year = now.getFullYear();
-    if (now.getMonth() + 1 < start) year--;
 
     const months = [];
-    let m = start;
-    let y = year;
+    let m = start.mois;
+    let y = start.annee;
     while (true) {
       months.push({ key: `${y}-${String(m).padStart(2, "0")}`, mois: m, annee: y });
-      if (m === end) break;
+      if (m === end.mois && y === end.annee) break;
       m++;
       if (m > 12) { m = 1; y++; }
     }

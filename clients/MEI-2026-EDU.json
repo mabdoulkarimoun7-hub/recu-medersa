@@ -39,7 +39,7 @@
     "paiements": true,
     "parametres": true,
     "guide": true,
-    "presences": false,
+    "presences": true,
     "bulletins": false,
     "attestations": false,
     "dashboard": false,
@@ -49,7 +49,10 @@
   "forfait": "essentiel",
   "guideConfig": {
     "sections": [],
-    "forfaits": { "afficher": true, "modesPaiementAbonnement": [] },
+    "forfaits": {
+      "afficher": true,
+      "modesPaiementAbonnement": []
+    },
     "messagePersonnalise": {}
   }
 }

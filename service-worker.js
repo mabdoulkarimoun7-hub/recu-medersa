@@ -1,4 +1,4 @@
-const CACHE_NAME = "recu-medersa-v12";
+const CACHE_NAME = "recu-medersa-v13";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,6 +9,7 @@ const APP_SHELL = [
   "./app/storage.js",
   "./app/modules-manager.js",
   "./app/app.js",
+  "./app/attendance.js",
   "./app/pdf-export.js",
   "./app/print-escpos.js",
   "./manifest.json",

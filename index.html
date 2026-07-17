@@ -149,6 +149,10 @@
     <span class="tab-icon">💰</span>
     <span data-i18n="tab_mensuel"></span>
   </button>
+  <button class="tab-btn" data-tab="presences" data-module="presences">
+    <span class="tab-icon">🗓️</span>
+    <span data-i18n="tab_presences"></span>
+  </button>
   <button class="tab-btn" data-tab="guide" data-module="guide">
     <span class="tab-icon">📖</span>
     <span data-i18n="tab_guide"></span>
@@ -338,6 +342,67 @@
   </section>
 </main>
 
+<!-- ========== ONGLET : PRÉSENCES ========== -->
+<main id="tab-presences" class="tab-content hidden" data-module="presences">
+
+  <div id="presenceSetup">
+    <div class="field">
+      <label data-i18n="label_choose_class" for="presenceClasse"></label>
+      <select id="presenceClasse">
+        <option value="" data-i18n="label_choose"></option>
+      </select>
+    </div>
+    <div class="field">
+      <label data-i18n="label_date_appel" for="presenceDate"></label>
+      <input type="date" id="presenceDate">
+    </div>
+    <div class="actions-row">
+      <button type="button" id="btnCommencerAppel" class="primary-btn" data-i18n="btn_commencer_appel"></button>
+    </div>
+  </div>
+
+  <div id="presenceRollcall" class="hidden">
+    <div class="rollcall-progress" id="rollcallProgress"></div>
+    <div class="rollcall-card">
+      <div class="rollcall-name" id="rollcallName"></div>
+      <div class="rollcall-matricule" id="rollcallMatricule"></div>
+    </div>
+    <div class="rollcall-actions">
+      <button type="button" id="btnAbsent" class="rollcall-btn btn-absent">✗ <span data-i18n="btn_absent"></span></button>
+      <button type="button" id="btnPresent" class="rollcall-btn btn-present">✓ <span data-i18n="btn_present"></span></button>
+    </div>
+    <div class="rollcall-nav">
+      <button type="button" id="btnRetourAppel" class="secondary-btn" data-i18n="btn_retour"></button>
+      <button type="button" id="btnTerminerPlusTard" class="secondary-btn" data-i18n="btn_terminer_plus_tard"></button>
+    </div>
+  </div>
+
+  <div id="presenceSummary" class="hidden">
+    <h3 data-i18n="title_rollcall_summary"></h3>
+    <div id="summaryCounts" class="student-info-card"></div>
+    <div id="summaryAbsentsList" class="list-container"></div>
+    <div class="actions-row">
+      <button type="button" id="btnValiderAppel" class="primary-btn" data-i18n="btn_valider_enregistrer"></button>
+    </div>
+  </div>
+
+  <section class="section-divider">
+    <h3 data-i18n="title_attendance_history"></h3>
+    <div class="field">
+      <label data-i18n="label_history_month" for="presenceHistMonth"></label>
+      <select id="presenceHistMonth"></select>
+    </div>
+    <div class="field">
+      <label data-i18n="label_choose_class" for="presenceHistClasse"></label>
+      <select id="presenceHistClasse">
+        <option value="" data-i18n="label_all_classes"></option>
+      </select>
+    </div>
+    <button type="button" id="btnExportAttendancePdf" class="secondary-btn">📄 <span data-i18n="btn_export_attendance_pdf"></span></button>
+    <div id="attendanceGrid" class="attendance-grid-wrap"></div>
+  </section>
+</main>
+
 <!-- ========== ONGLET : GUIDE D'UTILISATION ========== -->
 <main id="tab-guide" class="tab-content hidden" data-module="guide">
   <section class="settings-block">
@@ -504,5 +569,6 @@
 <script src="app/i18n.js"></script>
 <script src="app/modules-manager.js"></script>
 <script src="app/app.js"></script>
+<script src="app/attendance.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ const STORAGE_KEY_PREFIX = "medersa_";
 const KEYS = {
   students: STORAGE_KEY_PREFIX + "students",
   payments: STORAGE_KEY_PREFIX + "payments",
+  attendance: STORAGE_KEY_PREFIX + "attendance",
   lastNumber: STORAGE_KEY_PREFIX + "last_number",
   lastMatricule: STORAGE_KEY_PREFIX + "last_matricule",
   settings: STORAGE_KEY_PREFIX + "settings",
@@ -43,6 +44,7 @@ const Storage = {
 
     const studentsPath = getSchoolCollectionPath("students");
     const paymentsPath = getSchoolCollectionPath("payments");
+    const attendancePath = getSchoolCollectionPath("attendance");
     if (!studentsPath || !paymentsPath) {
       SyncState.set(SyncState.DISABLED);
       return;
@@ -52,6 +54,7 @@ const Storage = {
 
     this._listenToCollection(studentsPath, KEYS.students);
     this._listenToCollection(paymentsPath, KEYS.payments);
+    if (attendancePath) this._listenToCollection(attendancePath, KEYS.attendance);
     this._listenToCounters();
 
     this._firestoreListenersActive = true;
@@ -357,6 +360,59 @@ const Storage = {
     return months;
   },
 
+  // ==================== Présences ====================
+
+  getAllAttendance() {
+    try {
+      return JSON.parse(localStorage.getItem(KEYS.attendance) || "[]");
+    } catch (e) {
+      return [];
+    }
+  },
+
+  saveAttendance(record) {
+    const classeId = (record.classe || "").replace(/\//g, "-");
+    const docId = `${record.date}_${classeId}`;
+    const now = new Date().toISOString();
+    const full = {
+      ...record,
+      id: docId,
+      timestamp: record.timestamp || now,
+      createdAt: record.createdAt || now
+    };
+
+    const all = this.getAllAttendance();
+    const idx = all.findIndex(a => a.id === docId);
+    if (idx === -1) {
+      all.unshift(full);
+    } else {
+      all[idx] = full;
+    }
+    localStorage.setItem(KEYS.attendance, JSON.stringify(all));
+
+    if (isFirebaseReady()) {
+      const path = getSchoolCollectionPath("attendance");
+      if (path) {
+        getDb().collection(path).doc(docId).set(full)
+          .catch(err => console.error("Firestore save attendance error:", err));
+      }
+    }
+
+    return full;
+  },
+
+  getAttendanceForClasseMonth(classe, monthKey) {
+    return this.getAllAttendance().filter(
+      a => a.classe === classe && a.date && a.date.startsWith(monthKey)
+    );
+  },
+
+  getAttendanceForDate(classe, date) {
+    return this.getAllAttendance().find(
+      a => a.classe === classe && a.date === date
+    ) || null;
+  },
+
   // ==================== Sauvegarde ====================
 
   daysSinceLastExport() {
@@ -368,12 +424,13 @@ const Storage = {
   exportBackup() {
     const data = {
       type: "medersa_backup",
-      version: 4,
+      version: 5,
       exportedAt: new Date().toISOString(),
       lastNumber: parseInt(localStorage.getItem(KEYS.lastNumber) || "0", 10),
       lastMatricule: parseInt(localStorage.getItem(KEYS.lastMatricule) || "0", 10),
       students: this.getAllStudents(),
       payments: this.getAllPayments(),
+      attendance: this.getAllAttendance(),
       settings: this.getSettings()
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -446,17 +503,18 @@ const Storage = {
     localStorage.setItem(KEYS.lastMatricule, String(data.lastMatricule || 0));
     localStorage.setItem(KEYS.students, JSON.stringify(data.students || []));
     localStorage.setItem(KEYS.payments, JSON.stringify(data.payments || []));
+    localStorage.setItem(KEYS.attendance, JSON.stringify(data.attendance || []));
     if (data.settings) {
       localStorage.setItem(KEYS.settings, JSON.stringify(data.settings));
     }
     localStorage.setItem(KEYS.lastExportAt, String(Date.now()));
 
     if (isFirebaseReady()) {
-      this._uploadAllToFirestore(data.students || [], data.payments || []);
+      this._uploadAllToFirestore(data.students || [], data.payments || [], data.attendance || []);
     }
   },
 
-  _uploadAllToFirestore(students, payments) {
+  _uploadAllToFirestore(students, payments, attendance) {
     const db = getDb();
     const code = CONFIG.getClientCode();
     if (!db || !code) return;
@@ -464,6 +522,7 @@ const Storage = {
     const batch = db.batch();
     const studentsPath = `schools/${code}/students`;
     const paymentsPath = `schools/${code}/payments`;
+    const attendancePath = `schools/${code}/attendance`;
 
     students.forEach(s => {
       batch.set(db.collection(studentsPath).doc(s.id), s);
@@ -471,6 +530,10 @@ const Storage = {
 
     payments.forEach(p => {
       batch.set(db.collection(paymentsPath).doc(p.id), p);
+    });
+
+    (attendance || []).forEach(a => {
+      batch.set(db.collection(attendancePath).doc(a.id), a);
     });
 
     batch.set(db.doc(`schools/${code}/meta/counters`), {

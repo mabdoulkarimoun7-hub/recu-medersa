@@ -683,6 +683,98 @@ h3 {
   background: var(--accent-light);
 }
 
+/* ===== Appel oral (Présences) ===== */
+.rollcall-progress {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 14px 0 10px;
+}
+
+.rollcall-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 32px 16px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.rollcall-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.rollcall-matricule {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.rollcall-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rollcall-btn {
+  padding: 22px 8px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+
+.rollcall-btn:active { transform: scale(0.96); }
+
+.rollcall-btn.btn-present { background: var(--primary); }
+.rollcall-btn.btn-absent { background: var(--danger); }
+
+.rollcall-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.rollcall-nav .secondary-btn { flex: 1; }
+
+/* ===== Historique des présences ===== */
+.attendance-grid-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+table.attendance-grid {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 11px;
+}
+
+table.attendance-grid th,
+table.attendance-grid td {
+  border: 1px solid var(--border);
+  text-align: center;
+  padding: 4px;
+}
+
+.attendance-grid-name {
+  text-align: left !important;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.attendance-cell { width: 22px; height: 22px; }
+.attendance-cell-present { background: var(--primary-light); }
+.attendance-cell-absent { background: #fbe2e0; }
+.attendance-cell-none { background: var(--bg); }
+
 /* ===== Info élève (frais mensuels) ===== */
 .student-info-card {
   background: var(--primary-light);

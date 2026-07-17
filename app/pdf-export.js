@@ -219,5 +219,79 @@ const PdfExport = {
     }
 
     pdf.save(`classe_${className.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.pdf`);
+  },
+
+  async generateAttendanceSheetPdf(students, classe, monthKey, records) {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+    const s = CONFIG.getSettings();
+    const ml = 12;
+    const mt = 18;
+    const ph = pdf.internal.pageSize.getHeight();
+    const pw = pdf.internal.pageSize.getWidth();
+    const nameColWidth = 45;
+    let y = mt;
+
+    const days = records.map(r => r.date).sort();
+    const dayColWidth = Math.min(7, (pw - ml - nameColWidth - 5) / Math.max(days.length, 1));
+
+    const [year, month] = monthKey.split("-");
+    const monthLabel = `${monthName(parseInt(month, 10))} ${year}`;
+
+    const addArabicName = async (name, x, yPos, maxW) => {
+      const canvas = await this._renderArabicText(name, "Amiri, serif", 28, 200);
+      const imgW = (canvas.width / canvas.height) * 5;
+      pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, yPos - 4, Math.min(imgW, maxW), 5);
+    };
+
+    const drawHeader = () => {
+      pdf.setFontSize(14);
+      pdf.setFont(undefined, "bold");
+      pdf.text(s.nomFr, ml, y);
+      y += 7;
+      pdf.setFontSize(11);
+      pdf.text(`${t("title_attendance_history")} — ${classe} — ${monthLabel}`, ml, y);
+      y += 8;
+      pdf.setFont(undefined, "bold");
+      pdf.setFontSize(8);
+      pdf.text(t("pdf_col_name"), ml, y);
+      days.forEach((d, i) => {
+        pdf.text(d.slice(8, 10), ml + nameColWidth + i * dayColWidth + dayColWidth / 2, y, { align: "center" });
+      });
+      y += 2;
+      pdf.line(ml, y, pw - ml, y);
+      y += 5;
+      pdf.setFont(undefined, "normal");
+      pdf.setFontSize(8);
+    };
+
+    drawHeader();
+
+    for (const st of students) {
+      if (y > ph - 15) {
+        pdf.addPage();
+        y = mt;
+        drawHeader();
+      }
+
+      if (this._hasArabic(st.nom || "")) {
+        await addArabicName(st.nom, ml, y, nameColWidth - 2);
+      } else {
+        pdf.text((st.nom || "-").slice(0, 22), ml, y);
+      }
+
+      days.forEach((d, i) => {
+        const rec = records.find(r => r.date === d);
+        let mark = "-";
+        if (rec) {
+          if (rec.presents && rec.presents.includes(st.matricule)) mark = "P";
+          else if (rec.absents && rec.absents.includes(st.matricule)) mark = "A";
+        }
+        pdf.text(mark, ml + nameColWidth + i * dayColWidth + dayColWidth / 2, y, { align: "center" });
+      });
+      y += 6;
+    }
+
+    pdf.save(`presences_${classe.replace(/\s+/g, "_")}_${monthKey}.pdf`);
   }
 };

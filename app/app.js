@@ -170,6 +170,7 @@ async function showApp() {
   setupInscription();
   setupClasses();
   setupMensuel();
+  setupPresences();
   setupParametres();
   setupGuide();
   checkExportWarning();
@@ -365,6 +366,7 @@ function setupTabs() {
       if (btn.dataset.tab === "classes") renderClassesTab();
       if (btn.dataset.tab === "parametres") loadSettingsForm();
       if (btn.dataset.tab === "inscription") { populateClasseDropdown("studentClasse"); renderStudentsList(); refreshMatriculePreview(); }
+      if (btn.dataset.tab === "presences") refreshPresencesTab();
     });
   });
 }

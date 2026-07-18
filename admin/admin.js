@@ -48,6 +48,7 @@ let formModes = ["Espèces", "Mynita", "Amanata"];
 let formGuideModes = [];
 let logoBase64 = null;
 let firebaseEnabled = false;
+let _firestoreSyncConfirmed = false;
 
 /* ==================== Modules & Forfaits ==================== */
 
@@ -374,32 +375,11 @@ function addGuideModeTag() {
 
 /* ==================== État temps réel Firestore ==================== */
 
-function renderFirestoreLiveStatus(fsConfig) {
-  const statusEl = document.getElementById("firestoreLiveStatus");
-  const diffBox = document.getElementById("firestoreLiveDiff");
-
-  if (!fsConfig) {
-    statusEl.textContent = "Ce client n'a encore rien synchronisé depuis son application (aucune donnée Firestore trouvée). Les valeurs du formulaire proviennent du fichier JSON GitHub.";
-    diffBox.classList.add("hidden");
-    return;
-  }
-
-  const when = fsConfig.updatedAt ? new Date(fsConfig.updatedAt).toLocaleString("fr-FR") : "date inconnue";
-  statusEl.textContent = "Dernière modification par le client : " + when +
-    " — Classes : " + (fsConfig.classes || []).join(", ") +
-    " — Frais inscription : " + (fsConfig.fraisInscription ?? "-") +
-    " — Frais mensuels : " + (fsConfig.fraisMensuels ?? "-");
-
-  if (firestoreConfigDiffersFromForm(fsConfig)) {
-    diffBox.classList.remove("hidden");
-  } else {
-    diffBox.classList.add("hidden");
-  }
-}
-
-function loadFirestoreValuesIntoForm() {
-  if (!_latestFirestoreConfig) return;
-  const cfg = _latestFirestoreConfig;
+// Applique automatiquement les valeurs réelles (venant du téléphone du client) au formulaire.
+// Empêche qu'une modification admin sans rapport (ex: activer un module) écrase les classes/frais
+// réels du client avec d'anciennes valeurs obsolètes.
+function applyFirestoreConfigToForm(cfg) {
+  if (!cfg) return;
   if (cfg.classes) { formClasses = [...cfg.classes]; renderClassesTags(); }
   if (cfg.modesPaiement) { formModes = [...cfg.modesPaiement]; renderModesTags(); }
   if (cfg.fraisInscription !== undefined) document.getElementById("cfgFraisInscription").value = cfg.fraisInscription;
@@ -407,8 +387,32 @@ function loadFirestoreValuesIntoForm() {
   if (cfg.debutAnnee !== undefined) setSchoolYearInForm(cfg.debutAnnee, cfg.finAnnee);
   if (cfg.prefixeMatricule) document.getElementById("cfgPrefixeMatricule").value = cfg.prefixeMatricule;
   if (cfg.devise) document.getElementById("cfgDevise").value = cfg.devise;
-  document.getElementById("firestoreLiveDiff").classList.add("hidden");
-  toast("Valeurs Firestore chargées dans le formulaire. N'oubliez pas d'enregistrer.");
+}
+
+function renderFirestoreLiveStatus(fsConfig, err) {
+  const statusEl = document.getElementById("firestoreLiveStatus");
+  const saveBtn = document.getElementById("btnSaveClient");
+
+  if (err) {
+    // Connexion impossible : on ne peut pas garantir que les classes/frais du formulaire
+    // sont à jour, donc on bloque l'enregistrement de ces champs par sécurité (voir handleSaveClient).
+    _firestoreSyncConfirmed = false;
+    statusEl.textContent = "Impossible de vérifier les données en ligne du client (connexion instable). Les classes/frais/modes de paiement ne seront pas modifiés tant que la connexion n'est pas rétablie.";
+    saveBtn.disabled = false;
+    return;
+  }
+
+  _firestoreSyncConfirmed = true;
+  saveBtn.disabled = false;
+
+  if (!fsConfig) {
+    statusEl.textContent = "Ce client n'a encore rien synchronisé depuis son application (aucune donnée en ligne trouvée pour l'instant).";
+    return;
+  }
+
+  applyFirestoreConfigToForm(fsConfig);
+  const when = fsConfig.updatedAt ? new Date(fsConfig.updatedAt).toLocaleString("fr-FR") : "date inconnue";
+  statusEl.textContent = "✓ Synchronisé avec les données réelles du client (dernière modification : " + when + ")";
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -614,7 +618,6 @@ function setupFormView() {
   document.getElementById("cfgGuideNewMode").addEventListener("keydown", e => {
     if (e.key === "Enter") { e.preventDefault(); addGuideModeTag(); }
   });
-  document.getElementById("btnLoadFirestoreValues").addEventListener("click", loadFirestoreValuesIntoForm);
 }
 
 function renderClientsList() {
@@ -718,9 +721,26 @@ function openForm(code) {
     loadGuideConfig(c.guideConfig);
 
     if (firebaseEnabled) {
+      _firestoreSyncConfirmed = false;
+      const saveBtn = document.getElementById("btnSaveClient");
+      saveBtn.disabled = true;
       document.getElementById("firestoreLiveSection").classList.remove("hidden");
-      document.getElementById("firestoreLiveStatus").textContent = "Connexion en cours...";
+      document.getElementById("firestoreLiveStatus").textContent = "Vérification des données réelles du client...";
       startConfigListener(c.codeAcces, renderFirestoreLiveStatus);
+      // Filet de sécurité hors-ligne : si Firestore ne répond pas du tout après quelques
+      // secondes, on débloque l'enregistrement mais renderFirestoreLiveStatus n'aura jamais
+      // mis _firestoreSyncConfirmed à true, donc handleSaveClient protégera classes/frais.
+      setTimeout(() => {
+        if (editingCode === code && saveBtn.disabled) {
+          saveBtn.disabled = false;
+          if (!_firestoreSyncConfirmed) {
+            document.getElementById("firestoreLiveStatus").textContent =
+              "Impossible de vérifier les données en ligne du client (connexion instable). Les classes/frais/modes de paiement ne seront pas modifiés tant que la connexion n'est pas rétablie.";
+          }
+        }
+      }, 6000);
+    } else {
+      _firestoreSyncConfirmed = true;
     }
   } else {
     document.getElementById("formTitle").textContent = AdminI18n.t("admin_new_client_title");
@@ -734,6 +754,8 @@ function openForm(code) {
     resetGuideFields();
     document.getElementById("firestoreLiveSection").classList.add("hidden");
     stopConfigListener();
+    _firestoreSyncConfirmed = true;
+    document.getElementById("btnSaveClient").disabled = false;
   }
 
   renderClassesTags();
@@ -979,8 +1001,18 @@ async function handleSaveClient(e) {
 
   saveClients();
   await saveSmsConfig(obj.codeAcces);
-  await pushConfigToFirestore(obj.codeAcces, obj);
-  toast("Client enregistré : " + obj.nomFr);
+
+  // Filet de sécurité : si on n'a pas pu confirmer les données réelles du client en ligne
+  // (connexion instable pendant l'édition), on n'écrase pas ses classes/frais/modes de
+  // paiement pour éviter de perdre ce qu'il a lui-même saisi depuis son application.
+  const syncSkipped = editingCode && firebaseEnabled && !_firestoreSyncConfirmed;
+  if (!syncSkipped) {
+    await pushConfigToFirestore(obj.codeAcces, obj);
+  }
+
+  toast(syncSkipped
+    ? "Client enregistré, mais connexion instable : classes/frais/modes de paiement NON modifiés par sécurité. Réessayez plus tard."
+    : "Client enregistré : " + obj.nomFr);
 
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);
   if (token) {

@@ -177,14 +177,10 @@
             </div>
           </div>
 
-          <!-- État temps réel Firestore -->
+          <!-- État temps réel Firestore (synchronisation automatique, aucune action requise) -->
           <div class="form-section hidden" id="firestoreLiveSection">
             <h3 data-i18n-admin="admin_section_firestore">État actuel du client (temps réel)</h3>
             <div id="firestoreLiveStatus" class="hint" data-i18n-admin="admin_firestore_waiting">En attente de connexion...</div>
-            <div class="hidden" id="firestoreLiveDiff" style="margin-top:10px;padding:10px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;font-size:13px;color:#856404">
-              <div id="firestoreLiveDiffText" data-i18n-admin="admin_firestore_diff">Le client a modifié ses classes, frais ou modes de paiement depuis son application. Les valeurs ci-dessous (formulaire) ne correspondent plus à ce qu'il voit actuellement.</div>
-              <button type="button" class="btn btn-sm btn-outline" id="btnLoadFirestoreValues" style="margin-top:8px" data-i18n-admin="admin_firestore_load">Charger ces valeurs dans le formulaire</button>
-            </div>
           </div>
 
           <!-- Scolarité -->

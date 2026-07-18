@@ -19,15 +19,15 @@ const FIRESTORE_EDITABLE_FIELDS = [
 
 function startConfigListener(code, onUpdate) {
   stopConfigListener();
-  if (!firebaseEnabled || !code) return;
+  if (!firebaseEnabled || !code) { onUpdate(null, "no-firebase"); return; }
   _configUnsubscribe = _adminDb.doc(`schools/${code}/config/settings`).onSnapshot(
     doc => {
       _latestFirestoreConfig = doc.exists ? doc.data() : null;
-      onUpdate(_latestFirestoreConfig);
+      onUpdate(_latestFirestoreConfig, null);
     },
     err => {
       console.error("Erreur écoute config Firestore:", err);
-      onUpdate(null);
+      onUpdate(null, err);
     }
   );
 }
@@ -52,25 +52,3 @@ async function pushConfigToFirestore(code, settings) {
   }
 }
 
-function firestoreConfigDiffersFromForm(fsConfig) {
-  if (!fsConfig) return false;
-  const formClassesStr = JSON.stringify([...formClasses].sort());
-  const fsClassesStr = JSON.stringify([...(fsConfig.classes || [])].sort());
-  if (formClassesStr !== fsClassesStr) return true;
-
-  const formModesStr = JSON.stringify([...formModes].sort());
-  const fsModesStr = JSON.stringify([...(fsConfig.modesPaiement || [])].sort());
-  if (formModesStr !== fsModesStr) return true;
-
-  const numericFields = ["fraisInscription", "fraisMensuels", "debutAnnee", "finAnnee"];
-  for (const f of numericFields) {
-    if (fsConfig[f] === undefined) continue;
-    const formVal = document.getElementById(
-      f === "fraisInscription" ? "cfgFraisInscription" :
-      f === "fraisMensuels" ? "cfgFraisMensuels" :
-      f === "debutAnnee" ? "cfgDebutAnnee" : "cfgFinAnnee"
-    ).value;
-    if (String(fsConfig[f]) !== String(formVal)) return true;
-  }
-  return false;
-}

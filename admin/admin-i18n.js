@@ -79,9 +79,7 @@ const ADMIN_TRANSLATIONS = {
 
     // Form — Firestore live
     admin_section_firestore: "État actuel du client (temps réel)",
-    admin_firestore_waiting: "En attente de connexion...",
-    admin_firestore_diff: "Le client a modifié ses classes, frais ou modes de paiement depuis son application. Les valeurs ci-dessous (formulaire) ne correspondent plus à ce qu'il voit actuellement.",
-    admin_firestore_load: "Charger ces valeurs dans le formulaire",
+    admin_firestore_waiting: "Vérification des données réelles du client...",
 
     // Form — Schooling
     admin_section_schooling: "Scolarité",
@@ -309,9 +307,7 @@ const ADMIN_TRANSLATIONS = {
     admin_generate_code: "توليد رمز تلقائي",
 
     admin_section_firestore: "الحالة الحالية للعميل (مباشر)",
-    admin_firestore_waiting: "في انتظار الاتصال...",
-    admin_firestore_diff: "قام العميل بتعديل الأقسام أو الرسوم أو طرق الدفع من تطبيقه. القيم أدناه (النموذج) لم تعد تطابق ما يراه حالياً.",
-    admin_firestore_load: "تحميل هذه القيم في النموذج",
+    admin_firestore_waiting: "التحقق من البيانات الفعلية للعميل...",
 
     admin_section_schooling: "الدراسة",
     admin_frais_inscription: "رسوم التسجيل (FCFA)",
@@ -526,9 +522,7 @@ const ADMIN_TRANSLATIONS = {
     admin_generate_code: "Generate automatic code",
 
     admin_section_firestore: "Current client state (real-time)",
-    admin_firestore_waiting: "Waiting for connection...",
-    admin_firestore_diff: "The client has modified their classes, fees, or payment methods from their app. The values below (form) no longer match what they currently see.",
-    admin_firestore_load: "Load these values into the form",
+    admin_firestore_waiting: "Checking the client's real data...",
 
     admin_section_schooling: "Schooling",
     admin_frais_inscription: "Enrollment fee (FCFA)",

@@ -56,6 +56,7 @@ const Storage = {
     this._listenToCollection(paymentsPath, KEYS.payments);
     if (attendancePath) this._listenToCollection(attendancePath, KEYS.attendance);
     this._listenToCounters();
+    this._listenToConfig();
     this._setupNetworkListeners();
 
     this._firestoreListenersActive = true;
@@ -139,16 +140,72 @@ const Storage = {
     );
   },
 
-  _syncCounters() {
+  // Garde les classes/frais/modes de paiement/année scolaire à jour en direct pendant
+  // que l'app reste ouverte (ex: une tablette laissée allumée toute la journée), pour
+  // que saveSettings() ne parte jamais d'une base locale périmée et n'écrase jamais une
+  // modification faite entre-temps par l'admin ou un autre appareil du même établissement.
+  // Même principe que la correction du panneau admin du 18 juillet 2026, côté application.
+  _listenToConfig() {
+    const path = getSchoolCollectionPath("config");
+    if (!path) return;
+    const db = getDb();
+
+    db.doc(path + "/settings").onSnapshot(
+      (doc) => {
+        if (!doc.exists) return;
+        const data = doc.data();
+        const editableFields = [
+          "classes", "fraisInscription", "fraisMensuels",
+          "modesPaiement", "debutAnnee", "finAnnee",
+          "prefixeMatricule", "devise"
+        ];
+        const overrides = {};
+        editableFields.forEach(f => { if (data[f] !== undefined) overrides[f] = data[f]; });
+        if (Object.keys(overrides).length === 0) return;
+        const current = this.getSettings();
+        const merged = { ...current, ...overrides };
+        localStorage.setItem(KEYS.settings, JSON.stringify(merged));
+      },
+      (err) => console.error("Firestore config listen error:", err)
+    );
+  },
+
+  async _syncCounters() {
     if (!isFirebaseReady()) return;
     const code = CONFIG.getClientCode();
     if (!code) return;
     const db = getDb();
+    const ref = db.doc(`schools/${code}/meta/counters`);
 
-    db.doc(`schools/${code}/meta/counters`).set({
-      lastNumber: parseInt(localStorage.getItem(KEYS.lastNumber) || "0", 10),
-      lastMatricule: parseInt(localStorage.getItem(KEYS.lastMatricule) || "0", 10)
-    }, { merge: true }).catch(err => console.error("Sync counters error:", err));
+    const localNumber = parseInt(localStorage.getItem(KEYS.lastNumber) || "0", 10);
+    const localMatricule = parseInt(localStorage.getItem(KEYS.lastMatricule) || "0", 10);
+
+    // Repli non-transactionnel (utilisé hors-ligne ou si la transaction a échoué) :
+    // on ne pousse jamais une valeur locale brute qui pourrait faire reculer le
+    // compteur partagé et provoquer un doublon de numéro sur un autre appareil.
+    // On lit d'abord la valeur distante connue et on ne garde que le maximum.
+    try {
+      const doc = await ref.get();
+      const remote = doc.exists ? doc.data() : {};
+      const nextNumber = Math.max(remote.lastNumber || 0, localNumber);
+      const nextMatricule = Math.max(remote.lastMatricule || 0, localMatricule);
+      await ref.set({ lastNumber: nextNumber, lastMatricule: nextMatricule }, { merge: true });
+    } catch (err) {
+      console.error("Sync counters error:", err);
+    }
+  },
+
+  // Avertit l'utilisateur qu'une écriture Firestore a vraiment échoué (pas juste
+  // mise en attente hors-ligne — dans ce cas Firestore ne rejette pas la promesse).
+  // Débit limité pour ne pas spammer l'écran si plusieurs échecs arrivent d'affilée.
+  _lastSyncWarnAt: 0,
+  _warnSyncFailure() {
+    const now = Date.now();
+    if (now - this._lastSyncWarnAt < 15000) return;
+    this._lastSyncWarnAt = now;
+    if (typeof toast === "function") {
+      toast(typeof t === "function" ? t("msg_sync_write_error") : "Enregistré sur l'appareil, mais pas encore synchronisé en ligne (erreur réseau).");
+    }
   },
 
   // ==================== Paramètres ====================
@@ -302,7 +359,10 @@ const Storage = {
       const path = getSchoolCollectionPath("students");
       if (path) {
         getDb().collection(path).doc(student.id).set(student)
-          .catch(err => console.error("Firestore save student error:", err));
+          .catch(err => {
+            console.error("Firestore save student error:", err);
+            this._warnSyncFailure();
+          });
       }
     }
 
@@ -320,7 +380,10 @@ const Storage = {
       const path = getSchoolCollectionPath("students");
       if (path) {
         getDb().collection(path).doc(id).update(data)
-          .catch(err => console.error("Firestore update student error:", err));
+          .catch(err => {
+            console.error("Firestore update student error:", err);
+            this._warnSyncFailure();
+          });
       }
     }
 
@@ -354,17 +417,39 @@ const Storage = {
   },
 
   async savePayment(payment) {
-    const all = this.getAllPayments();
-    if (!payment.id) payment.id = "p" + Date.now() + Math.floor(Math.random() * 1000);
+    if (!payment.id) {
+      // Identifiant déterministe (au lieu d'un id aléatoire) pour "inscription" et
+      // "mensuel" : si deux appareils du même établissement enregistrent le même
+      // paiement (même élève, même mois) avant d'avoir pu se synchroniser, le second
+      // écrit par-dessus le premier au lieu de créer un doublon qui compterait
+      // l'argent deux fois dans les totaux.
+      if (payment.type === "mensuel" && payment.mois) {
+        payment.id = `${payment.studentId}_mensuel_${payment.mois}`;
+      } else if (payment.type === "inscription") {
+        payment.id = `${payment.studentId}_inscription`;
+      } else {
+        payment.id = "p" + Date.now() + Math.floor(Math.random() * 1000);
+      }
+    }
     if (!payment.numero) payment.numero = await this.commitNextNumber();
-    all.unshift(payment);
+
+    const all = this.getAllPayments();
+    const idx = all.findIndex(p => p.id === payment.id);
+    if (idx === -1) {
+      all.unshift(payment);
+    } else {
+      all[idx] = payment;
+    }
     localStorage.setItem(KEYS.payments, JSON.stringify(all));
 
     if (isFirebaseReady()) {
       const path = getSchoolCollectionPath("payments");
       if (path) {
         getDb().collection(path).doc(payment.id).set(payment)
-          .catch(err => console.error("Firestore save payment error:", err));
+          .catch(err => {
+            console.error("Firestore save payment error:", err);
+            this._warnSyncFailure();
+          });
       }
     }
 
@@ -547,6 +632,18 @@ const Storage = {
         `Numéro de séquence (${data.lastNumber}) inférieur au courant (${currentLast}). Import refusé.`
       );
     }
+    // Vérification de fraîcheur : le localStorage reflète l'état de Firestore en
+    // temps réel (via les écouteurs de initSync()) tant que l'appareil est en ligne.
+    // Si des élèves/paiements/présences plus récents que cette sauvegarde existent
+    // déjà, restaurer écraserait ces données créées ailleurs entre-temps.
+    const backupDate = data.exportedAt ? new Date(data.exportedAt).getTime() : 0;
+    const newestLocal = this._newestRecordTimestamp();
+    if (backupDate && newestLocal > backupDate) {
+      throw new Error(
+        `Cette sauvegarde date du ${new Date(backupDate).toLocaleString("fr-FR")}, mais des données plus récentes existent déjà sur cet appareil (jusqu'au ${new Date(newestLocal).toLocaleString("fr-FR")}). Import refusé pour éviter de les écraser.`
+      );
+    }
+
     localStorage.setItem(KEYS.lastNumber, String(data.lastNumber || 0));
     localStorage.setItem(KEYS.lastMatricule, String(data.lastMatricule || 0));
     localStorage.setItem(KEYS.students, JSON.stringify(data.students || []));
@@ -560,6 +657,22 @@ const Storage = {
     if (isFirebaseReady()) {
       this._uploadAllToFirestore(data.students || [], data.payments || [], data.attendance || []);
     }
+  },
+
+  _newestRecordTimestamp() {
+    const all = [
+      ...this.getAllStudents(),
+      ...this.getAllPayments(),
+      ...this.getAllAttendance()
+    ];
+    let newest = 0;
+    all.forEach(r => {
+      if (r.createdAt) {
+        const ts = new Date(r.createdAt).getTime();
+        if (!isNaN(ts) && ts > newest) newest = ts;
+      }
+    });
+    return newest;
   },
 
   _uploadAllToFirestore(students, payments, attendance) {

@@ -1019,6 +1019,8 @@ function setupParametres() {
       if (code === CONFIG.codeResetAdmin) {
         const action = prompt(t("txt_dev_action_prompt"));
         if (action && action.toUpperCase() === "RESET") {
+          const unsynced = SyncState.get() === SyncState.PENDING || SyncState.get() === SyncState.OFFLINE;
+          if (unsynced && !confirm(t("txt_reset_unsynced_warning"))) return;
           if (confirm(t("txt_reset_confirm"))) {
             Storage.resetAllData();
             toast(t("msg_data_reset"));

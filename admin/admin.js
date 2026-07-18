@@ -119,6 +119,7 @@ function setupAdminNavigation() {
     document.getElementById("formView").classList.add("hidden");
     document.getElementById("statsView").classList.add("hidden");
     if (typeof AdminStats !== "undefined") AdminStats.stopListening();
+    stopConfigListener();
   });
 
   navStats.addEventListener("click", () => {
@@ -697,6 +698,7 @@ function openForm(code) {
     document.getElementById("cfgCouleurSecondaire").value = c.couleurSecondaire || "#0b3d91";
     document.getElementById("cfgCouleurAccent").value = c.couleurAccent || "#c5972c";
     document.getElementById("cfgCodeAcces").value = c.codeAcces;
+    document.getElementById("cfgCodeAcces").readOnly = true;
     document.getElementById("cfgActif").value = String(c.actif !== false);
     document.getElementById("cfgTypeEtablissement").value = c.typeEtablissement || "";
     document.getElementById("cfgFraisInscription").value = c.fraisInscription ?? 5000;
@@ -744,6 +746,7 @@ function openForm(code) {
     }
   } else {
     document.getElementById("formTitle").textContent = AdminI18n.t("admin_new_client_title");
+    document.getElementById("cfgCodeAcces").readOnly = false;
     document.getElementById("cfgTypeEtablissement").value = "";
     formClasses = [];
     formModes = ["Espèces", "Mynita", "Amanata"];
@@ -930,11 +933,41 @@ async function pushToGitHub(clientObj) {
   return true;
 }
 
+// Liste les fichiers clients/*.json réellement présents sur GitHub. On ne se fie
+// jamais à la mémoire de cet onglet admin pour construire le manifeste : si deux
+// admins (ou deux onglets) travaillent en même temps, se baser sur l'état réel des
+// fichiers empêche qu'un client ajouté ailleurs disparaisse du manifeste.
+async function fetchActualClientCodesFromGitHub() {
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+  if (!token) return null;
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/clients?ref=${GITHUB_BRANCH}`;
+  const headers = {
+    "Authorization": "token " + token,
+    "Accept": "application/vnd.github.v3+json"
+  };
+  try {
+    const resp = await fetch(apiUrl, { headers });
+    if (!resp.ok) return null;
+    const files = await resp.json();
+    if (!Array.isArray(files)) return null;
+    return files
+      .filter(f => f.type === "file" && f.name.endsWith(".json") && f.name !== "index.json")
+      .map(f => f.name.replace(/\.json$/, ""));
+  } catch (err) {
+    console.error("Erreur listing clients GitHub:", err);
+    return null;
+  }
+}
+
 async function pushClientsIndex() {
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);
-  if (!token) return;
+  if (!token) return true;
 
-  const codes = clients.map(c => c.codeAcces);
+  const actualCodes = await fetchActualClientCodesFromGitHub();
+  // Repli sur la liste locale uniquement si le listing GitHub échoue (ex: token
+  // sans droit de lecture du dossier) — mieux vaut une tentative avec l'état
+  // connu localement que ne rien déployer du tout.
+  const codes = actualCodes || clients.map(c => c.codeAcces);
   const content = JSON.stringify(codes, null, 2);
   const contentBase64 = btoa(unescape(encodeURIComponent(content)));
   const path = "clients/index.json";
@@ -958,9 +991,11 @@ async function pushClientsIndex() {
       branch: GITHUB_BRANCH
     };
     if (sha) body.sha = sha;
-    await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify(body) });
+    const putResp = await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify(body) });
+    return putResp.ok;
   } catch (err) {
     console.error("Erreur push index:", err);
+    return false;
   }
 }
 
@@ -989,7 +1024,18 @@ async function handleSaveClient(e) {
     return toast("Le code d'accès et le nom français sont obligatoires.");
   }
 
+  if (!/^[A-Z0-9-]+$/.test(obj.codeAcces)) {
+    return toast("Le code d'accès ne peut contenir que des lettres, chiffres et tirets (pas d'espaces ni de caractères spéciaux).");
+  }
+
   if (editingCode) {
+    // Le code d'accès est verrouillé (champ readonly) une fois le client créé :
+    // le changer pourrait faire écraser les données d'un AUTRE client (même code)
+    // et contourne la protection de synchronisation Firestore ci-dessous, qui est
+    // liée au code d'origine. Voir CLAUDE.md — incident du 18 juillet 2026.
+    if (obj.codeAcces !== editingCode) {
+      return toast("Le code d'accès ne peut pas être modifié après création d'un client.");
+    }
     const idx = clients.findIndex(c => c.codeAcces === editingCode);
     if (idx >= 0) clients[idx] = obj;
   } else {
@@ -1019,8 +1065,10 @@ async function handleSaveClient(e) {
     toast("Déploiement en cours...");
     const ok = await pushToGitHub(obj);
     if (ok) {
-      await pushClientsIndex();
-      toast("Déployé ! Le lien sera actif dans ~1 minute.");
+      const indexOk = await pushClientsIndex();
+      toast(indexOk
+        ? "Déployé ! Le lien sera actif dans ~1 minute."
+        : "Client déployé, mais le manifeste n'a pas pu être mis à jour (le client reste accessible par son lien direct).");
       showClientLink(obj.codeAcces);
     }
   }
@@ -1029,13 +1077,31 @@ async function handleSaveClient(e) {
 }
 
 async function deleteClient(code) {
-  if (!confirm("Supprimer le client " + code + " ?")) return;
+  if (!confirm("Désactiver l'accès du client " + code + " ? Il ne pourra plus se connecter avec ce code. (Comme pour les élèves, le dossier n'est jamais vraiment supprimé — il pourra être réactivé plus tard.)")) return;
+
+  const client = clients.find(c => c.codeAcces === code);
   clients = clients.filter(c => c.codeAcces !== code);
   saveClients();
   renderClientsList();
+
   const token = localStorage.getItem(GITHUB_TOKEN_KEY);
-  if (token) await pushClientsIndex();
-  toast("Client supprimé.");
+  if (token && client) {
+    // Sans ça, "Supprimer" ne faisait disparaître le client que de la liste admin :
+    // son fichier JSON restait actif sur GitHub/Vercel et il pouvait continuer à se
+    // connecter indéfiniment avec son ancien code. Voir audit du 18 juillet 2026.
+    const disabled = { ...client, actif: false };
+    const ok = await pushFileToGitHub(
+      "clients/" + code + ".json",
+      JSON.stringify(disabled, null, 2),
+      "Désactivation client " + code
+    );
+    if (!ok) {
+      toast("Erreur : impossible de désactiver l'accès en ligne. Réessayez.");
+      return;
+    }
+    await pushClientsIndex();
+  }
+  toast("Accès du client désactivé.");
 }
 
 function downloadClient(code) {

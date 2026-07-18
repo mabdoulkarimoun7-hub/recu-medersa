@@ -1,5 +1,12 @@
 /* pdf-export.js — génération PDF/PNG du reçu + partage WhatsApp + listes PDF. */
 
+async function ensureArabicFontLoaded(fontSize) {
+  if (!document.fonts || !document.fonts.load) return;
+  try {
+    await document.fonts.load(`${fontSize}px "Amiri"`);
+  } catch (e) { /* on continue même si le chargement échoue (ex: hors-ligne, police jamais mise en cache) */ }
+}
+
 const PdfExport = {
   async _renderCanvas(el) {
     return await html2canvas(el, { scale: 3, backgroundColor: "#ffffff" });
@@ -60,25 +67,29 @@ const PdfExport = {
     toast(t("msg_image_downloaded"));
   },
 
-  _renderArabicText(text, font, fontSize, maxWidth) {
-    return new Promise((resolve) => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      ctx.font = `${fontSize}px ${font}`;
-      const measured = ctx.measureText(text);
-      const w = Math.min(Math.ceil(measured.width) + 10, maxWidth);
-      const h = Math.ceil(fontSize * 1.5);
-      canvas.width = w;
-      canvas.height = h;
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, w, h);
-      ctx.fillStyle = "#000000";
-      ctx.font = `${fontSize}px ${font}`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(text, w / 2, h / 2);
-      resolve(canvas);
-    });
+  async _renderArabicText(text, font, fontSize, maxWidth) {
+    // Un canvas ne déclenche pas le téléchargement de la police (ce n'est pas un
+    // élément DOM affiché) : sans cette attente explicite, fillText() peut dessiner
+    // avec la police de secours si Amiri n'a pas fini de charger, et ce rendu reste
+    // figé tel quel dans le PDF/PNG/reçu imprimé. Voir audit du 18 juillet 2026.
+    await ensureArabicFontLoaded(fontSize);
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.font = `${fontSize}px ${font}`;
+    const measured = ctx.measureText(text);
+    const w = Math.min(Math.ceil(measured.width) + 10, maxWidth);
+    const h = Math.ceil(fontSize * 1.5);
+    canvas.width = w;
+    canvas.height = h;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = "#000000";
+    ctx.font = `${fontSize}px ${font}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(text, w / 2, h / 2);
+    return canvas;
   },
 
   _hasArabic(str) {

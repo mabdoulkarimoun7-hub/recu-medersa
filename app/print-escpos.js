@@ -23,23 +23,29 @@ function loadImageAsCanvas(src, targetWidthDots) {
   });
 }
 
-function renderTextAsCanvas(text, font, fontSize, width) {
-  return new Promise((resolve) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    const ctx = canvas.getContext("2d");
-    ctx.font = `${fontSize}px ${font}`;
-    const height = Math.max(8, Math.ceil(fontSize * 1.4));
-    canvas.height = height;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "#000000";
-    ctx.font = `${fontSize}px ${font}`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(text, width / 2, height / 2);
-    resolve(canvas);
-  });
+async function renderTextAsCanvas(text, font, fontSize, width) {
+  // Sans cette attente, la police Amiri peut ne pas être encore chargée au moment
+  // du dessin sur le canvas (qui n'est pas affiché à l'écran, donc ne déclenche pas
+  // lui-même le téléchargement de la police) : le texte arabe imprimé se retrouve
+  // alors figé dans la police de secours. Voir audit du 18 juillet 2026.
+  if (typeof ensureArabicFontLoaded === "function") {
+    await ensureArabicFontLoaded(fontSize);
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  const ctx = canvas.getContext("2d");
+  ctx.font = `${fontSize}px ${font}`;
+  const height = Math.max(8, Math.ceil(fontSize * 1.4));
+  canvas.height = height;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = "#000000";
+  ctx.font = `${fontSize}px ${font}`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, width / 2, height / 2);
+  return canvas;
 }
 
 function uint8ToBase64(bytes) {

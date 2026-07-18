@@ -162,7 +162,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label data-i18n-admin="admin_code_acces">Code d'accès *</label>
-                <input type="text" id="cfgCodeAcces" required placeholder="Ex: ALQ-2026-NIA">
+                <input type="text" id="cfgCodeAcces" required pattern="[A-Za-z0-9\-]+" title="Lettres, chiffres et tirets uniquement" placeholder="Ex: ALQ-2026-NIA">
               </div>
               <div class="form-group">
                 <label data-i18n-admin="admin_statut">Statut</label>

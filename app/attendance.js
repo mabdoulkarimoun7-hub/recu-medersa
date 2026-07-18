@@ -79,6 +79,14 @@ function startRollCall() {
     clearAttendanceDraft();
   }
 
+  // Une présence déjà enregistrée pour cette classe/date (par cet appareil ou un
+  // autre) sera intégralement remplacée si on refait l'appel — on prévient avant
+  // d'écraser un appel déjà fait, plutôt que de le perdre silencieusement.
+  const existing = Storage.getAttendanceForDate(classe, date);
+  if (existing && !(draft && draft.classe === classe && draft.date === date)) {
+    if (!confirm(t("msg_attendance_already_exists"))) return;
+  }
+
   const students = Storage.getStudentsByClass(classe);
   if (students.length === 0) return toast(t("msg_no_students_in_class"));
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = "recu-medersa-v18";
+const CACHE_NAME = "recu-medersa-v20";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -22,7 +22,6 @@ const APP_SHELL = [
 const BYPASS_PATTERNS = [
   "/clients/",
   "firebaseio.com",
-  "googleapis.com",
   "gstatic.com/firebasejs",
   "firestore.googleapis.com",
   "identitytoolkit.googleapis.com",

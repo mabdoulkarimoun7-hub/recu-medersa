@@ -38,7 +38,7 @@
     "classes": true,
     "paiements": true,
     "parametres": true,
-    "guide": true,
+    "guide": false,
     "presences": false,
     "bulletins": false,
     "attestations": false,

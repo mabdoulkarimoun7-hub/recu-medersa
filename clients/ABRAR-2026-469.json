@@ -39,10 +39,10 @@
     "paiements": true,
     "parametres": true,
     "guide": false,
-    "presences": false,
-    "bulletins": false,
+    "presences": true,
+    "bulletins": true,
     "attestations": false,
-    "dashboard": false,
+    "dashboard": true,
     "enseignants": false,
     "historique": false
   },
